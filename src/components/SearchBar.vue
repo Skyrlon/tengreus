@@ -3,6 +3,8 @@
     <input
       v-model="searchCity"
       v-on:keyup="getCities($event)"
+      v-on:focusout="isActive = undefined"
+      v-on:focusin="isFocus()"
       id="cities-datalist-input"
       type="text"
       placeholder="Entrez le nom d'une ville"
@@ -32,7 +34,10 @@ export default {
         { value: "paris_france", text: "Paris, France" },
         { value: "tokyo_japan", text: "Tokyo, Japan" },
         { value: "beijing_china", text: "Beijing, China" },
-        { value: "abu-dhabi_united_arab_emirates", text: "Abu Dhabi, United Arab Emirates" },
+        {
+          value: "abu-dhabi_united_arab_emirates",
+          text: "Abu Dhabi, United Arab Emirates",
+        },
         { value: "athens_greece", text: "Athens, Greece" },
         { value: "bangkok_thailand", text: "Bangkok, Thailand" },
         { value: "belgrade_serbia", text: "Belgrade, Serbia" },
@@ -50,15 +55,28 @@ export default {
       this.filteredCities = this.citiesList.filter((x) =>
         x.text.toLowerCase().startsWith(this.searchCity.toLowerCase())
       );
-      if (this.searchCity.length > 0) {
+      if (this.filteredCities.length > 0) {
         this.isActive = true;
-      } else if (this.searchCity.length < 1) {
+      } else if (this.filteredCities.length < 1) {
+        this.isActive = undefined;
+      }
+      if (this.searchCity.length == 0) {
         this.isActive = undefined;
       }
     },
     selectCity(event) {
       (this.searchCity = event.target.textContent.replace(/\s+/g, " ").trim()),
         (this.isActive = undefined);
+    },
+    isFocus() {
+      if (this.filteredCities.length > 0) {
+        this.isActive = true;
+      } else if (this.filteredCities.length == 0) {
+        this.isActive = undefined;
+      }
+      if (this.searchCity.length == 0) {
+        this.isActive = undefined;
+      }
     },
   },
 };
@@ -71,6 +89,8 @@ export default {
   width: 35vw;
   &.active #cities-datalist-ul {
     display: block;
+    box-sizing: border-box;
+    border: 1px solid black;
   }
   &-input {
     margin: 0.25vw 0 0 0;
@@ -85,7 +105,6 @@ export default {
     padding: 0;
     width: 35vw;
     max-height: 50%;
-    border: 1px solid black;
     font-size: 1em;
     list-style: none;
     background: #fff;
