@@ -2,9 +2,8 @@
   <div id="cities-datalist" :class="{ active: isActive }">
     <input
       v-model="searchCity"
-      v-on:keyup="getCities($event)"
-      v-on:focusout="isActive = undefined"
-      v-on:focusin="isFocus()"
+      @keyup="getCities($event)"
+      @focusin="isFocus()"
       id="cities-datalist-input"
       type="text"
       placeholder="Entrez le nom d'une ville"
@@ -28,7 +27,7 @@ export default {
   data() {
     return {
       isActive: undefined,
-      searchCity: "",
+      searchCity: null,
       filteredCities: [],
       citiesList: [
         { value: "paris_france", text: "Paris, France" },
@@ -64,9 +63,9 @@ export default {
         this.isActive = undefined;
       }
     },
-    selectCity(event) {
-      (this.searchCity = event.target.textContent.replace(/\s+/g, " ").trim()),
-        (this.isActive = undefined);
+    selectCity(e) {
+      this.searchCity = e.target.textContent.replace(/\s+/g, " ").trim();
+      this.isActive = undefined;
     },
     isFocus() {
       if (this.filteredCities.length > 0) {
@@ -91,6 +90,10 @@ export default {
     display: block;
     box-sizing: border-box;
     border: 1px solid black;
+    & li:hover {
+      color: black;
+      background: lightgreen;
+    }
   }
   &-input {
     margin: 0.25vw 0 0 0;
@@ -109,7 +112,7 @@ export default {
     list-style: none;
     background: #fff;
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     & li {
       display: block;
       text-align: left;
