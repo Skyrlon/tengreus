@@ -1,5 +1,9 @@
 <template>
-  <div id="cities-datalist" :class="{ active: isActive }">
+  <div
+    id="cities-datalist"
+    :class="{ active: isActive }"
+    v-clickOutside="hideCityDatalistUl"
+  >
     <input
       v-model="searchCity"
       @keyup="getCities($event)"
@@ -24,10 +28,29 @@
 <script>
 export default {
   name: "SearchBar",
+  directives: {
+    clickOutside: {
+      bind(el, binding, vnode) {
+        var vm = vnode.context;
+        var callback = binding.value;
+
+        el.clickOutsideEvent = function (event) {
+          if (!(el == event.target || el.contains(event.target))) {
+            return callback.call(vm, event);
+          }
+        };
+        document.body.addEventListener("click", el.clickOutsideEvent);
+      },
+      unbind(el) {
+        document.body.removeEventListener("click", el.clickOutsideEvent);
+      },
+    },
+  },
   data() {
     return {
+      el: "#cities-datalist",
       isActive: undefined,
-      searchCity: null,
+      searchCity: "",
       filteredCities: [],
       citiesList: [
         { value: "paris_france", text: "Paris, France" },
@@ -57,25 +80,28 @@ export default {
       if (this.filteredCities.length > 0) {
         this.isActive = true;
       } else if (this.filteredCities.length < 1) {
-        this.isActive = undefined;
+        this.isActive = false;
       }
       if (this.searchCity.length == 0) {
-        this.isActive = undefined;
+        this.isActive = false;
       }
     },
     selectCity(e) {
       this.searchCity = e.target.textContent.replace(/\s+/g, " ").trim();
-      this.isActive = undefined;
+      this.isActive = false;
     },
     isFocus() {
       if (this.filteredCities.length > 0) {
         this.isActive = true;
       } else if (this.filteredCities.length == 0) {
-        this.isActive = undefined;
+        this.isActive = false;
       }
       if (this.searchCity.length == 0) {
-        this.isActive = undefined;
+        this.isActive = false;
       }
+    },
+    hideCityDatalistUl: function () {
+      this.isActive = false;
     },
   },
 };
@@ -103,11 +129,10 @@ export default {
   }
   &-ul {
     display: none;
-    position: absolute;
     margin: 0;
     padding: 0;
     width: 35vw;
-    max-height: 50%;
+    max-height: 5em;
     font-size: 1em;
     list-style: none;
     background: #fff;
