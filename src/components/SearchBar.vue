@@ -7,7 +7,8 @@
     <input
       v-model="searchCity"
       @keyup="getCities($event)"
-      @focusin="isFocus()"
+      @focusin="isFocus($event)"
+      onblur="this.placeholder = 'Entrez le nom d\'une ville'"
       id="cities-datalist-input"
       type="text"
       placeholder="Entrez le nom d'une ville"
@@ -90,7 +91,7 @@ export default {
       this.searchCity = e.target.textContent.replace(/\s+/g, " ").trim();
       this.isActive = false;
     },
-    isFocus() {
+    isFocus(e) {
       if (this.filteredCities.length > 0) {
         this.isActive = true;
       } else if (this.filteredCities.length == 0) {
@@ -98,6 +99,7 @@ export default {
       }
       if (this.searchCity.length == 0) {
         this.isActive = false;
+        e.target.placeholder = "";
       }
     },
     hideCityDatalistUl: function () {
@@ -111,7 +113,7 @@ export default {
 #cities-datalist {
   margin: auto;
   margin-top: 10%;
-  width: 35vw;
+  width: 20vw;
   &.active #cities-datalist-ul {
     display: block;
     box-sizing: border-box;
@@ -125,13 +127,14 @@ export default {
     margin: 0.25vw 0 0 0;
     width: 100%;
     font-size: 1em;
-    border-radius: 0.5vw;
+    border-radius: 10vw;
+    text-align: center;
   }
   &-ul {
     display: none;
     margin: 0;
     padding: 0;
-    width: 35vw;
+    width: 20vw;
     max-height: 5em;
     font-size: 1em;
     list-style: none;
