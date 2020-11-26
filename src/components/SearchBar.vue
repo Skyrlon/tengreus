@@ -118,39 +118,49 @@ export default {
     display: block;
     box-sizing: border-box;
     border: 1px solid black;
+    border-top-style: none;
+
     & li:hover {
       color: black;
       background: lightgreen;
     }
   }
   &-input {
-    margin: 0.25vw 0 0 0;
-    width: 100%;
+    position: relative;
+    z-index: 10;
+    box-sizing: border-box;
+    width: 20vw;
     font-size: 1em;
-    border-radius: 10vw;
+    border-radius: 20vw;
     text-align: center;
+    border: 1px solid black;
   }
   &-ul {
     display: none;
-    margin: 0;
+    position: relative;
+    margin-top: -0.75em;
     padding: 0;
     width: 20vw;
     max-height: 5em;
-    font-size: 1em;
     list-style: none;
     background: #fff;
+    border-bottom-left-radius: 0.5vw;
+    border-bottom-right-radius: 0.5vw;
     overflow: hidden;
     overflow-y: auto;
+    & li:nth-child(1) {
+      margin-top: 0.75em;
+    }
+
     & li {
       display: block;
+      border-bottom: 1px solid grey;
+      padding: 0.5em;
       text-align: left;
       color: #999;
+      font-size: 1em;
       cursor: pointer;
     }
-  }
-  & > p {
-    margin: 0.5vw 0 0 0;
-    font-size: 1em;
   }
 }
 </style>
