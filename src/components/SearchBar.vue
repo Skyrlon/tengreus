@@ -20,13 +20,15 @@
         :id="city.value"
         @click="selectCity($event)"
       >
-        {{ city.text }}
+        {{ city }}
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import cityList from "@/assets/city.list.json";
+
 export default {
   name: "SearchBar",
   directives: {
@@ -53,20 +55,7 @@ export default {
       isActive: undefined,
       searchCity: "",
       filteredCities: [],
-      citiesList: [
-        { value: "paris_france", text: "Paris, France" },
-        { value: "tokyo_japan", text: "Tokyo, Japan" },
-        { value: "beijing_china", text: "Beijing, China" },
-        {
-          value: "abu-dhabi_united_arab_emirates",
-          text: "Abu Dhabi, United Arab Emirates",
-        },
-        { value: "athens_greece", text: "Athens, Greece" },
-        { value: "bangkok_thailand", text: "Bangkok, Thailand" },
-        { value: "belgrade_serbia", text: "Belgrade, Serbia" },
-        { value: "brussels_belgium", text: "Brussels, Belgium" },
-        { value: "cairo_egypt", text: "Cairo, Egypt" },
-      ],
+      citiesList: cityList,
     };
   },
   methods: {
@@ -75,9 +64,16 @@ export default {
         return;
       }
       this.filteredCities = [];
-      this.filteredCities = this.citiesList.filter((x) =>
-        x.text.toLowerCase().startsWith(this.searchCity.toLowerCase())
-      );
+
+      for (let i = 0; i < this.citiesList.length; i++) {
+        if (
+          this.citiesList[i]["name"]
+            .toLowerCase()
+            .startsWith(this.searchCity.toLowerCase()) == true
+        ) {
+          this.filteredCities.push(this.citiesList[i]["name"]);
+        }
+      }
       if (this.filteredCities.length > 0) {
         this.isActive = true;
       } else if (this.filteredCities.length < 1) {
