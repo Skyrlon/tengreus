@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import cityList from "@/assets/city.list.json";
+const axios = require("axios");
 
 export default {
   name: "SearchBar",
@@ -55,32 +55,43 @@ export default {
       isActive: undefined,
       searchCity: "",
       filteredCities: [],
-      citiesList: cityList,
+      citiesList: null,
     };
   },
   methods: {
     getCities(event) {
-      if (event.key == "Shift" || event.keyCode == 16) {
-        return;
-      }
-      this.filteredCities = [];
-
-      for (let i = 0; i < this.citiesList.length; i++) {
-        if (
-          this.citiesList[i]["name"]
-            .toLowerCase()
-            .startsWith(this.searchCity.toLowerCase()) == true
-        ) {
-          this.filteredCities.push(this.citiesList[i]["name"]);
+      if (this.searchCity.length >= 3) {
+        if (event.key == "Shift" || event.keyCode == 16) {
+          return;
         }
-      }
-      if (this.filteredCities.length > 0) {
-        this.isActive = true;
-      } else if (this.filteredCities.length < 1) {
-        this.isActive = false;
-      }
-      if (this.searchCity.length == 0) {
-        this.isActive = false;
+        axios
+          .get(
+            `https://public.opendatasoft.com/api/records/1.0/search/?dataset=geonames-all-cities-with-a-population-1000&q=${this.searchCity}`
+          )
+          .then((response) => (this.citiesList = response.data.records))
+          .then(() => {
+            this.filteredCities = [];
+            console.log(this.citiesList.length);
+            for (let i = 0; i < this.citiesList.length; i++) {
+              if (
+                this.citiesList[i].fields.name
+                  .toLowerCase()
+                  .startsWith(this.searchCity.toLowerCase()) == true
+              ) {
+                console.log(this.citiesList[i].fields.name);
+                this.filteredCities.push(this.citiesList[i].fields.name);
+              }
+            }
+          });
+
+        if (this.filteredCities.length > 0) {
+          this.isActive = true;
+        } else if (this.filteredCities.length < 1) {
+          this.isActive = false;
+        }
+        if (this.searchCity.length == 0) {
+          this.isActive = false;
+        }
       }
     },
     selectCity(e) {
