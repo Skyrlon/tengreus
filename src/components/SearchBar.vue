@@ -14,23 +14,30 @@
       placeholder="Entrez le nom d'une ville"
     />
     <div id="searchbar-dropdown">
-      <div
-        :key="city.key"
-        v-for="city in filteredCities"
-        :id="city.value"
-        @click="selectCity($event)"
-      >
-        {{ city }}
+      <div id="searchbar-dropdown-list">
+        <div
+          :key="city.key"
+          v-for="city in filteredCities"
+          :id="city.value"
+          @click="selectCity($event)"
+        >
+          {{ city }}
+        </div>
       </div>
+      <custom-scroll-bar />
     </div>
   </div>
 </template>
 
 <script>
 const axios = require("axios");
+import CustomScrollBar from "@/components/CustomScrollBar.vue";
 
 export default {
   name: "SearchBar",
+  components: {
+    CustomScrollBar,
+  },
   directives: {
     clickOutside: {
       bind(el, binding, vnode) {
@@ -129,7 +136,7 @@ export default {
     border: 1px solid black;
     border-top-style: none;
 
-    & div:hover {
+    &-list div:hover {
       color: black;
       background: lightgreen;
     }
@@ -150,25 +157,24 @@ export default {
     margin-top: -0.75em;
     padding: 0;
     width: 20vw;
-    max-height: 5em;
+    max-height: 20.5em;
     list-style: none;
     background: #fff;
     border-bottom-left-radius: 0.5vw;
     border-bottom-right-radius: 0.5vw;
     overflow: hidden;
-    overflow-y: auto;
-    & div:nth-child(1) {
-      margin-top: 0.75em;
-    }
 
-    & div {
-      display: block;
-      border-bottom: 1px solid grey;
-      padding: 0.5em;
-      text-align: left;
-      color: #999;
-      font-size: 1em;
-      cursor: pointer;
+    &-list {
+      margin-top: 0.75em;
+      & div {
+        display: block;
+        border-bottom: 1px solid grey;
+        padding: 0.5em;
+        text-align: left;
+        color: #999;
+        font-size: 1em;
+        cursor: pointer;
+      }
     }
   }
 }
