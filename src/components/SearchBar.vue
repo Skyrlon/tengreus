@@ -1,6 +1,6 @@
 <template>
   <div
-    id="cities-datalist"
+    id="searchbar"
     :class="{ active: isActive }"
     v-clickOutside="hideCityDatalistUl"
   >
@@ -9,20 +9,20 @@
       @keyup="getCities($event)"
       @focusin="isFocus($event)"
       onblur="this.placeholder = 'Entrez le nom d\'une ville'"
-      id="cities-datalist-input"
+      id="searchbar-input"
       type="text"
       placeholder="Entrez le nom d'une ville"
     />
-    <ul id="cities-datalist-ul">
-      <li
+    <div id="searchbar-dropdown">
+      <div
         :key="city.key"
         v-for="city in filteredCities"
         :id="city.value"
         @click="selectCity($event)"
       >
         {{ city }}
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -119,17 +119,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#cities-datalist {
+#searchbar {
   margin: auto;
   margin-top: 10%;
   width: 20vw;
-  &.active #cities-datalist-ul {
+  &.active #searchbar-dropdown {
     display: block;
     box-sizing: border-box;
     border: 1px solid black;
     border-top-style: none;
 
-    & li:hover {
+    & div:hover {
       color: black;
       background: lightgreen;
     }
@@ -144,7 +144,7 @@ export default {
     text-align: center;
     border: 1px solid black;
   }
-  &-ul {
+  &-dropdown {
     display: none;
     position: relative;
     margin-top: -0.75em;
@@ -157,11 +157,11 @@ export default {
     border-bottom-right-radius: 0.5vw;
     overflow: hidden;
     overflow-y: auto;
-    & li:nth-child(1) {
+    & div:nth-child(1) {
       margin-top: 0.75em;
     }
 
-    & li {
+    & div {
       display: block;
       border-bottom: 1px solid grey;
       padding: 0.5em;
