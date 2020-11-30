@@ -69,7 +69,7 @@ export default {
         }
         axios
           .get(
-            `https://public.opendatasoft.com/api/records/1.0/search/?dataset=geonames-all-cities-with-a-population-1000&q="${this.searchCity}"&rows=100&sort=population`
+            `https://public.opendatasoft.com/api/records/1.0/search/?dataset=geonames-all-cities-with-a-population-1000&q='"${this.searchCity}'&rows=1000&sort=population`
           )
           .then((response) => (this.apiData = response.data.records))
           .then(() => {
