@@ -24,20 +24,15 @@
           {{ city }}
         </div>
       </div>
-      <custom-scroll-bar />
     </div>
   </div>
 </template>
 
 <script>
 const axios = require("axios");
-import CustomScrollBar from "@/components/CustomScrollBar.vue";
 
 export default {
   name: "SearchBar",
-  components: {
-    CustomScrollBar,
-  },
   directives: {
     clickOutside: {
       bind(el, binding, vnode) {
@@ -58,7 +53,6 @@ export default {
   },
   data() {
     return {
-      el: "#cities-datalist",
       isActive: undefined,
       searchCity: "",
       apiData: null,
@@ -103,10 +97,12 @@ export default {
           });
       }
     },
+
     selectCity(e) {
       this.searchCity = e.target.textContent.replace(/\s+/g, " ").trim();
       this.isActive = false;
     },
+
     isFocus(e) {
       if (this.filteredCities.length > 0) {
         this.isActive = true;
@@ -118,6 +114,7 @@ export default {
         e.target.placeholder = "";
       }
     },
+
     hideCityDatalistUl: function () {
       this.isActive = false;
     },
@@ -130,6 +127,7 @@ export default {
   margin: auto;
   margin-top: 10%;
   width: 20vw;
+
   &.active #searchbar-dropdown {
     display: block;
     box-sizing: border-box;
@@ -141,6 +139,7 @@ export default {
       background: lightgreen;
     }
   }
+
   &-input {
     position: relative;
     z-index: 10;
@@ -151,6 +150,7 @@ export default {
     text-align: center;
     border: 1px solid black;
   }
+
   &-dropdown {
     display: none;
     position: relative;
@@ -166,6 +166,7 @@ export default {
 
     &-list {
       margin-top: 0.75em;
+
       & div {
         display: block;
         border-bottom: 1px solid grey;
