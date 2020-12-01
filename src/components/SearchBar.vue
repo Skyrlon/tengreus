@@ -18,10 +18,10 @@
         <div
           :key="city.key"
           v-for="city in filteredCities"
-          :id="city.value"
+          :id="city.id"
           @click="selectCity($event)"
         >
-          {{ city }}
+          {{ city.name }}, {{ city.subdivision }}, {{ city.country }}
         </div>
       </div>
     </div>
@@ -61,8 +61,7 @@ export default {
     };
   },
   methods: {
-    getCities(event) {
-      this.citiesList = [];
+    getCities(event) {      
       if (this.searchCity.length >= 3) {
         if (event.key == "Shift" || event.keyCode == 16) {
           return;
@@ -73,13 +72,24 @@ export default {
           )
           .then((response) => (this.apiData = response.data.records))
           .then(() => {
+            this.citiesList = [];
             for (let i = 0; i < this.apiData.length; i++) {
-              this.citiesList.push(this.apiData[i]["fields"]["name"]);
+              let cityId = this.apiData[i]["fields"]["geoname_id"];
+              let cityName = this.apiData[i]["fields"]["name"];
+              let adminSubdivision = this.apiData[i]["fields"]["admin1_code"];
+              let countryName = this.apiData[i]["fields"]["country"];
+
+              this.citiesList.push({
+                id: cityId,
+                name: cityName,
+                subdivision: adminSubdivision,
+                country: countryName,
+              });
             }
             this.filteredCities = [];
             for (let i = 0; i < this.citiesList.length; i++) {
               if (
-                this.citiesList[i]
+                this.citiesList[i].name
                   .toLowerCase()
                   .startsWith(this.searchCity.toLowerCase()) == true
               ) {
