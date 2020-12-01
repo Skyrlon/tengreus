@@ -30,9 +30,11 @@
 
 <script>
 const axios = require("axios");
+import Admin1Codes from '!!raw-loader!@/assets/admin1CodesASCII.txt';
 
 export default {
   name: "SearchBar",
+  components: {},
   directives: {
     clickOutside: {
       bind(el, binding, vnode) {
@@ -58,10 +60,11 @@ export default {
       apiData: null,
       filteredCities: [],
       citiesList: [],
+      admin1CodesList: Admin1Codes.split(/\n/),
     };
   },
   methods: {
-    getCities(event) {      
+    getCities(event) {
       if (this.searchCity.length >= 3) {
         if (event.key == "Shift" || event.keyCode == 16) {
           return;
