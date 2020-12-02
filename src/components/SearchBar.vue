@@ -30,7 +30,7 @@
 
 <script>
 const axios = require("axios");
-import Admin1Codes from '!!raw-loader!@/assets/admin1CodesASCII.txt';
+import Admin1Codes from "!!raw-loader!@/assets/admin1CodesASCII.txt";
 
 export default {
   name: "SearchBar",
@@ -62,6 +62,23 @@ export default {
       citiesList: [],
       admin1CodesList: Admin1Codes.split(/\n/),
     };
+  },
+  computed: {
+    admin1CodesListOrganized() {
+      let admin1Array = [];
+      for (let i = 0; i < this.admin1CodesList.length; i++) {
+        let array = this.admin1CodesList[i].split(/\t/);
+        let countryInitials = array[0].substring(0, 2);
+        let admin1 = array[0].substring(3, array[0].length);
+        let name = array[1];
+        admin1Array.push({
+          country: countryInitials,
+          admin1code: admin1,
+          name: name,
+        }); 
+      }
+      return admin1Array;
+    },
   },
   methods: {
     getCities(event) {
