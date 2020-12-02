@@ -75,7 +75,7 @@ export default {
           country: countryInitials,
           admin1code: admin1,
           name: name,
-        }); 
+        });
       }
       return admin1Array;
     },
@@ -96,7 +96,17 @@ export default {
             for (let i = 0; i < this.apiData.length; i++) {
               let cityId = this.apiData[i]["fields"]["geoname_id"];
               let cityName = this.apiData[i]["fields"]["name"];
-              let adminSubdivision = this.apiData[i]["fields"]["admin1_code"];
+              let adminSubdivision;
+              for (let j = 0; j < this.admin1CodesListOrganized.length; j++) {
+                if (
+                  this.apiData[i]["fields"]["country_code"] ==
+                    this.admin1CodesListOrganized[j].country &&
+                  this.apiData[i]["fields"]["admin1_code"] ==
+                    this.admin1CodesListOrganized[j].admin1code
+                ) {
+                  adminSubdivision = this.admin1CodesListOrganized[j].name;
+                }
+              }
               let countryName = this.apiData[i]["fields"]["country"];
 
               this.citiesList.push({
