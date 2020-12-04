@@ -20,7 +20,7 @@ const routes = [
   },
   {
     path: '/weather_card',
-    name: 'Weather Card',
+    name: 'WeatherCard',
     component: () => import('../views/WeatherCard.vue')
   }
 ]
