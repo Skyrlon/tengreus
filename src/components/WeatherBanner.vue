@@ -38,7 +38,7 @@ export default {
 
 <style lang="scss" scoped>
 .banner {
-  position: fixed;
+  flex: 0 1 auto;
   width: 100%;
   background-image: url("https://via.placeholder.com/1536x320.png/0000FF?text=Banner");
   background-repeat: no-repeat;
@@ -49,9 +49,9 @@ export default {
 
 .weather-summary {
   position: relative;
+  padding: 5%;
   width: 90%;
   height: 50%;
-  margin: 5%;
   text-align: left;
 }
 
@@ -77,8 +77,8 @@ export default {
 
 .weather-icon {
   position: absolute;
-  top: 15%;
-  right: 0;
+  top: 20%;
+  right: 5%;
   width: 7em;
   height: 7em;
 }
