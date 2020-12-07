@@ -51,7 +51,6 @@ export default {
   position: relative;
   padding: 5%;
   width: 90%;
-  height: 50%;
   text-align: left;
 }
 

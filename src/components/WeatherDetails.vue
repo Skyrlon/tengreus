@@ -1,20 +1,39 @@
 <template>
   <div class="weather-details">
-    <div class="">Feels like : {{ feelLikeTemperature }}°C</div>
-    <div class="">
-      Min/max temperature : {{ minTemperature }}/{{ maxTemperature }}°C
-    </div>
-    <div class="">Pressure : {{ pressure }}hPA</div>
-    <div class="">Humidity : {{ humidity }}%</div>
-    <div class="">Visibility : {{ visibility }}m</div>
-    <div class="">Wind speed : {{ windSpeed }}m/s</div>
-    <div class="">Wind direction : {{ windDeg }}°</div>
-    <div class="">Wind Gust : {{ windGust }}m/s</div>
-    <div class="">Cloudiness : {{ cloudiness }}%</div>
-    <div class="">Rain volume for the last hour : {{ rainInLast1H }}mm</div>
-    <div class="">Rain volume for the last 3 hours : {{ rainInLast3H }}mm</div>
-    <div class="">Snow volume for the last hour : {{ snowInLast1H }}mm</div>
-    <div class="">Snow volume for the last 3 hours : {{ snowInLast3H }}mm</div>
+    <section>
+      <div class="feels-like-temp">
+        Feels like : {{ feelLikeTemperature }}°C
+      </div>
+      <div class="min-max-temp">
+        Min/max temperature : {{ minTemperature }}/{{ maxTemperature }}°C
+      </div>
+      <div class="pressure">Pressure : {{ pressure }}hPA</div>
+      <div class="humidity">Humidity : {{ humidity }}%</div>
+    </section>
+
+    <section>
+      <div class="visibility">Visibility : {{ visibility }}m</div>
+      <div class="wind">
+        Wind : {{ windDeg }}° {{ windSpeed }}m/s with gust of {{ windGust }}m/s
+      </div>
+      <div class="cloudiness">Cloudiness : {{ cloudiness }}%</div>
+      <div class="moon-phase">Moon phase : Waning Gibbous</div>
+    </section>
+
+    <section>
+      <div class="rain-last-hour">
+        Rain volume for the last hour : {{ rainInLast1H }}mm
+      </div>
+      <div class="rain-last-three-hours">
+        Rain volume for the last 3 hours : {{ rainInLast3H }}mm
+      </div>
+      <div class="snow-last-hour">
+        Snow volume for the last hour : {{ snowInLast1H }}mm
+      </div>
+      <div class="snow-last-three-hours">
+        Snow volume for the last 3 hours : {{ snowInLast3H }}mm
+      </div>
+    </section>
   </div>
 </template>
 
@@ -46,14 +65,22 @@ export default {
 
 <style lang="scss" scoped>
 .weather-details {
+  display: flex;
+  border: 5px solid;
   font-size: 1em;
   text-align: left;
-  flex-wrap: wrap;
   flex: 1 1 auto;
-  column-count: 3;
+  justify-content: space-between;
 
-  & div {
-    padding: 1em;
+  & section {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid;
+    flex: 1;
+    justify-content: center;
+    & div {
+      padding: 1.5em;
+    }
   }
 }
 </style>
