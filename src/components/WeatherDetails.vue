@@ -1,11 +1,24 @@
 <template>
   <div class="weather-details">
+    <div class="parameters">
+      Parameters :
+      <select id="temperature" @change="temperatureConverter($event)" v-model="temperatureUnity">
+        <option value="celsius">°C</option>
+        <option value="farenheit">°F</option>
+        <option value="kelvin">°K</option>
+      </select>
+      <select id="pressure"></select>
+      <select id="distance"></select>
+      <select id="speed"></select>
+    </div>
     <section>
       <div class="feels-like-temp">
-        Feels like : {{ feelLikeTemperature }}°C
+        Feels like : {{ feelLikeTemperatureConverted }}°C
       </div>
       <div class="min-max-temp">
-        Min/max temperature : {{ minTemperature }}/{{ maxTemperature }}°C
+        Min/max temperature : {{ minTemperatureConverted }}/{{
+          maxTemperatureConverted
+        }}°C
       </div>
       <div class="pressure">Pressure : {{ pressure }}hPA</div>
       <div class="humidity">Humidity : {{ humidity }}%</div>
@@ -17,7 +30,7 @@
         Wind : {{ windDeg }}° {{ windSpeed }}m/s with gust of {{ windGust }}m/s
       </div>
       <div class="cloudiness">Cloudiness : {{ cloudiness }}%</div>
-      <div class="moon-phase">Moon phase : Waning Gibbous</div>
+      <div class="moon-phase">Moon phase : {{ moonPhase }}</div>
     </section>
 
     <section>
@@ -58,16 +71,40 @@ export default {
       snowInLast3H: 0,
       sunrise: "7:00",
       sunset: "17:00",
+      moonPhase: "Waning Gibbous",
+      temperatureUnity: "",
+      feelLikeTemperatureConverted: undefined,
+      minTemperatureConverted: undefined,
+      maxTemperatureConverted: undefined,
     };
+  },
+  methods: {
+    temperatureConverter() {
+      if (this.temperatureUnity == "celsius") {
+        this.feelLikeTemperatureConverted = this.feelLikeTemperature;
+        this.minTemperatureConverted = this.minTemperature;
+        this.maxTemperatureConverted = this.maxTemperature;
+      }
+      if (this.temperatureUnity == "farenheit") {
+        this.feelLikeTemperatureConverted = this.feelLikeTemperature * 1.8 + 32;
+        this.minTemperatureConverted = this.minTemperature * 1.8 + 32;
+        this.maxTemperatureConverted = this.maxTemperature * 1.8 + 32;
+      }
+      if (this.temperatureUnity == "kelvin") {
+        this.feelLikeTemperatureConverted = this.feelLikeTemperature + 273.15;
+        this.maxTemperatureConverted = this.maxTemperature + 273.15;
+        this.minTemperatureConverted = this.minTemperature + 273.15;
+      }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .weather-details {
+  padding-top: 2%;
   display: flex;
-  border: 5px solid;
-  font-size: 1em;
+  font-size: medium;
   text-align: left;
   flex: 1 1 auto;
   justify-content: space-between;
@@ -75,12 +112,17 @@ export default {
   & section {
     display: flex;
     flex-direction: column;
-    border: 1px solid;
     flex: 1;
-    justify-content: center;
+    &:nth-child(-n + 3) {
+      border-right: 2px solid green;
+    }
     & div {
-      padding: 1.5em;
+      padding: 1.5em 15%;
     }
   }
+}
+
+.parameters {
+  position: absolute;
 }
 </style>
