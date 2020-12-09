@@ -2,7 +2,11 @@
   <div class="weather-details">
     <div class="parameters">
       Parameters :
-      <select id="temperature" @change="temperatureConverter($event)" v-model="temperatureUnity">
+      <select
+        id="temperature"
+        @change="temperatureConverter($event)"
+        v-model="temperatureUnity"
+      >
         <option value="celsius">°C</option>
         <option value="farenheit">°F</option>
         <option value="kelvin">°K</option>
@@ -13,11 +17,11 @@
     </div>
     <section>
       <div class="feels-like-temp">
-        Feels like : {{ feelLikeTemperatureConverted }}°C
+        Feels like : {{ feelsLikeTemp }}°C
       </div>
       <div class="min-max-temp">
-        Min/max temperature : {{ minTemperatureConverted }}/{{
-          maxTemperatureConverted
+        Min/max temperature : {{ minTemp }}/{{
+          maxTemp
         }}°C
       </div>
       <div class="pressure">Pressure : {{ pressure }}hPA</div>
@@ -51,32 +55,30 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "WeatherDetails",
-  data() {
-    return {
-      feelLikeTemperature: -10,
-      minTemperature: -11,
-      maxTemperature: -9,
-      pressure: 1023,
-      humidity: 100,
-      visibility: 16093,
-      windSpeed: 1.5,
-      windDeg: 350,
-      windGust: 3,
-      cloudiness: 1,
-      rainInLast1H: 0,
-      rainInLast3H: 0,
-      snowInLast1H: 0,
-      snowInLast3H: 0,
-      sunrise: "7:00",
-      sunset: "17:00",
-      moonPhase: "Waning Gibbous",
-      temperatureUnity: "",
-      feelLikeTemperatureConverted: undefined,
-      minTemperatureConverted: undefined,
-      maxTemperatureConverted: undefined,
-    };
+  computed: {
+    ...mapState([
+      "feelsLikeTemp",
+      "minTemp",
+      "maxTemp",
+      "pressure",
+      "humidity",
+      "visibility",
+      "windSpeed",
+      "windDeg",
+      "windGust",
+      "cloudiness",
+      "rainInLast1H",
+      "rainInLast3H",
+      "snowInLast1H",
+      "snowInLast3H",
+      "sunrise",
+      "sunset",
+      "moonPhase",
+    ]),
   },
   methods: {
     temperatureConverter() {

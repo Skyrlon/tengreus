@@ -3,7 +3,7 @@
     <div class="weather-summary">
       <div class="city-name">{{ city }}</div>
       <div class="hour">{{ time }}</div>
-      <div class="temperature">{{ temperature }}°C</div>
+      <div class="temperature">{{ currentTemp }}°C</div>
       <div class="current-weather">{{ weather }}</div>
       <div class="weather-icon">
         <svg viewBox="0 0 105 105">
@@ -23,15 +23,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "WeatherBanner",
-  data() {
-    return {
-      city: "City Name",
-      time: "11:54",
-      temperature: -15,
-      weather: "Current Weather",
-    };
+  computed: {
+    ...mapState(["city", "time", "currentTemp", "weather"]),
   },
 };
 </script>
