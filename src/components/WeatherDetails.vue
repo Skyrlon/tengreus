@@ -1,28 +1,11 @@
 <template>
   <div class="weather-details">
-    <div class="parameters">
-      Parameters :
-      <select
-        id="temperature"
-        @change="temperatureConverter($event)"
-        v-model="temperatureUnity"
-      >
-        <option value="celsius">°C</option>
-        <option value="farenheit">°F</option>
-        <option value="kelvin">°K</option>
-      </select>
-      <select id="pressure"></select>
-      <select id="distance"></select>
-      <select id="speed"></select>
-    </div>
     <section>
       <div class="feels-like-temp">
-        Feels like : {{ feelsLikeTemp }}°C
+        Feels like : {{ feelsLikeTemp }}{{ tempUnit }}
       </div>
       <div class="min-max-temp">
-        Min/max temperature : {{ minTemp }}/{{
-          maxTemp
-        }}°C
+        Min/max temperature : {{ minTemp }}/{{ maxTemp }}{{ tempUnit }}
       </div>
       <div class="pressure">Pressure : {{ pressure }}hPA</div>
       <div class="humidity">Humidity : {{ humidity }}%</div>
@@ -61,6 +44,7 @@ export default {
   name: "WeatherDetails",
   computed: {
     ...mapState([
+      "tempUnit",
       "feelsLikeTemp",
       "minTemp",
       "maxTemp",
@@ -79,25 +63,6 @@ export default {
       "sunset",
       "moonPhase",
     ]),
-  },
-  methods: {
-    temperatureConverter() {
-      if (this.temperatureUnity == "celsius") {
-        this.feelLikeTemperatureConverted = this.feelLikeTemperature;
-        this.minTemperatureConverted = this.minTemperature;
-        this.maxTemperatureConverted = this.maxTemperature;
-      }
-      if (this.temperatureUnity == "farenheit") {
-        this.feelLikeTemperatureConverted = this.feelLikeTemperature * 1.8 + 32;
-        this.minTemperatureConverted = this.minTemperature * 1.8 + 32;
-        this.maxTemperatureConverted = this.maxTemperature * 1.8 + 32;
-      }
-      if (this.temperatureUnity == "kelvin") {
-        this.feelLikeTemperatureConverted = this.feelLikeTemperature + 273.15;
-        this.maxTemperatureConverted = this.maxTemperature + 273.15;
-        this.minTemperatureConverted = this.minTemperature + 273.15;
-      }
-    },
   },
 };
 </script>
