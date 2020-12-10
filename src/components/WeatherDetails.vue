@@ -2,10 +2,12 @@
   <div class="weather-details">
     <section>
       <div class="feels-like-temp">
-        Feels like : {{ feelsLikeTemp }}{{ tempUnit }}
+        Feels like : {{ temperatures.feelsLikeTemp }}{{ tempUnit }}
       </div>
       <div class="min-max-temp">
-        Min/max temperature : {{ minTemp }}/{{ maxTemp }}{{ tempUnit }}
+        Min/max temperature : {{ temperatures.minTemp }}/{{
+          temperatures.maxTemp
+        }}{{ tempUnit }}
       </div>
       <div class="pressure">Pressure : {{ pressure }}hPA</div>
       <div class="humidity">Humidity : {{ humidity }}%</div>
@@ -45,9 +47,7 @@ export default {
   computed: {
     ...mapState([
       "tempUnit",
-      "feelsLikeTemp",
-      "minTemp",
-      "maxTemp",
+      "temperatures",
       "pressure",
       "humidity",
       "visibility",
