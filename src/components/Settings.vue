@@ -1,17 +1,23 @@
 <template>
   <div class="settings">
     Settings :
-    <select
-      id="temperature"
-      @change="temperatureConverter($event)"
-      v-model="temperatureUnity"
-    >
-      <option value="celsius">°C</option>
+    <select id="temperature" @change="changeTemperature($event)">
+      <option value="celsius" selected="selected">°C</option>
       <option value="fahrenheit">°F</option>
       <option value="kelvin">K</option>
     </select>
-    <select id="pressure"></select>
+
+    <select id="pressure" @change="changePressure($event)">
+      <option value="atmosphere">atm</option>
+      <option value="bar">bar</option>
+      <option value="hectopascal" selected="selected">hPa</option>
+      <option value="pascal">Pa</option>
+      <option value="psi">psi</option>
+      <option value="torr">Torr</option>
+    </select>
+
     <select id="distance"></select>
+
     <select id="speed"></select>
   </div>
 </template>
@@ -20,8 +26,11 @@
 export default {
   name: "Settings",
   methods: {
-    temperatureConverter(e) {
-      this.$store.commit("MEASUREMENT_UNIT_CONVERTER", e.target.value);
+    changeTemperature(e) {
+      this.$store.commit("TEMPERATURE_CONVERTER", e.target.value);
+    },
+    changePressure(e) {
+      this.$store.commit("PRESSURE_CONVERTER", e.target.value);
     },
   },
 };

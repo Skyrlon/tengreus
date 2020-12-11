@@ -9,7 +9,7 @@
           temperatures.maxTemp
         }}{{ tempUnit }}
       </div>
-      <div class="pressure">Pressure : {{ pressure }}hPA</div>
+      <div class="pressure">Pressure : {{ pressure }}{{ pressureUnit }}</div>
       <div class="humidity">Humidity : {{ humidity }}%</div>
     </section>
 
@@ -47,6 +47,7 @@ export default {
   computed: {
     ...mapState([
       "tempUnit",
+      "pressureUnit",
       "temperatures",
       "pressure",
       "humidity",
