@@ -13,16 +13,21 @@ export default new Vuex.Store({
     },
     tempUnit: "°C",
     pressureUnit: 'hPa',
+    lengthUnit: 'm',
+    speedUnit: 'm/s',
     city: "City Name",
     time: "11:54",
     weather: "Current Weather",
     pressureDefault: 1023, //value never change, used as reference to convert without worrying about round up mess
     pressureConverted: 1023,
     humidity: 100,
-    visibility: 16093,
-    windSpeed: 1.5,
+    visibilityDefault: 16093,
+    visibilityConverted: 16093,
+    windSpeedDefault: 1.5,
+    windSpeedConverted: 1.5,
     windDeg: 350,
-    windGust: 3,
+    windGustDefault: 3,
+    windGustConverted: 3,
     cloudiness: 1,
     rainInLast1H: 0,
     rainInLast3H: 0,
@@ -78,26 +83,42 @@ export default new Vuex.Store({
       if (payload == 'atmosphere') {
         state.pressureConverted = state.pressureDefault / 1013.25;
         state.pressureUnit = 'atm';
-      }
-      else if (payload == 'bar') {
+      } else if (payload == 'bar') {
         state.pressureConverted = state.pressureDefault / 1000;
         state.pressureUnit = 'bar';
-      }
-      else if (payload == 'hectopascal') {
+      } else if (payload == 'hectopascal') {
         state.pressureConverted = state.pressureDefault;
         state.pressureUnit = 'hPa';
-      }
-      else if (payload == 'pascal') {
+      } else if (payload == 'pascal') {
         state.pressureConverted = state.pressureDefault * 100;
         state.pressureUnit = 'Pa';
-      }
-      else if (payload == 'psi') {
+      } else if (payload == 'psi') {
         state.pressureConverted = state.pressureDefault / 68.948;
         state.pressureUnit = 'psi';
-      }
-      else if (payload == 'torr') {
+      } else if (payload == 'torr') {
         state.pressureConverted = state.pressureDefault / 1.333;
         state.pressureUnit = 'Torr';
+      }
+    },
+
+    LENGTH_CONVERTER(state, payload) {
+      if (payload == "metric") {
+        state.visibilityConverted = state.visibilityDefault;
+        state.lengthUnit = 'm'
+      } else if (payload == "imperial") {
+        state.visibilityConverted = state.visibilityDefault / 1609.344;
+        state.lengthUnit = 'mi'
+      }
+    },
+    SPEED_CONVERTER(state, payload) {
+      if (payload == "metric") {
+        state.windSpeedConverted = state.windSpeedDefault;
+        state.windGustConverted = state.windGustDefault;
+        state.speedUnit = "m/s";
+      } else if (payload == "imperial") {
+        state.windSpeedConverted = state.windSpeedDefault * 2.237;
+        state.windGustConverted = state.windGustDefault * 2.237;
+        state.speedUnit = "mi/h";
       }
     }
   },

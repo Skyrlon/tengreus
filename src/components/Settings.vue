@@ -16,9 +16,15 @@
       <option value="torr">Torr</option>
     </select>
 
-    <select id="distance"></select>
+    <select id="distance" @change="changeLength($event)">
+      <option value="metric">metric</option>
+      <option value="imperial">imperial</option>
+    </select>
 
-    <select id="speed"></select>
+    <select id="speed" @change="changeSpeed($event)">
+      <option value="metric">metric</option>
+      <option value="imperial">imperial</option>
+    </select>
   </div>
 </template>
 
@@ -31,6 +37,12 @@ export default {
     },
     changePressure(e) {
       this.$store.commit("PRESSURE_CONVERTER", e.target.value);
+    },
+    changeLength(e) {
+      this.$store.commit("LENGTH_CONVERTER", e.target.value);
+    },
+    changeSpeed(e) {
+      this.$store.commit("SPEED_CONVERTER", e.target.value);
     },
   },
 };

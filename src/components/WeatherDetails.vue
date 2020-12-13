@@ -9,14 +9,19 @@
           temperatures.maxTemp
         }}{{ tempUnit }}
       </div>
-      <div class="pressure">Pressure : {{ pressureConverted }} {{ pressureUnit }}</div>
+      <div class="pressure">
+        Pressure : {{ pressureConverted }} {{ pressureUnit }}
+      </div>
       <div class="humidity">Humidity : {{ humidity }}%</div>
     </section>
 
     <section>
-      <div class="visibility">Visibility : {{ visibility }}m</div>
+      <div class="visibility">
+        Visibility : {{ visibilityConverted }}{{ lengthUnit }}
+      </div>
       <div class="wind">
-        Wind : {{ windDeg }}° {{ windSpeed }}m/s with gust of {{ windGust }}m/s
+        Wind : {{ windDeg }}° {{ windSpeedConverted }}m/s with gust of
+        {{ windGustConverted }}{{ speedUnit }}
       </div>
       <div class="cloudiness">Cloudiness : {{ cloudiness }}%</div>
       <div class="moon-phase">Moon phase : {{ moonPhase }}</div>
@@ -48,13 +53,15 @@ export default {
     ...mapState([
       "tempUnit",
       "pressureUnit",
+      "lengthUnit",
+      "speedUnit",
       "temperatures",
       "pressureConverted",
       "humidity",
-      "visibility",
-      "windSpeed",
+      "visibilityConverted",
+      "windSpeedConverted",
       "windDeg",
-      "windGust",
+      "windGustConverted",
       "cloudiness",
       "rainInLast1H",
       "rainInLast3H",
