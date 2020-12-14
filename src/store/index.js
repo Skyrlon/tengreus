@@ -14,7 +14,7 @@ export default new Vuex.Store({
     tempUnit: "°C",
     pressureUnit: 'hPa',
     lengthUnit: 'm',
-    speedUnit: 'm/s',
+    speedUnit: 'km/h',
     city: "City Name",
     time: "11:54",
     weather: "Current Weather",
@@ -23,10 +23,10 @@ export default new Vuex.Store({
     humidity: 100,
     visibilityDefault: 16093,
     visibilityConverted: 16093,
-    windSpeedDefault: 1.5,
+    windSpeedDefault: 1.5, // in m/s
     windSpeedConverted: 1.5,
     windDeg: 350,
-    windGustDefault: 3,
+    windGustDefault: 3, // in m/s
     windGustConverted: 3,
     cloudiness: 1,
     rainInLast1H: 0,
@@ -44,37 +44,34 @@ export default new Vuex.Store({
           for (let n in state.temperatures) {
             state.temperatures[n] = (state.temperatures[n] - 32) / 1.8;
           }
-          state.tempUnit = '°C'
         } else if (state.tempUnit == "K") { //Kelvin -> Celsius
           for (let n in state.temperatures) {
             state.temperatures[n] = state.temperatures[n] - 273.15;
           }
-          state.tempUnit = '°C'
         }
+        state.tempUnit = '°C'
       } else if (payload == 'fahrenheit') {
         if (state.tempUnit == "°C") { //Celsius -> Fahrenheit
           for (let n in state.temperatures) {
             state.temperatures[n] = state.temperatures[n] * 1.8 + 32;
           }
-          state.tempUnit = '°F'
         } else if (state.tempUnit == "K") { //Kelvin -> Fahrenheit
           for (let n in state.temperatures) {
             state.temperatures[n] = (state.temperatures[n] - 273.15) * 1.8 + 32;
           }
-          state.tempUnit = '°F'
         }
+        state.tempUnit = '°F'
       } else if (payload == 'kelvin') {
         if (state.tempUnit == "°F") { //Fahrenheit -> Kelvin
           for (let n in state.temperatures) {
             state.temperatures[n] = (state.temperatures[n] - 32) / 1.8 + 273.15;
           }
-          state.tempUnit = 'K'
         } else if (state.tempUnit == "°C") { //Celsius -> Kelvin
           for (let n in state.temperatures) {
             state.temperatures[n] = state.temperatures[n] + 273.15;
           }
-          state.tempUnit = 'K'
         }
+        state.tempUnit = 'K'
       }
     },
 
@@ -99,6 +96,7 @@ export default new Vuex.Store({
         state.pressureConverted = state.pressureDefault / 1.333;
         state.pressureUnit = 'Torr';
       }
+      state.pressureConverted = (Math.round(state.pressureConverted * 1000)) / 1000;
     },
 
     LENGTH_CONVERTER(state, payload) {
@@ -109,17 +107,20 @@ export default new Vuex.Store({
         state.visibilityConverted = state.visibilityDefault / 1609.344;
         state.lengthUnit = 'mi'
       }
+      state.visibilityConverted = (Math.round(state.visibilityConverted * 1000)) / 1000;
     },
     SPEED_CONVERTER(state, payload) {
       if (payload == "metric") {
-        state.windSpeedConverted = state.windSpeedDefault;
-        state.windGustConverted = state.windGustDefault;
-        state.speedUnit = "m/s";
+        state.windSpeedConverted = state.windSpeedDefault * 3.6;
+        state.windGustConverted = state.windGustDefault * 3.6;
+        state.speedUnit = "km/h";
       } else if (payload == "imperial") {
         state.windSpeedConverted = state.windSpeedDefault * 2.237;
         state.windGustConverted = state.windGustDefault * 2.237;
         state.speedUnit = "mi/h";
       }
+      state.windSpeedConverted = (Math.round(state.windSpeedConverted * 1000)) / 1000;
+      state.windGustConverted = (Math.round(state.windGustConverted * 1000)) / 1000;
     }
   },
   actions: {},

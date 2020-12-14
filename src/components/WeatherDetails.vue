@@ -20,8 +20,8 @@
         Visibility : {{ visibilityConverted }}{{ lengthUnit }}
       </div>
       <div class="wind">
-        Wind : {{ windDeg }}° {{ windSpeedConverted }}m/s with gust of
-        {{ windGustConverted }}{{ speedUnit }}
+        Wind : {{ windDeg }}° {{ windSpeedConverted }}{{ speedUnit }} with gust
+        of {{ windGustConverted }}{{ speedUnit }}
       </div>
       <div class="cloudiness">Cloudiness : {{ cloudiness }}%</div>
       <div class="moon-phase">Moon phase : {{ moonPhase }}</div>
