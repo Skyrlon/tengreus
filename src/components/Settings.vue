@@ -1,30 +1,47 @@
 <template>
   <div class="settings">
-    Settings :
-    <select id="temperature" @change="changeTemperature($event)">
-      <option value="celsius" selected="selected">°C</option>
-      <option value="fahrenheit">°F</option>
-      <option value="kelvin">K</option>
-    </select>
+    <div class="form">
+      <div>Settings :</div>
+      <div class="row">
+        <div>Temperature :</div>
+        <select id="temperature" @change="changeTemperature($event)">
+          <option value="celsius" selected="selected">°C</option>
+          <option value="fahrenheit">°F</option>
+          <option value="kelvin">K</option>
+        </select>
+      </div>
 
-    <select id="pressure" @change="changePressure($event)">
-      <option value="atmosphere">atm</option>
-      <option value="bar">bar</option>
-      <option value="hectopascal" selected="selected">hPa</option>
-      <option value="pascal">Pa</option>
-      <option value="psi">psi</option>
-      <option value="torr">Torr</option>
-    </select>
+      <div class="row">
+        <div>Pressure :</div>
+        <select id="pressure" @change="changePressure($event)">
+          <option value="atmosphere">atm</option>
+          <option value="bar">bar</option>
+          <option value="hectopascal" selected="selected">hPa</option>
+          <option value="pascal">Pa</option>
+          <option value="psi">psi</option>
+          <option value="torr">Torr</option>
+        </select>
+      </div>
 
-    <select id="distance" @change="changeLength($event)">
-      <option value="metric">metric</option>
-      <option value="imperial">imperial</option>
-    </select>
+      <div class="row">
+        <div>Distance :</div>
+        <select id="distance" @change="changeLength($event)">
+          <option value="metric">metric</option>
+          <option value="imperial">imperial</option>
+        </select>
+      </div>
 
-    <select id="speed" @change="changeSpeed($event)">
-      <option value="metric">metric</option>
-      <option value="imperial">imperial</option>
-    </select>
+      <div class="row">
+        <div>Speed :</div>
+        <select id="speed" @change="changeSpeed($event)">
+          <option value="metric">metric</option>
+          <option value="imperial">imperial</option>
+        </select>
+      </div>
+    </div>
+    <div class="settings-icon">
+     X
+    </div>
   </div>
 </template>
 
@@ -51,7 +68,20 @@ export default {
 <style lang="scss" scoped>
 .settings {
   position: absolute;
+  display: flex;
   top: 0;
   right: 0;
+  width: 20%;
+  justify-content: left;
+  background: white;
+  &-icon {
+    width: 100px;
+    height: 100px;
+    
+  }
+  & .row {
+    display: flex;
+    padding: 1em;
+  }
 }
 </style>
