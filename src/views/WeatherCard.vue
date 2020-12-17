@@ -2,7 +2,8 @@
   <div class="weather-card">
     <weather-banner />
     <weather-details />
-    <settings />
+    <settings v-if="showSettings" />
+    <settings-icon @click.native="showSettings = !showSettings" />
   </div>
 </template>
 
@@ -10,13 +11,20 @@
 import WeatherBanner from "@/components/WeatherBanner.vue";
 import WeatherDetails from "@/components/WeatherDetails.vue";
 import Settings from "@/components/Settings.vue";
+import SettingsIcon from '@/components/SettingsIcon.vue';
 
 export default {
   name: "WeatherCard",
+  data() {
+    return {
+      showSettings: false,
+    }
+  },
   components: {
     WeatherBanner,
     WeatherDetails,
     Settings,
+    SettingsIcon,
   },
 };
 </script>
