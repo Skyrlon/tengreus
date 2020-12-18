@@ -2,7 +2,9 @@
   <div class="weather-card">
     <weather-banner />
     <weather-details />
-    <settings v-if="showSettings" />
+    <transition name="settings-appear">
+      <settings v-if="showSettings" />
+    </transition>
     <settings-icon @click.native="showSettings = !showSettings" />
   </div>
 </template>
@@ -11,14 +13,14 @@
 import WeatherBanner from "@/components/WeatherBanner.vue";
 import WeatherDetails from "@/components/WeatherDetails.vue";
 import Settings from "@/components/Settings.vue";
-import SettingsIcon from '@/components/SettingsIcon.vue';
+import SettingsIcon from "@/components/SettingsIcon.vue";
 
 export default {
   name: "WeatherCard",
   data() {
     return {
       showSettings: false,
-    }
+    };
   },
   components: {
     WeatherBanner,
@@ -38,6 +40,25 @@ export default {
   height: 100%;
   & .footer {
     flex: 0 1 40px;
+  }
+}
+
+.settings-appear-enter-active {
+  transform-origin: top right;
+  animation: appearance 1s;
+}
+
+.settings-appear-leave-active {
+  transform-origin: top right;
+  animation: appearance 1s reverse;
+}
+
+@keyframes appearance {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>
