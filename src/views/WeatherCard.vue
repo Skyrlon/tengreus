@@ -5,7 +5,10 @@
     <transition name="settings-appear">
       <settings v-if="showSettings" />
     </transition>
-    <settings-icon @click.native="showSettings = !showSettings" />
+    <settings-icon
+      @click.native="showSettings = !showSettings"
+      :isActive="showSettings"
+    />
   </div>
 </template>
 
@@ -45,15 +48,15 @@ export default {
 
 .settings-appear-enter-active {
   transform-origin: top right;
-  animation: appearance 1s;
+  animation: show-up 0.5s linear;
 }
 
 .settings-appear-leave-active {
   transform-origin: top right;
-  animation: appearance 1s reverse;
+  animation: show-up 0.5s linear reverse;
 }
 
-@keyframes appearance {
+@keyframes show-up {
   0% {
     transform: scale(0);
   }
