@@ -20,8 +20,8 @@
         Visibility : {{ visibilityConverted }}{{ lengthUnit }}
       </div>
       <div class="wind">
-        Wind : {{ windDeg }}° {{ windSpeedConverted }}{{ speedUnit }} with gust
-        of {{ windGustConverted }}{{ speedUnit }}
+        Wind : <compass-icon /> {{ windDeg }}° {{ windSpeedConverted
+        }}{{ speedUnit }} with gust of {{ windGustConverted }}{{ speedUnit }}
       </div>
       <div class="cloudiness">Cloudiness : {{ cloudiness }}%</div>
       <div class="moon-phase">Moon phase : {{ moonPhase }}</div>
@@ -46,8 +46,10 @@
 
 <script>
 import { mapState } from "vuex";
+import CompassIcon from "./CompassIcon.vue";
 
 export default {
+  components: { CompassIcon },
   name: "WeatherDetails",
   computed: {
     ...mapState([
