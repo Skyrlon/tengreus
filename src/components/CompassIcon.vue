@@ -6,13 +6,23 @@
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
     >
-      <circle cx="50" cy="50" r="50" fill="white" stroke="black" />
-      <text x="45" y="15" fill="black">N</text>
-      <text x="90" y="55" fill="black">E</text>
+      <circle cx="50" cy="50" r="49" fill="white" stroke="black" />
+      <text x="45" y="13" fill="black">N</text>
+      <text x="89" y="55" fill="black">E</text>
       <text x="45" y="95" fill="black">S</text>
-      <text x="0" y="55" fill="black">W</text>
-      <path d="M45,50 L50,0 L55,50 z" stroke="red" fill="red" />
-      <path d="M45,50 L50,100 L55,50 z" stroke="black" fill="white" />
+      <text x="1" y="55" fill="black">W</text>
+      <path
+        d="M45,50 L50,1 L55,50 z"
+        stroke="red"
+        fill="red"
+        :transform="'rotate(' + degree + ' 50 50)'"
+      />
+      <path
+        d="M45,50 L50,99 L55,50 z"
+        stroke="black"
+        fill="white"
+        :transform="'rotate(' + degree + ' 50 50)'"
+      />
     </svg>
   </div>
 </template>
@@ -20,6 +30,9 @@
 <script>
 export default {
   name: "CompassIcon",
+  props: {
+    degree: Number,
+  },
 };
 </script>
 

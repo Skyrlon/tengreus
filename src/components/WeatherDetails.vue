@@ -20,7 +20,7 @@
         Visibility : {{ visibilityConverted }}{{ lengthUnit }}
       </div>
       <div class="wind">
-        Wind : <compass-icon /> {{ windDeg }}° {{ windSpeedConverted
+        Wind : <compass-icon :degree="windDeg" /> {{ windSpeedConverted
         }}{{ speedUnit }} with gust of {{ windGustConverted }}{{ speedUnit }}
       </div>
       <div class="cloudiness">Cloudiness : {{ cloudiness }}%</div>
