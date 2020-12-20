@@ -77,7 +77,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .weather-details {
   padding-top: 2%;
   display: flex;
@@ -93,13 +93,9 @@ export default {
     &:nth-child(-n + 3) {
       border-right: 2px solid green;
     }
-    & div {
+    & > div {
       padding: 1.5em 15%;
     }
   }
-}
-
-.parameters {
-  position: absolute;
 }
 </style>
