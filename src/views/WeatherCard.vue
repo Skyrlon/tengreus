@@ -16,7 +16,7 @@
 import WeatherBanner from "@/components/WeatherBanner.vue";
 import WeatherDetails from "@/components/WeatherDetails.vue";
 import Settings from "@/components/Settings.vue";
-import SettingsIcon from "@/components/SettingsIcon.vue";
+import SettingsIcon from "@/components/icons/SettingsIcon.vue";
 
 export default {
   name: "WeatherCard",

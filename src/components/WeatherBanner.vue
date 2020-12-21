@@ -16,7 +16,7 @@
 
 <script>
 import { mapState } from "vuex";
-import SunIcon from "@/components/SunIcon.vue";
+import SunIcon from "@/components/icons/SunIcon.vue";
 
 export default {
   name: "WeatherBanner",

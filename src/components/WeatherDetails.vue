@@ -46,7 +46,7 @@
 
 <script>
 import { mapState } from "vuex";
-import CompassIcon from "./CompassIcon.vue";
+import CompassIcon from "@/components/icons/CompassIcon.vue";
 
 export default {
   components: { CompassIcon },
