@@ -9,6 +9,7 @@
       <div class="current-weather">{{ weather }}</div>
       <div class="weather-icon">
         <sun-icon />
+        <cloud-icon />
       </div>
     </div>
   </div>
@@ -17,11 +18,13 @@
 <script>
 import { mapState } from "vuex";
 import SunIcon from "@/components/icons/SunIcon.vue";
+import CloudIcon from "@/components/icons/CloudIcon.vue";
 
 export default {
   name: "WeatherBanner",
   components: {
     SunIcon,
+    CloudIcon,
   },
   computed: {
     ...mapState([
