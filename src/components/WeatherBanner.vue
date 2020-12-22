@@ -9,9 +9,10 @@
       <div class="current-weather">{{ weather }}</div>
       <div class="weather-icon">
         <sun-icon v-if="foo == false" />
-        <cloud-icon v-if="foo == false"/>
-        <cloud-with-sun-icon v-if="foo == false"/>
-        <thunderstorm-icon v-if="foo == true"/>
+        <cloud-icon v-if="foo == false" />
+        <cloud-with-sun-icon v-if="foo == false" />
+        <thunderstorm-icon v-if="foo == false" />
+        <rain-icon v-if="foo == true" />
       </div>
     </div>
   </div>
@@ -22,7 +23,8 @@ import { mapState } from "vuex";
 import SunIcon from "./icons/SunIcon.vue";
 import CloudIcon from "./icons/CloudIcon.vue";
 import CloudWithSunIcon from "./icons/CloudWithSunIcon.vue";
-import ThunderstormIcon from './icons/ThunderstormIcon.vue';
+import ThunderstormIcon from "./icons/ThunderstormIcon.vue";
+import RainIcon from "./icons/RainIcon.vue";
 
 export default {
   name: "WeatherBanner",
@@ -31,11 +33,12 @@ export default {
     CloudIcon,
     CloudWithSunIcon,
     ThunderstormIcon,
+    RainIcon,
   },
   data() {
     return {
       foo: true,
-    }
+    };
   },
   computed: {
     ...mapState([
@@ -99,11 +102,5 @@ export default {
 svg {
   height: 100%;
   width: 100%;
-}
-path {
-  fill: white;
-  stroke: black;
-  stroke-width: 2;
-  stroke-linejoin: round;
 }
 </style>
