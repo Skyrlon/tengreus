@@ -12,7 +12,8 @@
         <cloud-icon v-if="foo == false" />
         <cloud-with-sun-icon v-if="foo == false" />
         <thunderstorm-icon v-if="foo == false" />
-        <rain-icon v-if="foo == true" />
+        <rain-icon v-if="foo == false" />
+        <snow-icon v-if="foo == true"/>
       </div>
     </div>
   </div>
@@ -25,6 +26,7 @@ import CloudIcon from "./icons/CloudIcon.vue";
 import CloudWithSunIcon from "./icons/CloudWithSunIcon.vue";
 import ThunderstormIcon from "./icons/ThunderstormIcon.vue";
 import RainIcon from "./icons/RainIcon.vue";
+import SnowIcon from './icons/SnowIcon.vue';
 
 export default {
   name: "WeatherBanner",
@@ -34,6 +36,7 @@ export default {
     CloudWithSunIcon,
     ThunderstormIcon,
     RainIcon,
+    SnowIcon,
   },
   data() {
     return {
