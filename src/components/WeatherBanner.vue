@@ -12,8 +12,8 @@
         <cloud-icon v-if="foo == false" />
         <cloud-with-sun-icon v-if="foo == false" />
         <thunderstorm-icon v-if="foo == false" />
-        <rain-icon v-if="foo == false" />
-        <snow-icon v-if="foo == true"/>
+        <rain-icon v-if="foo == true" />
+        <snow-icon v-if="foo == false"/>
       </div>
     </div>
   </div>
