@@ -24,6 +24,11 @@
         stroke-width="1"
       />
     </def>
+    <moon-icon
+      :moonPhase="moonPhase"
+      style="transform: scale(0.5)"
+      v-if="cloudiness == 'Few Clouds'"
+    />
     <circle
       cx="30"
       cy="40"
@@ -50,11 +55,16 @@
 </template>
 
 <script>
+import MoonIcon from "./MoonIcon.vue";
 export default {
   name: "CloudIcon",
+  components: {
+    MoonIcon,
+  },
   props: {
     cloudiness: String,
-  }
+    moonPhase: String,
+  },
 };
 </script>
 

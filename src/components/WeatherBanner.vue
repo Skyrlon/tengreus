@@ -9,11 +9,15 @@
       <div class="current-weather">{{ weather }}</div>
       <div class="weather-icon">
         <sun-icon v-if="foo == false" />
-        <cloud-icon v-if="foo == true" cloudiness="Overcast Clouds"/>
+        <cloud-icon
+          v-if="foo == true"
+          :cloudiness="weather"
+          :moonPhase="moonPhase"
+        />
         <thunderstorm-icon v-if="foo == false" />
         <rain-icon v-if="foo == false" />
-        <snow-icon v-if="foo == false"/>
-        <moon-icon v-if="foo == false" :moonPhase="moonPhase"/>
+        <snow-icon v-if="foo == false" />
+        <moon-icon v-if="foo == false" :moonPhase="moonPhase" />
       </div>
     </div>
   </div>
@@ -25,8 +29,8 @@ import SunIcon from "./icons/SunIcon.vue";
 import CloudIcon from "./icons/CloudIcon.vue";
 import ThunderstormIcon from "./icons/ThunderstormIcon.vue";
 import RainIcon from "./icons/RainIcon.vue";
-import SnowIcon from './icons/SnowIcon.vue';
-import MoonIcon from './icons/MoonIcon.vue';
+import SnowIcon from "./icons/SnowIcon.vue";
+import MoonIcon from "./icons/MoonIcon.vue";
 
 export default {
   name: "WeatherBanner",
