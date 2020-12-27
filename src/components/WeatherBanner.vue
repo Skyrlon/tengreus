@@ -14,7 +14,7 @@
         <thunderstorm-icon v-if="foo == false" />
         <rain-icon v-if="foo == false" />
         <snow-icon v-if="foo == false"/>
-        <moon-icon v-if="foo == true"/>
+        <moon-icon v-if="foo == true" :moonPhase="moonPhase"/>
       </div>
     </div>
   </div>
@@ -54,6 +54,7 @@ export default {
       "time",
       "currentTemp",
       "weather",
+      "moonPhase",
     ]),
   },
 };
