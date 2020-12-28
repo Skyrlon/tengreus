@@ -14,14 +14,17 @@
           :cloudiness="weather"
           :moonPhase="moonPhase"
         />
-        <thunderstorm-icon v-if="foo == false" />
+        <thunderstorm-icon
+          v-if="foo == true"
+          :isRaining="weather.includes('Rain') || weather.includes('Drizzle')"
+        />
         <rain-icon
           v-if="foo == false"
           :isSnowing="weather.includes('Freezing')"
         />
         <snow-icon v-if="foo == false" />
         <moon-icon v-if="foo == false" :moonPhase="moonPhase" />
-        <mist-icon v-if="foo == true" />
+        <mist-icon v-if="foo == false" />
       </div>
     </div>
   </div>

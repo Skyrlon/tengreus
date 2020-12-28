@@ -17,7 +17,7 @@ export default new Vuex.Store({
     speedUnit: 'km/h',
     city: "City Name",
     time: "11:54",
-    weather: "Freezing Rain",
+    weather: "Thunderstorm with Drizzle",
     pressureDefault: 1023, //value never change, used as reference to convert without worrying about round up mess
     pressureConverted: 1023,
     humidity: 100,
