@@ -10,12 +10,15 @@
       <div class="weather-icon">
         <sun-icon v-if="foo == false" />
         <cloud-icon
-          v-if="foo == true"
+          v-if="foo == false"
           :cloudiness="weather"
           :moonPhase="moonPhase"
         />
         <thunderstorm-icon v-if="foo == false" />
-        <rain-icon v-if="foo == false" />
+        <rain-icon
+          v-if="foo == true"
+          :isSnowing="weather.includes('Freezing')"
+        />
         <snow-icon v-if="foo == false" />
         <moon-icon v-if="foo == false" :moonPhase="moonPhase" />
       </div>
