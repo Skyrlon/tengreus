@@ -12,7 +12,7 @@
         <cloud-icon
           v-if="foo == false"
           :cloudiness="weather"
-          :moonPhase="moonPhase"
+          :moonPhase="getMoonPhase"
         />
         <thunderstorm-icon
           v-if="foo == true"
@@ -23,7 +23,7 @@
           :isSnowing="weather.includes('Freezing')"
         />
         <snow-icon v-if="foo == false" />
-        <moon-icon v-if="foo == false" :moonPhase="moonPhase" />
+        <moon-icon v-if="foo == false" :moonPhase="getMoonPhase" />
         <mist-icon v-if="foo == false" />
       </div>
     </div>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import SunIcon from "./icons/SunIcon.vue";
 import CloudIcon from "./icons/CloudIcon.vue";
 import ThunderstormIcon from "./icons/ThunderstormIcon.vue";
@@ -66,6 +66,7 @@ export default {
       "weather",
       "moonPhase",
     ]),
+    ...mapGetters(["getMoonPhase"]),
   },
 };
 </script>
