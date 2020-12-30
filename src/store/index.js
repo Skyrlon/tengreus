@@ -16,7 +16,7 @@ export default new Vuex.Store({
     lengthUnit: 'm',
     speedUnit: 'km/h',
     city: "City Name",
-    time: 1609240823,
+    time: 1609340400,
     weather: "Tornado",
     pressureDefault: 1023, //value never change, used as reference to convert without worrying about round up mess
     pressureConverted: 1023,
@@ -33,8 +33,8 @@ export default new Vuex.Store({
     rainInLast3H: 0,
     snowInLast1H: 0,
     snowInLast3H: 0,
-    sunrise: "7:00",
-    sunset: "17:00",
+    sunrise: 1609311600,
+    sunset: 1609347600,
   },
   getters: {
     getMoonPhase: state => {

@@ -27,6 +27,9 @@
         <mist-icon v-if="foo == false" />
         <tornado-icon v-if="foo == true" />
       </div>
+      <div class="sun-path">
+        <sun-path-icon :time="time" :sunRise="sunrise" :sunSet="sunset" />
+      </div>
     </div>
   </div>
 </template>
@@ -41,6 +44,7 @@ import SnowIcon from "./icons/SnowIcon.vue";
 import MoonIcon from "./icons/MoonIcon.vue";
 import MistIcon from "./icons/MistIcon.vue";
 import TornadoIcon from "./icons/TornadoIcon.vue";
+import SunPathIcon from "./icons/SunPathIcon.vue";
 
 export default {
   name: "WeatherBanner",
@@ -53,6 +57,7 @@ export default {
     MoonIcon,
     MistIcon,
     TornadoIcon,
+    SunPathIcon,
   },
   data() {
     return {
@@ -65,6 +70,8 @@ export default {
       "temperatures",
       "city",
       "time",
+      "sunrise",
+      "sunset",
       "currentTemp",
       "weather",
       "moonPhase",
@@ -118,6 +125,13 @@ export default {
   right: 5%;
   width: 7em;
   height: 7em;
+}
+
+.sun-path {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  width: 7em;
 }
 
 svg {
