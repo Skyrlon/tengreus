@@ -15,7 +15,7 @@
           :moonPhase="getMoonPhase"
         />
         <thunderstorm-icon
-          v-if="foo == true"
+          v-if="foo == false"
           :isRaining="weather.includes('Rain') || weather.includes('Drizzle')"
         />
         <rain-icon
@@ -25,6 +25,7 @@
         <snow-icon v-if="foo == false" />
         <moon-icon v-if="foo == false" :moonPhase="getMoonPhase" />
         <mist-icon v-if="foo == false" />
+        <tornado-icon v-if="foo == true" />
       </div>
     </div>
   </div>
@@ -39,6 +40,7 @@ import RainIcon from "./icons/RainIcon.vue";
 import SnowIcon from "./icons/SnowIcon.vue";
 import MoonIcon from "./icons/MoonIcon.vue";
 import MistIcon from "./icons/MistIcon.vue";
+import TornadoIcon from "./icons/TornadoIcon.vue";
 
 export default {
   name: "WeatherBanner",
@@ -50,6 +52,7 @@ export default {
     SnowIcon,
     MoonIcon,
     MistIcon,
+    TornadoIcon,
   },
   data() {
     return {
