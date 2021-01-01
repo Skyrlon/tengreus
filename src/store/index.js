@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+const axios = require("axios");
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    apiKey: process.env.VUE_APP_API_KEY,
     temperatures: {
       currentTemp: -15,
       feelsLikeTemp: -10,
@@ -15,8 +16,12 @@ export default new Vuex.Store({
     pressureUnit: 'hPa',
     lengthUnit: 'm',
     speedUnit: 'km/h',
-    city: "City Name",
+    city: {
+      name: "Paris",
+      id: 2988507
+    },
     time: 1609340400,
+    weatherCategory: "",
     weather: "Tornado",
     pressureDefault: 1023, //value never change, used as reference to convert without worrying about round up mess
     pressureConverted: 1023,
@@ -83,6 +88,24 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    LOAD_WEATHER(state, payload) {
+      state.temperatures = {
+        currentTemp: payload.main.temp,
+        feelsLikeTemp: payload.main.feels_like,
+        minTemp: payload.main.temp_min,
+        maxTemp: payload.main.temp_max,
+      }
+      state.pressureDefault = payload.main.pressure;
+      state.pressureConverted = payload.main.pressure;
+      state.humidity = payload.main.humidity;
+      state.visibilityDefault = payload.visibility;
+      state.visibilityConverted = payload.visibility;
+      state.windDeg = payload.wind.deg;
+      state.windSpeedDefault = payload.wind.speed;
+      state.windSpeedConverted = payload.wind.speed;
+      state.weatherCategory = payload.weather[0].main;
+      state.weather = payload.weather[0].description;
+    },
     TEMPERATURE_CONVERTER(state, payload) {
       if (payload == 'celsius') {
         if (state.tempUnit == "°F") { //Fahrenheit -> Celsius
@@ -168,6 +191,18 @@ export default new Vuex.Store({
       state.windGustConverted = (Math.round(state.windGustConverted * 1000)) / 1000;
     }
   },
-  actions: {},
+  actions: {
+    getWeather({
+      commit,
+      state
+    }) {
+      axios
+        .get(
+          `https://api.openweathermap.org/data/2.5/weather?id=${state.city.id}&appid=${state.apiKey}&units=metric`)
+        .then(result => {
+          commit('LOAD_WEATHER', result.data);
+        })
+    }
+  },
   modules: {}
 })

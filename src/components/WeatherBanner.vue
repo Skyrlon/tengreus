@@ -1,7 +1,7 @@
 <template>
   <div class="banner">
     <div class="weather-summary">
-      <div class="city-name">{{ city }}</div>
+      <div class="city-name">{{ city.name }}</div>
       <div class="hour">{{ time }}</div>
       <div class="temperature">
         {{ temperatures.currentTemp }}{{ tempUnit }}
@@ -47,6 +47,9 @@ import TornadoIcon from "./icons/TornadoIcon.vue";
 import SunPathIcon from "./icons/SunPathIcon.vue";
 
 export default {
+  created() {
+    this.$store.dispatch("getWeather");
+  },
   name: "WeatherBanner",
   components: {
     SunIcon,
