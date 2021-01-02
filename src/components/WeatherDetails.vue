@@ -2,26 +2,25 @@
   <div class="weather-details">
     <section>
       <div class="feels-like-temp">
-        Feels like : {{ temperatures.feelsLikeTemp }}{{ tempUnit }}
+        Feels like : {{ temperatures.feelsLike }}{{ tempUnit }}
       </div>
       <div class="min-max-temp">
-        Min/max temperature : {{ temperatures.minTemp }}/{{
-          temperatures.maxTemp
+        Min/max temperature : {{ temperatures.min }}/{{ temperatures.max
         }}{{ tempUnit }}
       </div>
       <div class="pressure">
-        Pressure : {{ pressureConverted }} {{ pressureUnit }}
+        Pressure : {{ pressure.converted }} {{ pressureUnit }}
       </div>
       <div class="humidity">Humidity : {{ humidity }}%</div>
     </section>
 
     <section>
       <div class="visibility">
-        Visibility : {{ visibilityConverted }}{{ lengthUnit }}
+        Visibility : {{ visibility.converted }}{{ lengthUnit }}
       </div>
       <div class="wind">
-        Wind : <compass-icon :degree="windDeg" /> {{ windSpeedConverted
-        }}{{ speedUnit }} with gust of {{ windGustConverted }}{{ speedUnit }}
+        Wind : <compass-icon :degree="wind.deg" /> {{ wind.speedConverted
+        }}{{ speedUnit }} with gust of {{ wind.gustConverted }}{{ speedUnit }}
       </div>
       <div class="cloudiness">Cloudiness : {{ cloudiness }}%</div>
       <div class="moon-phase">Moon phase : {{ getMoonPhase }}</div>
@@ -29,16 +28,16 @@
 
     <section>
       <div class="rain-last-hour">
-        Rain volume for the last hour : {{ rainInLast1H }}mm
+        Rain volume for the last hour : {{ precipitation.rainLast1H }}mm
       </div>
       <div class="rain-last-three-hours">
-        Rain volume for the last 3 hours : {{ rainInLast3H }}mm
+        Rain volume for the last 3 hours : {{ precipitation.rainLast3H }}mm
       </div>
       <div class="snow-last-hour">
-        Snow volume for the last hour : {{ snowInLast1H }}mm
+        Snow volume for the last hour : {{ precipitation.snowLast1H }}mm
       </div>
       <div class="snow-last-three-hours">
-        Snow volume for the last 3 hours : {{ snowInLast3H }}mm
+        Snow volume for the last 3 hours : {{ precipitation.snowLast3H }}mm
       </div>
     </section>
   </div>
@@ -58,17 +57,12 @@ export default {
       "lengthUnit",
       "speedUnit",
       "temperatures",
-      "pressureConverted",
+      "pressure",
       "humidity",
-      "visibilityConverted",
-      "windSpeedConverted",
-      "windDeg",
-      "windGustConverted",
+      "visibility",
+      "wind",
       "cloudiness",
-      "rainInLast1H",
-      "rainInLast3H",
-      "snowInLast1H",
-      "snowInLast3H",
+      "precipitation",
       "sunrise",
       "sunset",
       "moonPhase",

@@ -7,10 +7,10 @@ export default new Vuex.Store({
   state: {
     apiKey: process.env.VUE_APP_API_KEY,
     temperatures: {
-      currentTemp: -15,
-      feelsLikeTemp: -10,
-      minTemp: -11,
-      maxTemp: -9,
+      current: -15,
+      feelsLike: -10,
+      min: -11,
+      max: -9,
     },
     tempUnit: "°C",
     pressureUnit: 'hPa',
@@ -21,23 +21,33 @@ export default new Vuex.Store({
       id: 2988507
     },
     time: 1609340400,
-    weatherCategory: "",
-    weather: "Tornado",
-    pressureDefault: 1023, //value never change, used as reference to convert without worrying about round up mess
-    pressureConverted: 1023,
+    weather: {
+      main: '',
+      detailed: '',
+    },
+    pressure: {
+      default: 1023, //value never change, used as reference to convert without worrying about round up mess
+      converted: 1023,
+    },
     humidity: 100,
-    visibilityDefault: 16093,
-    visibilityConverted: 16093,
-    windSpeedDefault: 1.5, // in m/s
-    windSpeedConverted: 1.5,
-    windDeg: 350,
-    windGustDefault: 3, // in m/s
-    windGustConverted: 3,
+    visibility: {
+      default: 16093,
+      converted: 16093,
+    },
+    wind: {
+      speedDefault: 1.5, // in m/s
+      speedConverted: 1.5,
+      deg: 350,
+      gustDefault: 3, // in m/s
+      gustConverted: 3,
+    },
     cloudiness: 1,
-    rainInLast1H: 0,
-    rainInLast3H: 0,
-    snowInLast1H: 0,
-    snowInLast3H: 0,
+    precipitation: {
+      rainLast1H: 0,
+      rainLast3H: 0,
+      snowLast1H: 0,
+      snowLast3H: 0,
+    },
     sunrise: 1609311600,
     sunset: 1609347600,
   },
@@ -90,22 +100,34 @@ export default new Vuex.Store({
   mutations: {
     LOAD_WEATHER(state, payload) {
       state.temperatures = {
-        currentTemp: payload.main.temp,
-        feelsLikeTemp: payload.main.feels_like,
-        minTemp: payload.main.temp_min,
-        maxTemp: payload.main.temp_max,
-      }
-      state.pressureDefault = payload.main.pressure;
-      state.pressureConverted = payload.main.pressure;
+        current: Math.ceil(payload.main.temp),
+        feelsLike: Math.ceil(payload.main.feels_like),
+        min: Math.ceil(payload.main.temp_min),
+        max: Math.ceil(payload.main.temp_max),
+      };
+      state.pressure = {
+        default: payload.main.pressure,
+        converted: payload.main.pressure,
+      };
+      state.visibility = {
+        default: payload.visibility,
+        converted: payload.visibility,
+      };
       state.humidity = payload.main.humidity;
-      state.visibilityDefault = payload.visibility;
-      state.visibilityConverted = payload.visibility;
-      state.windDeg = payload.wind.deg;
-      state.windSpeedDefault = payload.wind.speed;
-      state.windSpeedConverted = payload.wind.speed;
-      state.weatherCategory = payload.weather[0].main;
-      state.weather = payload.weather[0].description;
+      state.wind = {
+        speedDefault: payload.wind.speed,
+        speedConverted: payload.wind.speed,
+        deg: payload.wind.deg,
+        gustDefault: payload.wind.gust,
+        gustConverted: payload.wind.gust,
+      };
+      state.cloudiness = payload.clouds.all;
+      state.weather = {
+        main: payload.weather[0].main,
+        detailed: payload.weather[0].description,
+      }
     },
+
     TEMPERATURE_CONVERTER(state, payload) {
       if (payload == 'celsius') {
         if (state.tempUnit == "°F") { //Fahrenheit -> Celsius
@@ -145,50 +167,50 @@ export default new Vuex.Store({
 
     PRESSURE_CONVERTER(state, payload) {
       if (payload == 'atmosphere') {
-        state.pressureConverted = state.pressureDefault / 1013.25;
+        state.pressure.converted = state.pressure.default / 1013.25;
         state.pressureUnit = 'atm';
       } else if (payload == 'bar') {
-        state.pressureConverted = state.pressureDefault / 1000;
+        state.pressure.converted = state.pressure.default / 1000;
         state.pressureUnit = 'bar';
       } else if (payload == 'hectopascal') {
-        state.pressureConverted = state.pressureDefault;
+        state.pressure.converted = state.pressure.default;
         state.pressureUnit = 'hPa';
       } else if (payload == 'pascal') {
-        state.pressureConverted = state.pressureDefault * 100;
+        state.pressure.converted = state.pressure.default * 100;
         state.pressureUnit = 'Pa';
       } else if (payload == 'psi') {
-        state.pressureConverted = state.pressureDefault / 68.948;
+        state.pressure.converted = state.pressure.default / 68.948;
         state.pressureUnit = 'psi';
       } else if (payload == 'torr') {
-        state.pressureConverted = state.pressureDefault / 1.333;
+        state.pressure.converted = state.pressure.default / 1.333;
         state.pressureUnit = 'Torr';
       }
-      state.pressureConverted = (Math.round(state.pressureConverted * 1000)) / 1000;
+      state.pressure.converted = (Math.round(state.pressure.converted * 1000)) / 1000;
     },
 
     LENGTH_CONVERTER(state, payload) {
       if (payload == "metric") {
-        state.visibilityConverted = state.visibilityDefault;
+        state.visibility.converted = state.visibility.default;
         state.lengthUnit = 'm'
       } else if (payload == "imperial") {
-        state.visibilityConverted = state.visibilityDefault / 1609.344;
+        state.visibility.converted = state.visibility.default / 1609.344;
         state.lengthUnit = 'mi'
       }
-      state.visibilityConverted = (Math.round(state.visibilityConverted * 1000)) / 1000;
+      state.visibility.converted = (Math.round(state.visibility.converted * 1000)) / 1000;
     },
 
     SPEED_CONVERTER(state, payload) {
       if (payload == "metric") {
-        state.windSpeedConverted = state.windSpeedDefault * 3.6;
-        state.windGustConverted = state.windGustDefault * 3.6;
+        state.wind.speedConverted = state.wind.speedDefault * 3.6;
+        state.wind.gustConverted = state.wind.gustDefault * 3.6;
         state.speedUnit = "km/h";
       } else if (payload == "imperial") {
-        state.windSpeedConverted = state.windSpeedDefault * 2.237;
-        state.windGustConverted = state.windGustDefault * 2.237;
+        state.wind.speedConverted = state.wind.speedDefault * 2.237;
+        state.wind.gustConverted = state.wind.gustDefault * 2.237;
         state.speedUnit = "mi/h";
       }
-      state.windSpeedConverted = (Math.round(state.windSpeedConverted * 1000)) / 1000;
-      state.windGustConverted = (Math.round(state.windGustConverted * 1000)) / 1000;
+      state.wind.speedConverted = (Math.round(state.wind.speedConverted * 1000)) / 1000;
+      state.wind.gustConverted = (Math.round(state.wind.gustConverted * 1000)) / 1000;
     }
   },
   actions: {

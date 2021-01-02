@@ -4,9 +4,9 @@
       <div class="city-name">{{ city.name }}</div>
       <div class="hour">{{ time }}</div>
       <div class="temperature">
-        {{ temperatures.currentTemp }}{{ tempUnit }}
+        {{ temperatures.current }}{{ tempUnit }}
       </div>
-      <div class="current-weather">{{ weather }}</div>
+      <div class="current-weather">{{ weather.detailed }}</div>
       <div class="weather-icon">
         <sun-icon v-if="foo == false" />
         <cloud-icon
@@ -120,6 +120,7 @@ export default {
 .current-weather {
   font-size: 1.75em;
   padding-top: 0.5em;
+  text-transform: capitalize;
 }
 
 .weather-icon {
