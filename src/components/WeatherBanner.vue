@@ -2,10 +2,8 @@
   <div class="banner">
     <div class="weather-summary">
       <div class="city-name">{{ city.name }}</div>
-      <div class="hour">{{ time }}</div>
-      <div class="temperature">
-        {{ temperatures.current }}{{ tempUnit }}
-      </div>
+      <div class="hour">{{ time.hour }}:{{ time.minutes }}</div>
+      <div class="temperature">{{ temperatures.current }}{{ tempUnit }}</div>
       <div class="current-weather">{{ weather.detailed }}</div>
       <div class="weather-icon">
         <sun-icon v-if="foo == false" />
@@ -28,7 +26,7 @@
         <tornado-icon v-if="foo == true" />
       </div>
       <div class="sun-path">
-        <sun-path-icon :time="time" :sunRise="sunrise" :sunSet="sunset" />
+        <sun-path-icon :time="time.unix" :sunRise="sunrise.unix" :sunSet="sunset.unix" />
       </div>
     </div>
   </div>

@@ -20,7 +20,12 @@ export default new Vuex.Store({
       name: "Paris",
       id: 2988507
     },
-    time: 1609340400,
+    time: {
+      unix: 0,
+      hour: 0,
+      minutes: 0,
+
+    },
     weather: {
       main: '',
       detailed: '',
@@ -48,8 +53,18 @@ export default new Vuex.Store({
       snowLast1H: 0,
       snowLast3H: 0,
     },
-    sunrise: 1609311600,
-    sunset: 1609347600,
+    sunrise: {
+      unix: 0,
+      hour: 0,
+      minutes: 0,
+
+    },
+    sunset: {
+      unix: 0,
+      hour: 0,
+      minutes: 0,
+
+    },
   },
   getters: {
     getMoonPhase: state => {
@@ -99,6 +114,30 @@ export default new Vuex.Store({
   },
   mutations: {
     LOAD_WEATHER(state, payload) {
+      function convertDate(time) {
+        let dt = new Date(time * 1000);
+        let hour = dt.getHours();
+        let minutes = (dt.getMinutes() < 10 ? '0' : '') + dt.getMinutes();
+        let array = [time, hour, minutes];
+        return array;
+      }
+
+      state.time = {
+        unix: convertDate(payload.dt)[0],
+        hour: convertDate(payload.dt)[1],
+        minutes: convertDate(payload.dt)[2],
+
+      };
+      state.sunrise = {
+        unix: convertDate(payload.sys.sunrise)[0],
+        hour: convertDate(payload.sys.sunrise)[1],
+        minutes: convertDate(payload.sys.sunrise)[2],
+      };
+      state.sunset = {
+        unix: convertDate(payload.sys.sunset)[0],
+        hour: convertDate(payload.sys.sunset)[1],
+        minutes: convertDate(payload.sys.sunset)[2],
+      };
       state.temperatures = {
         current: Math.ceil(payload.main.temp),
         feelsLike: Math.ceil(payload.main.feels_like),
