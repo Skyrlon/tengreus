@@ -27,21 +27,21 @@
     <moon-icon
       :moonPhase="moonPhase"
       style="transform: scale(0.5)"
-      v-if="cloudiness == 'Few Clouds'"
+      v-if="cloudiness == 'few clouds'"
     />
     <circle
       cx="30"
       cy="40"
       r="35"
       fill="url(#SunGradient)"
-      v-if="cloudiness == 'Few Clouds'"
+      v-if="cloudiness == 'few clouds'"
     />
     <use
       x="-5"
       y="5"
       href="#cloud"
       transform="scale(0.6)"
-      v-if="cloudiness == 'Overcast Clouds'"
+      v-if="cloudiness == 'overcast clouds'"
     />
     <use x="0" y="0" href="#cloud" />
     <use
@@ -49,7 +49,7 @@
       y="45"
       href="#cloud"
       transform="scale(0.7)"
-      v-if="cloudiness == 'Broken Clouds' || cloudiness == 'Overcast Clouds'"
+      v-if="cloudiness == 'broken clouds' || cloudiness == 'overcast clouds'"
     />
   </svg>
 </template>

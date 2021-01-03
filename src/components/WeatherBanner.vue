@@ -6,27 +6,45 @@
       <div class="temperature">{{ temperatures.current }}{{ tempUnit }}</div>
       <div class="current-weather">{{ weather.detailed }}</div>
       <div class="weather-icon">
-        <sun-icon v-if="foo == false" />
+        <sun-icon v-if="temperatures.current == 'Clear'" />
+        <moon-icon v-if="weather.main == 'Clear'" :moonPhase="getMoonPhase" />
         <cloud-icon
-          v-if="foo == false"
-          :cloudiness="weather"
+          v-if="weather.main == 'Clouds'"
+          :cloudiness="weather.detailed"
           :moonPhase="getMoonPhase"
         />
         <thunderstorm-icon
-          v-if="foo == false"
-          :isRaining="weather.includes('Rain') || weather.includes('Drizzle')"
+          v-if="weather.main == 'Thunderstorm'"
+          :isRaining="
+            weather.detailed.includes('rain') || weather.includes('drizzle')
+          "
         />
         <rain-icon
-          v-if="foo == false"
-          :isSnowing="weather.includes('Freezing')"
+          v-if="weather.main == 'Rain'"
+          :isSnowing="weather.includes('freezing')"
         />
-        <snow-icon v-if="foo == false" />
-        <moon-icon v-if="foo == false" :moonPhase="getMoonPhase" />
-        <mist-icon v-if="foo == false" />
-        <tornado-icon v-if="foo == true" />
+        <snow-icon v-if="weather.main == 'Snow'" />
+        <mist-icon
+          v-if="
+            weather.main ==
+            ('Mist' ||
+              'Smoke' ||
+              'Haze' ||
+              'Dust' ||
+              'Fog' ||
+              'Sand' ||
+              'Ash' ||
+              'Squall')
+          "
+        />
+        <tornado-icon v-if="weather.main == 'Tornado'" />
       </div>
       <div class="sun-path">
-        <sun-path-icon :time="time.unix" :sunRise="sunrise.unix" :sunSet="sunset.unix" />
+        <sun-path-icon
+          :time="time.unix"
+          :sunRise="sunrise.unix"
+          :sunSet="sunset.unix"
+        />
       </div>
     </div>
   </div>
@@ -59,11 +77,6 @@ export default {
     MistIcon,
     TornadoIcon,
     SunPathIcon,
-  },
-  data() {
-    return {
-      foo: true,
-    };
   },
   computed: {
     ...mapState([
