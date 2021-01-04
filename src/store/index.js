@@ -57,7 +57,6 @@ export default new Vuex.Store({
       unix: 0,
       hour: 0,
       minutes: 0,
-
     },
     sunset: {
       unix: 0,

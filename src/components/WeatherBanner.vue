@@ -5,39 +5,11 @@
       <div class="hour">{{ time.hour }}:{{ time.minutes }}</div>
       <div class="temperature">{{ temperatures.current }}{{ tempUnit }}</div>
       <div class="current-weather">{{ weather.detailed }}</div>
-      <div class="weather-icon">
-        <sun-icon v-if="temperatures.current == 'Clear'" />
-        <moon-icon v-if="weather.main == 'Clear'" :moonPhase="getMoonPhase" />
-        <cloud-icon
-          v-if="weather.main == 'Clouds'"
-          :cloudiness="weather.detailed"
-          :moonPhase="getMoonPhase"
+      <div class="weather-icon-container">
+        <weather-icon
+          :weatherMain="weather.main"
+          :weatherDetails="weather.detailed"
         />
-        <thunderstorm-icon
-          v-if="weather.main == 'Thunderstorm'"
-          :isRaining="
-            weather.detailed.includes('rain') || weather.includes('drizzle')
-          "
-        />
-        <rain-icon
-          v-if="weather.main == 'Rain'"
-          :isSnowing="weather.includes('freezing')"
-        />
-        <snow-icon v-if="weather.main == 'Snow'" />
-        <mist-icon
-          v-if="
-            weather.main ==
-            ('Mist' ||
-              'Smoke' ||
-              'Haze' ||
-              'Dust' ||
-              'Fog' ||
-              'Sand' ||
-              'Ash' ||
-              'Squall')
-          "
-        />
-        <tornado-icon v-if="weather.main == 'Tornado'" />
       </div>
       <div class="sun-path">
         <sun-path-icon
@@ -52,15 +24,8 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
-import SunIcon from "./icons/SunIcon.vue";
-import CloudIcon from "./icons/CloudIcon.vue";
-import ThunderstormIcon from "./icons/ThunderstormIcon.vue";
-import RainIcon from "./icons/RainIcon.vue";
-import SnowIcon from "./icons/SnowIcon.vue";
-import MoonIcon from "./icons/MoonIcon.vue";
-import MistIcon from "./icons/MistIcon.vue";
-import TornadoIcon from "./icons/TornadoIcon.vue";
 import SunPathIcon from "./icons/SunPathIcon.vue";
+import WeatherIcon from "./icons/WeatherIcon.vue";
 
 export default {
   created() {
@@ -68,15 +33,8 @@ export default {
   },
   name: "WeatherBanner",
   components: {
-    SunIcon,
-    CloudIcon,
-    ThunderstormIcon,
-    RainIcon,
-    SnowIcon,
-    MoonIcon,
-    MistIcon,
-    TornadoIcon,
     SunPathIcon,
+    WeatherIcon,
   },
   computed: {
     ...mapState([
@@ -134,7 +92,7 @@ export default {
   text-transform: capitalize;
 }
 
-.weather-icon {
+.weather-icon-container {
   position: absolute;
   top: 20%;
   right: 5%;
