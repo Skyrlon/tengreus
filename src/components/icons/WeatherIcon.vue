@@ -1,11 +1,21 @@
 <template>
   <div class="weather-icon">
-    <sun-icon v-if="weatherMain == 'Clear'" />
-    <moon-icon v-if="weatherMain == 'Clear'" :moonPhase="getMoonPhase" />
+    <sun-icon
+      v-if="
+        weatherMain == 'Clear' && isDayOrNight(time, sunrise, sunset) == 'day'
+      "
+    />
+    <moon-icon
+      v-if="
+        weatherMain == 'Clear' && isDayOrNight(time, sunrise, sunset) == 'night'
+      "
+      :moonPhase="moonPhase"
+    />
     <cloud-icon
       v-if="weatherMain == 'Clouds'"
       :cloudiness="weatherDetails"
-      :moonPhase="getMoonPhase"
+      :moonPhase="moonPhase"
+      :moonOrSun="isDayOrNight(time, sunrise, sunset)"
     />
     <thunderstorm-icon
       v-if="weatherMain == 'Thunderstorm'"
@@ -61,6 +71,19 @@ export default {
   props: {
     weatherMain: String,
     weatherDetails: String,
+    time: Number,
+    sunrise: Number,
+    sunset: Number,
+    moonPhase: String,
+  },
+  methods: {
+    isDayOrNight(time, sunrise, sunset) {
+      if (time > sunrise && time < sunset) {
+        return "day";
+      } else {
+        return "night";
+      }
+    },
   },
 };
 </script>

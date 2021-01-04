@@ -18,7 +18,7 @@ export default new Vuex.Store({
     speedUnit: 'km/h',
     city: {
       name: "Paris",
-      id: 2988507
+      id: 2988507,
     },
     time: {
       unix: 0,
@@ -67,7 +67,7 @@ export default new Vuex.Store({
   },
   getters: {
     getMoonPhase: state => {
-      let time = new Date(state.time * 1000);
+      let time = new Date(state.time.unix * 1000);
       var year = time.getFullYear(),
         month = time.getMonth(),
         day = time.getDate();

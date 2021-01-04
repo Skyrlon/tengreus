@@ -27,14 +27,14 @@
     <moon-icon
       :moonPhase="moonPhase"
       style="transform: scale(0.5)"
-      v-if="cloudiness == 'few clouds'"
+      v-if="cloudiness == 'few clouds' && moonOrSun == 'night'"
     />
     <circle
       cx="30"
       cy="40"
       r="35"
       fill="url(#SunGradient)"
-      v-if="cloudiness == 'few clouds'"
+      v-if="cloudiness == 'few clouds' && moonOrSun == 'day'"
     />
     <use
       x="-5"
@@ -64,6 +64,7 @@ export default {
   props: {
     cloudiness: String,
     moonPhase: String,
+    moonOrSun: String,
   },
 };
 </script>

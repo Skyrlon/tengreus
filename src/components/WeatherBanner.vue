@@ -9,6 +9,10 @@
         <weather-icon
           :weatherMain="weather.main"
           :weatherDetails="weather.detailed"
+          :time="time.unix"
+          :sunrise="sunrise.unix"
+          :sunset="sunset.unix"
+          :moonPhase="getMoonPhase"
         />
       </div>
       <div class="sun-path">
