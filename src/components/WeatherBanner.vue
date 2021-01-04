@@ -29,7 +29,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import SunPathIcon from "./icons/SunPathIcon.vue";
-import WeatherIcon from "./icons/WeatherIcon.vue";
+import WeatherIcon from "@/components/WeatherIcon.vue";
 
 export default {
   created() {
