@@ -20,6 +20,7 @@ export default new Vuex.Store({
       name: "Paris",
       id: 2988507,
     },
+    timeShift: 0,
     time: {
       unix: 0,
       hour: 0,
@@ -68,9 +69,9 @@ export default new Vuex.Store({
   getters: {
     getMoonPhase: state => {
       let time = new Date(state.time.unix * 1000);
-      var year = time.getFullYear(),
-        month = time.getMonth(),
-        day = time.getDate();
+      var year = time.getUTCFullYear(),
+        month = time.getUTCMonth(),
+        day = time.getUTCDate();
       if (month < 3) {
         year--;
         month += 12;
@@ -114,18 +115,18 @@ export default new Vuex.Store({
   mutations: {
     LOAD_WEATHER(state, payload) {
       function convertDate(time) {
-        let dt = new Date(time * 1000);
-        let hour = dt.getHours();
-        let minutes = (dt.getMinutes() < 10 ? '0' : '') + dt.getMinutes();
+        let dt = new Date((time + state.timeShift) * 1000);
+        let hour = dt.getUTCHours();
+        let minutes = (dt.getUTCMinutes() < 10 ? '0' : '') + dt.getUTCMinutes();
         let array = [time, hour, minutes];
         return array;
       }
 
+      state.timeShift = payload.timezone;
       state.time = {
-        unix: convertDate(payload.dt)[0],
-        hour: convertDate(payload.dt)[1],
-        minutes: convertDate(payload.dt)[2],
-
+        unix: convertDate(Date.now() / 1000)[0],
+        hour: convertDate(Date.now() / 1000)[1],
+        minutes: convertDate(Date.now() / 1000)[2],
       };
       state.sunrise = {
         unix: convertDate(payload.sys.sunrise)[0],
