@@ -2,10 +2,12 @@
   <div class="weather-details">
     <section>
       <div class="feels-like-temp">
-        Feels like : {{ temperatures.feelsLike }}{{ tempUnit }}
+        Feels like : {{ convertTemperature(temperatures.feelsLike)
+        }}{{ tempUnit }}
       </div>
       <div class="min-max-temp">
-        Min/max temperature : {{ temperatures.min }}/{{ temperatures.max
+        Min/max temperature : {{ convertTemperature(temperatures.min) }}/{{
+          convertTemperature(temperatures.max)
         }}{{ tempUnit }}
       </div>
       <div class="pressure">

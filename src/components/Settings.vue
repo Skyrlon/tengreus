@@ -47,7 +47,7 @@ export default {
   name: "Settings",
   methods: {
     changeTemperature(e) {
-      this.$store.commit("TEMPERATURE_CONVERTER", e.target.value);
+      this.$store.commit("CHANGE_TEMPERATURE_UNIT", e.target.value);
     },
     changePressure(e) {
       this.$store.commit("PRESSURE_CONVERTER", e.target.value);

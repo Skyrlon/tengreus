@@ -3,7 +3,7 @@
     <div class="weather-summary">
       <div class="city-name">{{ city.name }}</div>
       <div class="hour">{{ time.hour }}:{{ time.minutes }}</div>
-      <div class="temperature">{{ temperatures.current }}{{ tempUnit }}</div>
+      <div class="temperature">{{ convertTemperature(temperatures.current) }}{{ tempUnit }}</div>
       <div class="current-weather">{{ weather.detailed }}</div>
       <div class="weather-icon-container">
         <weather-icon

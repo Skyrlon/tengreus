@@ -167,40 +167,13 @@ export default new Vuex.Store({
       }
     },
 
-    TEMPERATURE_CONVERTER(state, payload) {
-      if (payload == 'celsius') {
-        if (state.tempUnit == "°F") { //Fahrenheit -> Celsius
-          for (let n in state.temperatures) {
-            state.temperatures[n] = (state.temperatures[n] - 32) / 1.8;
-          }
-        } else if (state.tempUnit == "K") { //Kelvin -> Celsius
-          for (let n in state.temperatures) {
-            state.temperatures[n] = state.temperatures[n] - 273.15;
-          }
-        }
-        state.tempUnit = '°C'
-      } else if (payload == 'fahrenheit') {
-        if (state.tempUnit == "°C") { //Celsius -> Fahrenheit
-          for (let n in state.temperatures) {
-            state.temperatures[n] = state.temperatures[n] * 1.8 + 32;
-          }
-        } else if (state.tempUnit == "K") { //Kelvin -> Fahrenheit
-          for (let n in state.temperatures) {
-            state.temperatures[n] = (state.temperatures[n] - 273.15) * 1.8 + 32;
-          }
-        }
-        state.tempUnit = '°F'
-      } else if (payload == 'kelvin') {
-        if (state.tempUnit == "°F") { //Fahrenheit -> Kelvin
-          for (let n in state.temperatures) {
-            state.temperatures[n] = (state.temperatures[n] - 32) / 1.8 + 273.15;
-          }
-        } else if (state.tempUnit == "°C") { //Celsius -> Kelvin
-          for (let n in state.temperatures) {
-            state.temperatures[n] = state.temperatures[n] + 273.15;
-          }
-        }
-        state.tempUnit = 'K'
+    CHANGE_TEMPERATURE_UNIT(state, payload) {
+      if (payload === "celsius") {
+        state.tempUnit = "°C";
+      } else if (payload === "fahrenheit") {
+        state.tempUnit = "°F";
+      } else if (payload === "kelvin") {
+        state.tempUnit = "K";
       }
     },
 
