@@ -31,10 +31,7 @@ export default new Vuex.Store({
       main: '',
       detailed: '',
     },
-    pressure: {
-      default: 1023, //value never change, used as reference to convert without worrying about round up mess
-      converted: 1023,
-    },
+    pressure: 0,
     humidity: 100,
     visibility: {
       default: 16093,
@@ -144,10 +141,7 @@ export default new Vuex.Store({
         min: Math.ceil(payload.main.temp_min),
         max: Math.ceil(payload.main.temp_max),
       };
-      state.pressure = {
-        default: payload.main.pressure,
-        converted: payload.main.pressure,
-      };
+      state.pressure = payload.main.pressure;
       state.visibility = {
         default: payload.visibility,
         converted: payload.visibility,
@@ -177,27 +171,20 @@ export default new Vuex.Store({
       }
     },
 
-    PRESSURE_CONVERTER(state, payload) {
-      if (payload == 'atmosphere') {
-        state.pressure.converted = state.pressure.default / 1013.25;
+    CHANGE_PRESSURE_UNIT(state, payload) {
+      if (payload === 'atmosphere') {
         state.pressureUnit = 'atm';
-      } else if (payload == 'bar') {
-        state.pressure.converted = state.pressure.default / 1000;
+      } else if (payload === 'bar') {
         state.pressureUnit = 'bar';
-      } else if (payload == 'hectopascal') {
-        state.pressure.converted = state.pressure.default;
+      } else if (payload === 'hectopascal') {
         state.pressureUnit = 'hPa';
-      } else if (payload == 'pascal') {
-        state.pressure.converted = state.pressure.default * 100;
+      } else if (payload === 'pascal') {
         state.pressureUnit = 'Pa';
-      } else if (payload == 'psi') {
-        state.pressure.converted = state.pressure.default / 68.948;
+      } else if (payload === 'psi') {
         state.pressureUnit = 'psi';
-      } else if (payload == 'torr') {
-        state.pressure.converted = state.pressure.default / 1.333;
+      } else if (payload === 'torr') {
         state.pressureUnit = 'Torr';
       }
-      state.pressure.converted = (Math.round(state.pressure.converted * 1000)) / 1000;
     },
 
     LENGTH_CONVERTER(state, payload) {

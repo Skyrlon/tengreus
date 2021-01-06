@@ -11,7 +11,7 @@
         }}{{ tempUnit }}
       </div>
       <div class="pressure">
-        Pressure : {{ pressure.converted }} {{ pressureUnit }}
+        Pressure : {{ convertPressure(pressure) }} {{ pressureUnit }}
       </div>
       <div class="humidity">Humidity : {{ humidity }}%</div>
     </section>
