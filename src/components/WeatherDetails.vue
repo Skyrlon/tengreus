@@ -18,7 +18,7 @@
 
     <section>
       <div class="visibility">
-        Visibility : {{ visibility.converted }}{{ lengthUnit }}
+        Visibility : {{ convertLength(visibility) }}{{ lengthUnit }}
       </div>
       <div class="wind">
         Wind : <compass-icon :degree="wind.deg" /> {{ wind.speedConverted

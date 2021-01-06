@@ -25,6 +25,13 @@ const Converters = {
                     } else if (this.$store.state.pressureUnit === "Torr") {
                         return value / 1.333;
                     }
+                },
+                convertLength(value) {
+                    if (this.$store.state.lengthUnit === "m") {
+                        return value;
+                    } else if (this.$store.state.lengthUnit === "mi") {
+                        return value / 1609.344;
+                    }
                 }
             }
         });

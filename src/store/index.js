@@ -33,10 +33,7 @@ export default new Vuex.Store({
     },
     pressure: 0,
     humidity: 100,
-    visibility: {
-      default: 16093,
-      converted: 16093,
-    },
+    visibility: 16093,
     wind: {
       speedDefault: 1.5, // in m/s
       speedConverted: 1.5,
@@ -142,10 +139,7 @@ export default new Vuex.Store({
         max: Math.ceil(payload.main.temp_max),
       };
       state.pressure = payload.main.pressure;
-      state.visibility = {
-        default: payload.visibility,
-        converted: payload.visibility,
-      };
+      state.visibility = payload.visibility;
       state.humidity = payload.main.humidity;
       state.wind = {
         speedDefault: payload.wind.speed,
@@ -187,15 +181,12 @@ export default new Vuex.Store({
       }
     },
 
-    LENGTH_CONVERTER(state, payload) {
+    CHANGE_LENGTH_UNIT(state, payload) {
       if (payload == "metric") {
-        state.visibility.converted = state.visibility.default;
         state.lengthUnit = 'm'
       } else if (payload == "imperial") {
-        state.visibility.converted = state.visibility.default / 1609.344;
         state.lengthUnit = 'mi'
       }
-      state.visibility.converted = (Math.round(state.visibility.converted * 1000)) / 1000;
     },
 
     SPEED_CONVERTER(state, payload) {

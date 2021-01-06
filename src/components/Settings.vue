@@ -53,7 +53,7 @@ export default {
       this.$store.commit("CHANGE_PRESSURE_UNIT", e.target.value);
     },
     changeLength(e) {
-      this.$store.commit("LENGTH_CONVERTER", e.target.value);
+      this.$store.commit("CHANGE_LENGTH_UNIT", e.target.value);
     },
     changeSpeed(e) {
       this.$store.commit("SPEED_CONVERTER", e.target.value);
