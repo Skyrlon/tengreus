@@ -21,8 +21,9 @@
         Visibility : {{ convertLength(visibility) }}{{ lengthUnit }}
       </div>
       <div class="wind">
-        Wind : <compass-icon :degree="wind.deg" /> {{ wind.speedConverted
-        }}{{ speedUnit }} with gust of {{ wind.gustConverted }}{{ speedUnit }}
+        Wind : <compass-icon :degree="wind.deg" /> {{ convertSpeed(wind.speed)
+        }}{{ speedUnit }} with gust of {{ convertSpeed(wind.gust)
+        }}{{ speedUnit }}
       </div>
       <div class="cloudiness">Cloudiness : {{ cloudiness }}%</div>
       <div class="moon-phase">Moon phase : {{ getMoonPhase }}</div>

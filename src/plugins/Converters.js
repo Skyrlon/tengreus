@@ -32,6 +32,13 @@ const Converters = {
                     } else if (this.$store.state.lengthUnit === "mi") {
                         return value / 1609.344;
                     }
+                },
+                convertSpeed(value) {
+                    if (this.$store.state.speedUnit === "km/h") {
+                        return value * 3.6;
+                    } else if (this.$store.state.speedUnit === "mi/h") {
+                        return value * 2.237;
+                    }
                 }
             }
         });

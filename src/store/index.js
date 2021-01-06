@@ -35,11 +35,9 @@ export default new Vuex.Store({
     humidity: 100,
     visibility: 16093,
     wind: {
-      speedDefault: 1.5, // in m/s
-      speedConverted: 1.5,
+      speed: 1.5, // in m/s
       deg: 350,
-      gustDefault: 3, // in m/s
-      gustConverted: 3,
+      gust: 3, // in m/s
     },
     cloudiness: 1,
     precipitation: {
@@ -142,11 +140,9 @@ export default new Vuex.Store({
       state.visibility = payload.visibility;
       state.humidity = payload.main.humidity;
       state.wind = {
-        speedDefault: payload.wind.speed,
-        speedConverted: payload.wind.speed,
+        speed: payload.wind.speed,
         deg: payload.wind.deg,
-        gustDefault: payload.wind.gust,
-        gustConverted: payload.wind.gust,
+        gust: payload.wind.gust,
       };
       state.cloudiness = payload.clouds.all;
       state.weather = {
@@ -189,18 +185,12 @@ export default new Vuex.Store({
       }
     },
 
-    SPEED_CONVERTER(state, payload) {
+    CHANGE_SPEED_UNIT(state, payload) {
       if (payload == "metric") {
-        state.wind.speedConverted = state.wind.speedDefault * 3.6;
-        state.wind.gustConverted = state.wind.gustDefault * 3.6;
         state.speedUnit = "km/h";
       } else if (payload == "imperial") {
-        state.wind.speedConverted = state.wind.speedDefault * 2.237;
-        state.wind.gustConverted = state.wind.gustDefault * 2.237;
         state.speedUnit = "mi/h";
       }
-      state.wind.speedConverted = (Math.round(state.wind.speedConverted * 1000)) / 1000;
-      state.wind.gustConverted = (Math.round(state.wind.gustConverted * 1000)) / 1000;
     }
   },
   actions: {
