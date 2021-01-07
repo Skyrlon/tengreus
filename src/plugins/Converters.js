@@ -3,42 +3,70 @@ const Converters = {
         Vue.mixin({
             methods: {
                 convertTemperature(value) {
-                    if (this.$store.state.tempUnit === "°C") {
-                        return value;
-                    } else if (this.$store.state.tempUnit === "°F") {
-                        return (value * 1.8) + 32;
-                    } else if (this.$store.state.tempUnit === "K") {
-                        return value - 273.15;
+                    let temperature;
+                    switch (this.$store.state.tempUnit) {
+                        case "°C":
+                            temperature = value;
+                            break;
+                        case "°F":
+                            temperature = (value * 1.8) + 32;
+                            break;
+                        case "K":
+                            temperature = value + 273.15;
+                            break;
                     }
+                    return temperature;
                 },
+
                 convertPressure(value) {
-                    if (this.$store.state.pressureUnit === "atm") {
-                        return value / 1013;
-                    } else if (this.$store.state.pressureUnit === "bar") {
-                        return value / 1000;
-                    } else if (this.$store.state.pressureUnit === "hPa") {
-                        return value;
-                    } else if (this.$store.state.pressureUnit === "Pa") {
-                        return value * 100;
-                    } else if (this.$store.state.pressureUnit === "psi") {
-                        return value / 68.948;
-                    } else if (this.$store.state.pressureUnit === "Torr") {
-                        return value / 1.333;
+                    let pressure;
+                    switch (this.$store.state.pressureUnit) {
+                        case "atm":
+                            pressure = value / 1013.25;
+                            break;
+                        case "bar":
+                            pressure = value / 1000;
+                            break;
+                        case "hPa":
+                            pressure = value;
+                            break;
+                        case "Pa":
+                            pressure = value * 100;
+                            break;
+                        case "psi":
+                            pressure = value / 68.946;
+                            break;
+                        case "Torr":
+                            pressure = value / 1.33322;
+                            break;
                     }
+                    return Math.round(pressure * 1000) / 1000
                 },
+
                 convertLength(value) {
-                    if (this.$store.state.lengthUnit === "m") {
-                        return value;
-                    } else if (this.$store.state.lengthUnit === "mi") {
-                        return value / 1609.344;
+                    let length;
+                    switch (this.$store.state.lengthUnit) {
+                        case "m":
+                            length = value;
+                            break;
+                        case "mi":
+                            length = value / 1609.344;
+                            break;
                     }
+                    return Math.round(length * 1000) / 1000
                 },
+
                 convertSpeed(value) {
-                    if (this.$store.state.speedUnit === "km/h") {
-                        return value * 3.6;
-                    } else if (this.$store.state.speedUnit === "mi/h") {
-                        return value * 2.237;
+                    let speed;
+                    switch (this.$store.state.speedUnit) {
+                        case "km/h":
+                            speed = value * 3.6;
+                            break;
+                        case "mi/h":
+                            speed = value * 2.237;
+                            break;
                     }
+                    return Math.round(speed * 100) / 100
                 }
             }
         });
