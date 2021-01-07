@@ -67,6 +67,12 @@ const Converters = {
                             break;
                     }
                     return Math.round(speed * 100) / 100
+                },
+                convertTime(time) {
+                    let dt = new Date((time + this.$store.state.timeShift) * 1000);
+                    let hour = dt.getUTCHours();
+                    let minutes = (dt.getUTCMinutes() < 10 ? '0' : '') + dt.getUTCMinutes();
+                    return `${hour}:${minutes}`;
                 }
             }
         });

@@ -21,12 +21,7 @@ export default new Vuex.Store({
       id: 2988507,
     },
     timeShift: 0,
-    time: {
-      unix: 0,
-      hour: 0,
-      minutes: 0,
-
-    },
+    time: 0,
     weather: {
       main: '',
       detailed: '',
@@ -60,7 +55,7 @@ export default new Vuex.Store({
   },
   getters: {
     getMoonPhase: state => {
-      let time = new Date(state.time.unix * 1000);
+      let time = new Date(state.time * 1000);
       var year = time.getUTCFullYear(),
         month = time.getUTCMonth(),
         day = time.getUTCDate();
@@ -106,30 +101,10 @@ export default new Vuex.Store({
   },
   mutations: {
     LOAD_WEATHER(state, payload) {
-      function convertDate(time) {
-        let dt = new Date((time + state.timeShift) * 1000);
-        let hour = dt.getUTCHours();
-        let minutes = (dt.getUTCMinutes() < 10 ? '0' : '') + dt.getUTCMinutes();
-        let array = [time, hour, minutes];
-        return array;
-      }
-
       state.timeShift = payload.timezone;
-      state.time = {
-        unix: convertDate(Date.now() / 1000)[0],
-        hour: convertDate(Date.now() / 1000)[1],
-        minutes: convertDate(Date.now() / 1000)[2],
-      };
-      state.sunrise = {
-        unix: convertDate(payload.sys.sunrise)[0],
-        hour: convertDate(payload.sys.sunrise)[1],
-        minutes: convertDate(payload.sys.sunrise)[2],
-      };
-      state.sunset = {
-        unix: convertDate(payload.sys.sunset)[0],
-        hour: convertDate(payload.sys.sunset)[1],
-        minutes: convertDate(payload.sys.sunset)[2],
-      };
+      state.time = Date.now() / 1000;
+      state.sunrise = payload.sys.sunrise;
+      state.sunset = payload.sys.sunset;
       state.temperatures = {
         current: Math.ceil(payload.main.temp),
         feelsLike: Math.ceil(payload.main.feels_like),

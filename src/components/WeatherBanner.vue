@@ -2,25 +2,23 @@
   <div class="banner">
     <div class="weather-summary">
       <div class="city-name">{{ city.name }}</div>
-      <div class="hour">{{ time.hour }}:{{ time.minutes }}</div>
-      <div class="temperature">{{ convertTemperature(temperatures.current) }}{{ tempUnit }}</div>
+      <div class="hour">{{ convertTime(time) }}</div>
+      <div class="temperature">
+        {{ convertTemperature(temperatures.current) }}{{ tempUnit }}
+      </div>
       <div class="current-weather">{{ weather.detailed }}</div>
       <div class="weather-icon-container">
         <weather-icon
           :weatherMain="weather.main"
           :weatherDetails="weather.detailed"
-          :time="time.unix"
-          :sunrise="sunrise.unix"
-          :sunset="sunset.unix"
+          :time="time"
+          :sunrise="sunrise"
+          :sunset="sunset"
           :moonPhase="getMoonPhase"
         />
       </div>
       <div class="sun-path">
-        <sun-path-icon
-          :time="time.unix"
-          :sunRise="sunrise.unix"
-          :sunSet="sunset.unix"
-        />
+        <sun-path-icon :time="time" :sunRise="sunrise" :sunSet="sunset" />
       </div>
     </div>
   </div>
