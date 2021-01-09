@@ -19,6 +19,8 @@ export default new Vuex.Store({
     city: {
       name: "Paris",
       id: 2988507,
+      lat: 48.85341,
+      lon: 2.3488,
     },
     timeShift: 0,
     time: 0,
@@ -100,7 +102,7 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    LOAD_WEATHER(state, payload) {
+    LOAD_CURRENT_WEATHER(state, payload) {
       state.timeShift = payload.timezone;
       state.time = Date.now() / 1000;
       state.sunrise = payload.sys.sunrise;
@@ -124,6 +126,10 @@ export default new Vuex.Store({
         main: payload.weather[0].main,
         detailed: payload.weather[0].description,
       }
+    },
+
+    LOAD_FORECAST_WEATHER(state, payload) {
+      [state.forecast] = [payload.daily]
     },
 
     CHANGE_TEMPERATURE_UNIT(state, payload) {
@@ -169,15 +175,24 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getWeather({
+    getCurrentWeather({
       commit,
       state
     }) {
       axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/weather?id=${state.city.id}&appid=${state.apiKey}&units=metric`)
+        .get(`https://api.openweathermap.org/data/2.5/weather?id=${state.city.id}&appid=${state.apiKey}&units=metric`)
         .then(result => {
-          commit('LOAD_WEATHER', result.data);
+          commit('LOAD_CURRENT_WEATHER', result.data);
+        })
+    },
+    getForecastWeather({
+      commit,
+      state
+    }) {
+      axios
+        .get(`https://api.openweathermap.org/data/2.5/onecall?appid=${state.apiKey}&units=metric&lat=${state.city.lat}&lon=${state.city.lon}&exclude=current,minutely,hourly,alerts`)
+        .then(result => {
+          commit('LOAD_FORECAST_WEATHER', result.data);
         })
     }
   },

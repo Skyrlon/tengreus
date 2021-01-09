@@ -31,7 +31,8 @@ import WeatherIcon from "@/components/WeatherIcon.vue";
 
 export default {
   created() {
-    this.$store.dispatch("getWeather");
+    this.$store.dispatch("getCurrentWeather");
+    this.$store.dispatch("getForecastWeather");
   },
   name: "WeatherBanner",
   components: {

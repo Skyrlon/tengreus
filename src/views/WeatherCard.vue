@@ -14,9 +14,9 @@
 
 <script>
 import WeatherBanner from "@/components/WeatherBanner.vue";
-import WeatherDetails from "@/components/WeatherDetails.vue";
 import Settings from "@/components/Settings.vue";
 import SettingsIcon from "@/components/icons/SettingsIcon.vue";
+import WeatherDetails from "../components/WeatherDetails.vue";
 
 export default {
   name: "WeatherCard",
@@ -27,9 +27,9 @@ export default {
   },
   components: {
     WeatherBanner,
-    WeatherDetails,
     Settings,
     SettingsIcon,
+    WeatherDetails,
   },
 };
 </script>
@@ -44,16 +44,6 @@ export default {
   & .footer {
     flex: 0 1 40px;
   }
-}
-
-.settings-appear-enter-active {
-  transform-origin: top right;
-  animation: show-up 0.5s linear;
-}
-
-.settings-appear-leave-active {
-  transform-origin: top right;
-  animation: show-up 0.5s linear reverse;
 }
 
 @keyframes show-up {
