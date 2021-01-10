@@ -14,7 +14,7 @@
           :time="time"
           :sunrise="sunrise"
           :sunset="sunset"
-          :moonPhase="getMoonPhase"
+          :moonPhase="getMoonPhase(time)"
         />
       </div>
       <div class="sun-path">
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 import SunPathIcon from "./icons/SunPathIcon.vue";
 import WeatherIcon from "@/components/WeatherIcon.vue";
 
@@ -47,7 +47,6 @@ export default {
       "weather",
       "moonPhase",
     ]),
-    ...mapGetters(["getMoonPhase"]),
   },
 };
 </script>

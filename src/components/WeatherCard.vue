@@ -8,6 +8,7 @@
       :time="WeatherData.dt"
       :sunrise="WeatherData.sunrise"
       :sunset="WeatherData.sunset"
+      :moonPhase="getMoonPhase(WeatherData.dt)"
     />
   </div>
 </template>

@@ -5,6 +5,7 @@
       v-for="day in forecast"
       :WeatherData="day"
       :title="dayOfTheWeek(day.dt)"
+      
     />
   </div>
 </template>
@@ -70,7 +71,8 @@ export default {
     left: 0;
   }
   & > div {
-    flex-grow: 1;
+    width: 10%;
+    height: 100%;
   }
 }
 </style>

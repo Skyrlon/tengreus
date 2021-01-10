@@ -26,7 +26,7 @@
         }}{{ speedUnit }}
       </div>
       <div class="cloudiness">Cloudiness : {{ cloudiness }}%</div>
-      <div class="moon-phase">Moon phase : {{ getMoonPhase }}</div>
+      <div class="moon-phase">Moon phase : {{ getMoonPhase(time) }}</div>
     </section>
 
     <section>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 import CompassIcon from "@/components/icons/CompassIcon.vue";
 
 export default {
@@ -69,11 +69,11 @@ export default {
       "wind",
       "cloudiness",
       "precipitation",
+      "time",
       "sunrise",
       "sunset",
       "moonPhase",
     ]),
-    ...mapGetters(["getMoonPhase"]),
   },
 };
 </script>
