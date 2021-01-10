@@ -30,10 +30,6 @@ import SunPathIcon from "./icons/SunPathIcon.vue";
 import WeatherIcon from "@/components/WeatherIcon.vue";
 
 export default {
-  created() {
-    this.$store.dispatch("getCurrentWeather");
-    this.$store.dispatch("getForecastWeather");
-  },
   name: "WeatherBanner",
   components: {
     SunPathIcon,

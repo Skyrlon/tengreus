@@ -1,5 +1,5 @@
 <template>
-  <div class="weather-card">
+  <div class="weather">
     <weather-banner />
     <weather-details />
     <transition name="settings-appear">
@@ -19,7 +19,11 @@ import SettingsIcon from "@/components/icons/SettingsIcon.vue";
 import WeatherDetails from "../components/WeatherDetails.vue";
 
 export default {
-  name: "WeatherCard",
+  name: "Weather",
+  beforeCreate() {
+    this.$store.dispatch("getCurrentWeather");
+    this.$store.dispatch("getForecastWeather");
+  },
   data() {
     return {
       showSettings: false,
@@ -35,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss">
-.weather-card {
+.weather {
   display: flex;
   flex-direction: column;
   margin: 0 auto;

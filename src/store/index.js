@@ -54,6 +54,7 @@ export default new Vuex.Store({
       minutes: 0,
 
     },
+    forecast: [],
   },
   getters: {
     getMoonPhase: state => {
