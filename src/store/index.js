@@ -43,19 +43,10 @@ export default new Vuex.Store({
       snowLast1H: 0,
       snowLast3H: 0,
     },
-    sunrise: {
-      unix: 0,
-      hour: 0,
-      minutes: 0,
-    },
-    sunset: {
-      unix: 0,
-      hour: 0,
-      minutes: 0,
-
-    },
+    sunrise: 0,
+    sunset: 0,
     forecast: [],
-  },    
+  },
   mutations: {
     LOAD_CURRENT_WEATHER(state, payload) {
       state.timeShift = payload.timezone;

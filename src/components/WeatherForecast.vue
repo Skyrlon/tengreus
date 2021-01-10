@@ -4,7 +4,7 @@
       :key="day.dt"
       v-for="day in forecast"
       :WeatherData="day"
-      :title="dayOfTheWeek(day.dt)"
+      :Title="dayOfTheWeek(day.dt)"
       
     />
   </div>
