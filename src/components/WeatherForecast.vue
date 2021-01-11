@@ -1,11 +1,17 @@
 <template>
   <div class="weather-forecast" :class="{ active: isActive }">
-    <weather-card
-      :key="day.dt"
-      v-for="day in forecast"
-      :WeatherData="day"
-      :Title="dayOfTheWeek(day.dt)"
-      
+    <div class="weather-forecast-card-container" v-if="!showForecastDetails">
+      <weather-card
+        :key="day.dt"
+        v-for="day in forecast"
+        :WeatherData="day"
+        :Title="dayOfTheWeek(day.dt)"
+        @ask-for-details="showDetails"
+      />
+    </div>
+    <weather-forecast-details
+      v-if="showForecastDetails"
+      :ForecastData="forecastDetailsData"
     />
   </div>
 </template>
@@ -13,12 +19,19 @@
 <script>
 import { mapState } from "vuex";
 import WeatherCard from "./WeatherCard.vue";
+import WeatherForecastDetails from "./WeatherForecastDetails.vue";
 
 export default {
-  components: { WeatherCard },
+  components: { WeatherCard, WeatherForecastDetails },
   name: "WeatherForecast",
   props: {
     isActive: Boolean,
+  },
+  data() {
+    return {
+      showForecastDetails: false,
+      forecastDetailsData: {},
+    };
   },
   computed: {
     ...mapState(["forecast"]),
@@ -53,6 +66,10 @@ export default {
       }
       return dayInLetters;
     },
+    showDetails(payload) {
+      this.forecastDetailsData = payload.data;
+      this.showForecastDetails = true;
+    },
   },
 };
 </script>
@@ -60,9 +77,6 @@ export default {
 <style lang="scss">
 .weather-forecast {
   position: absolute;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
   left: 100%;
   width: 100%;
   height: 200px;
@@ -70,9 +84,16 @@ export default {
   &.active {
     left: 0;
   }
-  & > div {
-    width: 10%;
+  &-card-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
     height: 100%;
+    & > div {
+      width: 10%;
+      height: 100%;
+    }
   }
 }
 </style>

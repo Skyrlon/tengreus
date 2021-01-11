@@ -1,15 +1,22 @@
 <template>
   <div class="weather-card">
     <div class="weather-card_title">{{ Title }}</div>
-    <div class="weather-card_icon"></div>
-    <weather-icon
-      :weatherMain="WeatherData.weather[0].main"
-      :weatherDetails="WeatherData.weather[0].description"
-      :time="WeatherData.dt"
-      :sunrise="WeatherData.sunrise"
-      :sunset="WeatherData.sunset"
-      :moonPhase="getMoonPhase(WeatherData.dt)"
-    />
+    <div class="weather-card_icon">
+      <weather-icon
+        :weatherMain="WeatherData.weather[0].main"
+        :weatherDetails="WeatherData.weather[0].description"
+        :time="WeatherData.dt"
+        :sunrise="WeatherData.sunrise"
+        :sunset="WeatherData.sunset"
+        :moonPhase="getMoonPhase(WeatherData.dt)"
+      />
+      <div
+        class="weather-forecast_details"
+        @click="$emit('ask-for-details', { data: WeatherData })"
+      >
+        Details
+      </div>
+    </div>
   </div>
 </template>
 
@@ -29,9 +36,20 @@ export default {
 .weather-card {
   border: 1px solid;
   border-radius: 10%;
+  width: 100%;
+  height: 100%;
+  &_title {
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
   &_icon {
-    width: 33%;
-    height: 33%;
+    margin-left: 15%;
+    width: 70%;
+    height: auto;
+  }
+  &_details {
+    margin-top: 10%;
+    text-decoration: underline;
   }
 }
 </style>
