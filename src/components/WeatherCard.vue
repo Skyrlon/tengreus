@@ -10,12 +10,7 @@
         :sunset="WeatherData.sunset"
         :moonPhase="getMoonPhase(WeatherData.dt)"
       />
-      <div
-        class="weather-forecast_details"
-        @click="$emit('ask-for-details', { data: WeatherData })"
-      >
-        Details
-      </div>
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -46,10 +41,6 @@ export default {
     margin-left: 15%;
     width: 70%;
     height: auto;
-  }
-  &_details {
-    margin-top: 10%;
-    text-decoration: underline;
   }
 }
 </style>

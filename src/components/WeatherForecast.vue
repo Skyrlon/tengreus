@@ -6,12 +6,16 @@
         v-for="day in forecast"
         :WeatherData="day"
         :Title="dayOfTheWeek(day.dt)"
-        @ask-for-details="showDetails"
-      />
+      >
+        <div class="weather-forecast-details-link" @click="showDetails(day)">
+          Details
+        </div>
+      </weather-card>
     </div>
     <weather-forecast-details
       v-if="showForecastDetails"
       :ForecastData="forecastDetailsData"
+      @go-back="showForecastDetails = false"
     />
   </div>
 </template>
@@ -67,7 +71,7 @@ export default {
       return dayInLetters;
     },
     showDetails(payload) {
-      this.forecastDetailsData = payload.data;
+      this.forecastDetailsData = payload;
       this.showForecastDetails = true;
     },
   },
