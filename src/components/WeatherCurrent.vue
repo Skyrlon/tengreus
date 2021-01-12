@@ -21,9 +21,12 @@
         Visibility : {{ convertLength(visibility) }}{{ lengthUnit }}
       </div>
       <div class="wind">
-        Wind : <compass-icon :degree="wind.deg" /> {{ convertSpeed(wind.speed)
-        }}{{ speedUnit }} with gust of {{ convertSpeed(wind.gust)
-        }}{{ speedUnit }}
+        Wind :
+        <div class="wind-direction">
+          <arrow-icon :degree="wind.deg" />
+        </div>
+        {{ convertSpeed(wind.speed) }}{{ speedUnit }} with gust of
+        {{ convertSpeed(wind.gust) }}{{ speedUnit }}
       </div>
       <div class="cloudiness">Cloudiness : {{ cloudiness }}%</div>
       <div class="moon-phase">Moon phase : {{ getMoonPhase(time) }}</div>
@@ -48,11 +51,11 @@
 
 <script>
 import { mapState } from "vuex";
-import CompassIcon from "@/components/icons/CompassIcon.vue";
+import ArrowIcon from "@/components/icons/ArrowIcon.vue";
 
 export default {
   name: "WeatherCurrent",
-  components: { CompassIcon },
+  components: { ArrowIcon },
   props: {
     isActive: Boolean,
   },
@@ -102,6 +105,13 @@ export default {
     }
     & > div {
       padding: 1.5em 15%;
+    }
+  }
+  & .wind {
+    display: flex;
+    flex-direction: row;
+    &-direction {
+      width: 1em;
     }
   }
 }

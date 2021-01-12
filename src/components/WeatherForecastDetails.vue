@@ -23,7 +23,10 @@
       </div>
       <div class="humidity">Humidity : {{ ForecastData.humidity }}%</div>
       <div class="wind">
-        Wind : <compass-icon :degree="ForecastData.wind_deg" />
+        Wind :
+        <div class="wind-direction">
+          <arrow-icon :degree="ForecastData.wind_deg" />
+        </div>
         {{ convertSpeed(ForecastData.wind_speed) }}{{ speedUnit }}
       </div>
       <div class="cloudiness">Cloudiness : {{ ForecastData.clouds }}%</div>
@@ -36,11 +39,11 @@
 
 <script>
 import { mapState } from "vuex";
-import CompassIcon from "@/components/icons/CompassIcon.vue";
+import ArrowIcon from "@/components/icons/ArrowIcon.vue";
 import WeatherCard from "./WeatherCard.vue";
 
 export default {
-  components: { WeatherCard, CompassIcon },
+  components: { WeatherCard, ArrowIcon },
   name: "WeatherForecastDetails",
   props: {
     ForecastData: Object,
@@ -63,7 +66,16 @@ export default {
     display: flex;
     flex-wrap: wrap;
     & > div {
+      justify-content: center;
       width: 50%;
+    }
+    & .wind {
+      display: flex;
+      flex-direction: row;
+      &-direction {
+        width: 1em;
+        height: 1em;
+      }
     }
   }
 }
