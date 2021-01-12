@@ -41,35 +41,6 @@ export default {
     ...mapState(["forecast"]),
   },
   methods: {
-    dayOfTheWeek(time) {
-      let dayInLetters;
-      let dt = new Date(time * 1000);
-      let day = dt.getDay();
-      switch (day) {
-        case 0:
-          dayInLetters = "Monday";
-          break;
-        case 1:
-          dayInLetters = "Tuesday";
-          break;
-        case 2:
-          dayInLetters = "Wednesday";
-          break;
-        case 3:
-          dayInLetters = "Thursday";
-          break;
-        case 4:
-          dayInLetters = "Friday";
-          break;
-        case 5:
-          dayInLetters = "Saturday";
-          break;
-        case 6:
-          dayInLetters = "Sunday";
-          break;
-      }
-      return dayInLetters;
-    },
     showDetails(payload) {
       this.forecastDetailsData = payload;
       this.showForecastDetails = true;

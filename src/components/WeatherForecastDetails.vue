@@ -1,7 +1,10 @@
 <template>
   <div class="weather-forecast-details">
     <div class="weather-forecast-details-icon">
-      <weather-card :WeatherData="ForecastData" :Title="ForecastData.dt">
+      <weather-card
+        :WeatherData="ForecastData"
+        :Title="dayOfTheWeek(ForecastData.dt)"
+      >
         <div class="weather-forecast-details-link" @click="$emit('go-back')">
           Back
         </div>
