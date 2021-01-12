@@ -25,6 +25,7 @@
         <div class="wind-direction">
           <arrow-icon :degree="wind.deg" />
         </div>
+        {{ getWindDirection(wind.deg) }}
         {{ convertSpeed(wind.speed) }}{{ speedUnit }} with gust of
         {{ convertSpeed(wind.gust) }}{{ speedUnit }}
       </div>
@@ -112,6 +113,7 @@ export default {
     flex-direction: row;
     &-direction {
       width: 1em;
+      height: 1em;
     }
   }
 }

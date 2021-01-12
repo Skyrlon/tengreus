@@ -27,6 +27,7 @@
         <div class="wind-direction">
           <arrow-icon :degree="ForecastData.wind_deg" />
         </div>
+        {{ getWindDirection(ForecastData.wind_deg) }}
         {{ convertSpeed(ForecastData.wind_speed) }}{{ speedUnit }}
       </div>
       <div class="cloudiness">Cloudiness : {{ ForecastData.clouds }}%</div>

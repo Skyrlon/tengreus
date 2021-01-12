@@ -68,11 +68,34 @@ const Converters = {
                     }
                     return Math.round(speed * 100) / 100
                 },
+
                 convertTime(time) {
                     let dt = new Date((time + this.$store.state.timeShift) * 1000);
                     let hour = dt.getUTCHours();
                     let minutes = (dt.getUTCMinutes() < 10 ? '0' : '') + dt.getUTCMinutes();
                     return `${hour}:${minutes}`;
+                },
+
+                getWindDirection(degree) {
+                    let direction;
+                    if (degree <= 22 || degree >= 338) {
+                        direction = "From North"
+                    } else if (degree >= 23 && degree <= 67) {
+                        direction = "From North East"
+                    } else if (degree >= 68 && degree <= 112) {
+                        direction = "From East"
+                    } else if (degree >= 113 && degree <= 157) {
+                        direction = "From South East"
+                    } else if (degree >= 158 && degree <= 202) {
+                        direction = "From South"
+                    } else if (degree >= 203 && degree <= 247) {
+                        direction = "From South West"
+                    } else if (degree >= 248 && degree <= 292) {
+                        direction = "From West"
+                    } else if (degree >= 293 && degree <= 337) {
+                        direction = "From North West"
+                    }
+                    return direction;
                 }
             }
         });
