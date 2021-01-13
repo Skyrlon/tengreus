@@ -1,52 +1,31 @@
 <template>
   <div class="weather-current" :class="{ active: isActive }">
-    <section>
-      <div class="feels-like-temp">
-        Feels like : {{ convertTemperature(temperatures.feelsLike)
-        }}{{ tempUnit }}
+    <div class="feels-like-temp">
+      Feels like : {{ convertTemperature(temperatures.feelsLike)
+      }}{{ tempUnit }}
+    </div>
+    <div class="min-max-temp">
+      Min/max temperature : {{ convertTemperature(temperatures.min) }}/{{
+        convertTemperature(temperatures.max)
+      }}{{ tempUnit }}
+    </div>
+    <div class="pressure">
+      Pressure : {{ convertPressure(pressure) }} {{ pressureUnit }}
+    </div>
+    <div class="humidity">Humidity : {{ humidity }}%</div>
+    <div class="visibility">
+      Visibility : {{ convertLength(visibility) }}{{ lengthUnit }}
+    </div>
+    <div class="wind">
+      Wind :
+      <div class="wind-direction">
+        <arrow-icon :degree="wind.deg" />
       </div>
-      <div class="min-max-temp">
-        Min/max temperature : {{ convertTemperature(temperatures.min) }}/{{
-          convertTemperature(temperatures.max)
-        }}{{ tempUnit }}
-      </div>
-      <div class="pressure">
-        Pressure : {{ convertPressure(pressure) }} {{ pressureUnit }}
-      </div>
-      <div class="humidity">Humidity : {{ humidity }}%</div>
-    </section>
-
-    <section>
-      <div class="visibility">
-        Visibility : {{ convertLength(visibility) }}{{ lengthUnit }}
-      </div>
-      <div class="wind">
-        Wind :
-        <div class="wind-direction">
-          <arrow-icon :degree="wind.deg" />
-        </div>
-        {{ getWindDirection(wind.deg) }}
-        {{ convertSpeed(wind.speed) }}{{ speedUnit }} with gust of
-        {{ convertSpeed(wind.gust) }}{{ speedUnit }}
-      </div>
-      <div class="cloudiness">Cloudiness : {{ cloudiness }}%</div>
-      <div class="moon-phase">Moon phase : {{ getMoonPhase(time) }}</div>
-    </section>
-
-    <section>
-      <div class="rain-last-hour">
-        Rain volume for the last hour : {{ precipitation.rainLast1H }}mm
-      </div>
-      <div class="rain-last-three-hours">
-        Rain volume for the last 3 hours : {{ precipitation.rainLast3H }}mm
-      </div>
-      <div class="snow-last-hour">
-        Snow volume for the last hour : {{ precipitation.snowLast1H }}mm
-      </div>
-      <div class="snow-last-three-hours">
-        Snow volume for the last 3 hours : {{ precipitation.snowLast3H }}mm
-      </div>
-    </section>
+      {{ getWindDirection(wind.deg) }}
+      {{ convertSpeed(wind.speed) }}{{ speedUnit }}
+    </div>
+    <div class="cloudiness">Cloudiness : {{ cloudiness }}%</div>
+    <div class="moon-phase">Moon phase : {{ getMoonPhase(time) }}</div>
   </div>
 </template>
 
@@ -72,7 +51,6 @@ export default {
       "visibility",
       "wind",
       "cloudiness",
-      "precipitation",
       "time",
       "sunrise",
       "sunset",
@@ -86,35 +64,27 @@ export default {
 .weather-current {
   position: absolute;
   display: flex;
+  flex-wrap: wrap;
   left: -100%;
   width: 100%;
   font-size: medium;
   text-align: left;
   flex: 1 1 auto;
   justify-content: space-between;
-  transition: 0.5s;
+  transition: 1s;
   &.active {
     left: 0;
   }
-
-  & section {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    &:nth-child(-n + 3) {
-      border-right: 2px solid green;
-    }
-    & > div {
-      padding: 1.5em 15%;
-    }
+  & > div {
+    box-sizing: border-box;
+    margin-top: 3em;
+    padding-left: 5em;
+    width: 50%;
   }
-  & .wind {
-    display: flex;
-    flex-direction: row;
-    &-direction {
-      width: 1em;
-      height: 1em;
-    }
+  & .wind-direction {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
   }
 }
 </style>

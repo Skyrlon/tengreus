@@ -70,16 +70,15 @@ export default {
     display: flex;
     flex-wrap: wrap;
     & > div {
-      justify-content: center;
+      box-sizing: border-box;
+      margin-top: 3em;
+      padding-left: 5em;
       width: 50%;
     }
-    & .wind {
-      display: flex;
-      flex-direction: row;
-      &-direction {
-        width: 1em;
-        height: 1em;
-      }
+    & .wind-direction {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
     }
   }
 }

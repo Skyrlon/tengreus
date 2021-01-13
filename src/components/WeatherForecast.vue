@@ -55,7 +55,7 @@ export default {
   left: 100%;
   width: 100%;
   height: 200px;
-  transition: 0.5s;
+  transition: 1s;
   &.active {
     left: 0;
   }

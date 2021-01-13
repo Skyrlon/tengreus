@@ -34,15 +34,8 @@ export default new Vuex.Store({
     wind: {
       speed: 1.5, // in m/s
       deg: 350,
-      gust: 3, // in m/s
     },
     cloudiness: 1,
-    precipitation: {
-      rainLast1H: 0,
-      rainLast3H: 0,
-      snowLast1H: 0,
-      snowLast3H: 0,
-    },
     sunrise: 0,
     sunset: 0,
     forecast: [],
