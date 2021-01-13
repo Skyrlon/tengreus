@@ -2,13 +2,15 @@
   <div class="weather">
     <weather-banner />
     <weather-details />
-    <transition name="settings-appear">
+    <transition name="show-settings">
       <settings v-if="showSettings" />
     </transition>
-    <settings-icon
-      @click.native="showSettings = !showSettings"
-      :isActive="showSettings"
-    />
+    <div class="settings-icon" :class="{ active: showSettings }">
+      <settings-icon
+        @click.native="showSettings = !showSettings"
+        :isActive="showSettings"
+      />
+    </div>
   </div>
 </template>
 
@@ -47,6 +49,29 @@ export default {
   height: 100%;
   & .footer {
     flex: 0 1 40px;
+  }
+}
+
+.show-settings-enter-active {
+  transform-origin: 100% 0%;
+  animation: show-up 0.7s linear;
+}
+
+.show-settings-leave-active {
+  transform-origin: 100% 0%;
+  animation: show-up 0.7s linear reverse;
+}
+
+.settings-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 3.5%;
+  height: auto;
+  transform: rotate(0deg);
+  transition: 0.7s;
+  &.active {
+    transform: rotate(-180deg);
   }
 }
 
