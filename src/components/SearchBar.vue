@@ -165,7 +165,7 @@ export default {
 <style lang="scss" scoped>
 #searchbar {
   margin: auto;
-  margin-top: 10%;
+  margin-top: 1%;
   width: 20vw;
 
   &.active #searchbar-dropdown {
