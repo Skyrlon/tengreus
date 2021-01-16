@@ -1,11 +1,27 @@
 <template>
   <svg viewBox="0 0 100 60" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <radialGradient id="SunGradient">
-        <stop offset="0%" stop-color="yellow" />
-        <stop offset="40%" stop-color="yellow" />
-        <stop offset="100%" stop-color="white" stop-opacity="0" />
-      </radialGradient>
+      <rect
+        id="sun-ray"
+        x="-0.5"
+        y="-10"
+        rx="2"
+        r="2"
+        width="1"
+        height="5"
+        fill="#f7f701"
+      />
+      <g id="sun">
+        <use x="0" href="#sun-ray" />
+        <use x="0" href="#sun-ray" transform="rotate(45 0 0)" />
+        <use x="0" href="#sun-ray" transform="rotate(90 0 0)" />
+        <use x="0" href="#sun-ray" transform="rotate(135 0 0)" />
+        <use x="0" href="#sun-ray" transform="rotate(180 0 0)" />
+        <use x="0" href="#sun-ray" transform="rotate(225 0 0)" />
+        <use x="0" href="#sun-ray" transform="rotate(270 0 0)" />
+        <use x="0" href="#sun-ray" transform="rotate(315 0 0)" />
+        <circle cx="0" cy="0" r="4" fill="#f7f701" />
+      </g>
     </defs>
     <path
       d="M10,60 a10,10 0 0,1 80,00"
@@ -13,11 +29,10 @@
       fill="transparent"
       stroke-width="2"
     />
-    <circle
-      cx="10"
-      cy="60"
-      r="10"
-      fill="url(#SunGradient)"
+    <use
+      x="10"
+      y="60"
+      href="#sun"
       :style="`transform-origin: 50px 60px; transform: rotate(${sunPos(
         time,
         sunRise,

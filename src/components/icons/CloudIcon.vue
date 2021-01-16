@@ -6,11 +6,27 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
   >
     <def>
-      <radialGradient id="SunGradient">
-        <stop offset="0%" stop-color="yellow" />
-        <stop offset="40%" stop-color="yellow" />
-        <stop offset="100%" stop-color="white" stop-opacity="0" />
-      </radialGradient>
+      <rect
+        id="sun-ray"
+        x="-1"
+        y="-22"
+        rx="2"
+        r="2"
+        width="2"
+        height="10"
+        fill="#f7f701"
+      />
+      <g id="sun">
+        <use x="0" href="#sun-ray" />
+        <use x="0" href="#sun-ray" transform="rotate(45 0 0)" />
+        <use x="0" href="#sun-ray" transform="rotate(90 0 0)" />
+        <use x="0" href="#sun-ray" transform="rotate(135 0 0)" />
+        <use x="0" href="#sun-ray" transform="rotate(180 0 0)" />
+        <use x="0" href="#sun-ray" transform="rotate(225 0 0)" />
+        <use x="0" href="#sun-ray" transform="rotate(270 0 0)" />
+        <use x="0" href="#sun-ray" transform="rotate(315 0 0)" />
+        <circle cx="0" cy="0" r="10" fill="#f7f701" />
+      </g>
       <path
         id="cloud"
         d="M 20,70
@@ -29,11 +45,10 @@
       style="transform: scale(0.5)"
       v-if="cloudiness == 'few clouds' && moonOrSun == 'night'"
     />
-    <circle
-      cx="30"
-      cy="40"
-      r="35"
-      fill="url(#SunGradient)"
+    <use
+      x="30"
+      y="35"
+      href="#sun"
       v-if="cloudiness == 'few clouds' && moonOrSun == 'day'"
     />
     <use
@@ -68,6 +83,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>
