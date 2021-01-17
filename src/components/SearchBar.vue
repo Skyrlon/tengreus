@@ -17,7 +17,7 @@
       <div id="searchbar-dropdown-list">
         <div
           :key="city.key"
-          v-for="city in filteredCities"
+          v-for="city in citiesList"
           :id="city.id"
           @click="selectCity($event)"
         >
@@ -58,7 +58,6 @@ export default {
       isActive: undefined,
       searchCity: "",
       apiData: null,
-      filteredCities: [],
       citiesList: [],
       admin1CodesList: Admin1Codes.split(/\n/),
     };
@@ -90,7 +89,14 @@ export default {
           .get(
             `https://public.opendatasoft.com/api/records/1.0/search/?dataset=geonames-all-cities-with-a-population-1000&q='"${this.searchCity}'&rows=1000&sort=population`
           )
-          .then((response) => (this.apiData = response.data.records))
+          .then(
+            (response) =>
+              (this.apiData = response.data.records.filter((data) =>
+                data["fields"]["name"]
+                  .toLowerCase()
+                  .startsWith(this.searchCity.toLowerCase())
+              ))
+          )
           .then(() => {
             this.citiesList = [];
             for (let i = 0; i < this.apiData.length; i++) {
@@ -116,19 +122,9 @@ export default {
                 country: countryName,
               });
             }
-            this.filteredCities = [];
-            for (let i = 0; i < this.citiesList.length; i++) {
-              if (
-                this.citiesList[i].name
-                  .toLowerCase()
-                  .startsWith(this.searchCity.toLowerCase()) == true
-              ) {
-                this.filteredCities.push(this.citiesList[i]);
-              }
-            }
-            if (this.filteredCities.length > 0) {
+            if (this.citiesList.length > 0) {
               this.isActive = true;
-            } else if (this.filteredCities.length < 1) {
+            } else if (this.citiesList.length < 1) {
               this.isActive = false;
             }
             if (this.searchCity.length == 0) {
@@ -144,9 +140,9 @@ export default {
     },
 
     isFocus(e) {
-      if (this.filteredCities.length > 0) {
+      if (this.citiesList.length > 0) {
         this.isActive = true;
-      } else if (this.filteredCities.length == 0) {
+      } else if (this.citiesList.length == 0) {
         this.isActive = false;
       }
       if (this.searchCity.length == 0) {
