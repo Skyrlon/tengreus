@@ -1,19 +1,20 @@
 <template>
   <div
     id="searchbar"
-    :class="{ active: isActive }"
+    :class="{ active: isActive, loading: isLoading }"
     v-clickOutside="hideCityDatalistUl"
   >
     <input
       v-model="searchCity"
       @keyup="getCities($event)"
-      @focusin="isFocus($event)"
+      @focusin="showDropdown($event)"
       onblur="this.placeholder = 'Entrez le nom d\'une ville'"
       id="searchbar-input"
       type="text"
       placeholder="Entrez le nom d'une ville"
     />
     <div id="searchbar-dropdown">
+      <div class="loading-icon" v-if="isLoading"></div>
       <div id="searchbar-dropdown-list">
         <div
           :key="city.key"
@@ -34,7 +35,6 @@ import Admin1Codes from "!!raw-loader!@/assets/admin1CodesASCII.txt";
 
 export default {
   name: "SearchBar",
-  components: {},
   directives: {
     clickOutside: {
       bind(el, binding, vnode) {
@@ -56,6 +56,7 @@ export default {
   data() {
     return {
       isActive: undefined,
+      isLoading: false,
       searchCity: "",
       apiData: null,
       citiesList: [],
@@ -82,6 +83,7 @@ export default {
   methods: {
     getCities(event) {
       if (this.searchCity.length >= 3) {
+        this.isLoading = true;
         if (event.key == "Shift" || event.keyCode == 16) {
           return;
         }
@@ -122,14 +124,10 @@ export default {
                 country: countryName,
               });
             }
-            if (this.citiesList.length > 0) {
-              this.isActive = true;
-            } else if (this.citiesList.length < 1) {
-              this.isActive = false;
-            }
-            if (this.searchCity.length == 0) {
-              this.isActive = false;
-            }
+            this.showDropdown(event);
+          })
+          .then(() => {
+            this.isLoading = false;
           });
       }
     },
@@ -139,7 +137,7 @@ export default {
       this.isActive = false;
     },
 
-    isFocus(e) {
+    showDropdown(e) {
       if (this.citiesList.length > 0) {
         this.isActive = true;
       } else if (this.citiesList.length == 0) {
@@ -174,6 +172,13 @@ export default {
       color: black;
       background: lightgreen;
     }
+  }
+
+  &.loading #searchbar-dropdown {
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-top-style: none;
   }
 
   &-input {
@@ -213,6 +218,23 @@ export default {
         cursor: pointer;
       }
     }
+    & .loading-icon {
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 16px solid #3498db;
+      width: 120px;
+      height: 120px;
+      animation: spin 2s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>
