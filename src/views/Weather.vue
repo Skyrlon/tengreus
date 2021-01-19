@@ -22,10 +22,6 @@ import WeatherDetails from "../components/WeatherDetails.vue";
 
 export default {
   name: "Weather",
-  beforeCreate() {
-    this.$store.dispatch("getCurrentWeather");
-    this.$store.dispatch("getForecastWeather");
-  },
   data() {
     return {
       showSettings: false,

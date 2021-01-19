@@ -135,6 +135,7 @@ export default {
     selectCity(e) {
       this.searchCity = e.target.textContent.replace(/\s+/g, " ").trim();
       this.isActive = false;
+      this.$store.dispatch("getCurrentWeather", { id: e.target.id });
     },
 
     showDropdown(e) {
@@ -216,6 +217,10 @@ export default {
         color: #999;
         font-size: 1em;
         cursor: pointer;
+        & a {
+          text-decoration: none;
+          color: #999;
+        }
       }
     }
     & .loading-icon {

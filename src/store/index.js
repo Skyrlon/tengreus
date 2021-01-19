@@ -117,9 +117,9 @@ export default new Vuex.Store({
     getCurrentWeather({
       commit,
       state
-    }) {
+    }, payload) {
       axios
-        .get(`https://api.openweathermap.org/data/2.5/weather?id=${state.city.id}&appid=${state.apiKey}&units=metric`)
+        .get(`https://api.openweathermap.org/data/2.5/weather?id=${payload.id}&appid=${state.apiKey}&units=metric`)
         .then(result => {
           commit('LOAD_CURRENT_WEATHER', result.data);
         })
