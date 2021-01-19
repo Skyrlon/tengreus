@@ -83,6 +83,7 @@ export default {
   methods: {
     getCities(event) {
       if (this.searchCity.length >= 3) {
+        this.citiesList = [];
         this.isLoading = true;
         if (event.key == "Shift" || event.keyCode == 16) {
           return;
@@ -100,7 +101,6 @@ export default {
               ))
           )
           .then(() => {
-            this.citiesList = [];
             for (let i = 0; i < this.apiData.length; i++) {
               let cityId = this.apiData[i]["fields"]["geoname_id"];
               let cityName = this.apiData[i]["fields"]["name"];
@@ -219,11 +219,15 @@ export default {
       }
     }
     & .loading-icon {
-      border: 16px solid #f3f3f3;
+      display: block;
+      margin-top: 1em;
+      margin-left: auto;
+      margin-right: auto;
+      width: 1em;
+      height: 1em;
+      border: 0.5em solid #f3f3f3;
       border-radius: 50%;
-      border-top: 16px solid #3498db;
-      width: 120px;
-      height: 120px;
+      border-top: 0.5em solid #3498db;
       animation: spin 2s linear infinite;
     }
   }
