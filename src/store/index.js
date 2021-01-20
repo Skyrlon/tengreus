@@ -42,6 +42,7 @@ export default new Vuex.Store({
   },
   mutations: {
     LOAD_CURRENT_WEATHER(state, payload) {
+      state.city.name = payload.name;
       state.timeShift = payload.timezone;
       state.time = Date.now() / 1000;
       state.sunrise = payload.sys.sunrise;
@@ -127,9 +128,9 @@ export default new Vuex.Store({
     getForecastWeather({
       commit,
       state
-    }) {
+    }, payload) {
       axios
-        .get(`https://api.openweathermap.org/data/2.5/onecall?appid=${state.apiKey}&units=metric&lat=${state.city.lat}&lon=${state.city.lon}&exclude=current,minutely,hourly,alerts`)
+        .get(`https://api.openweathermap.org/data/2.5/onecall?appid=${state.apiKey}&units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts`)
         .then(result => {
           commit('LOAD_FORECAST_WEATHER', result.data);
         })

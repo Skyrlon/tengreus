@@ -20,7 +20,7 @@
           :key="city.key"
           v-for="city in citiesList"
           :id="city.id"
-          @click="selectCity($event)"
+          @click="selectCity($event, city.id, city.longitude, city.latitude)"
         >
           {{ city.name }}, {{ city.subdivision }}, {{ city.country }}
         </div>
@@ -116,12 +116,16 @@ export default {
                 }
               }
               let countryName = this.apiData[i]["fields"]["country"];
+              let longitude = this.apiData[i]["fields"]["longitude"];
+              let latitude = this.apiData[i]["fields"]["latitude"];
 
               this.citiesList.push({
                 id: cityId,
                 name: cityName,
                 subdivision: adminSubdivision,
                 country: countryName,
+                longitude: longitude,
+                latitude: latitude,
               });
             }
             this.showDropdown(event);
@@ -132,10 +136,14 @@ export default {
       }
     },
 
-    selectCity(e) {
+    selectCity(e, id, longitude, latitude) {
       this.searchCity = e.target.textContent.replace(/\s+/g, " ").trim();
       this.isActive = false;
-      this.$store.dispatch("getCurrentWeather", { id: e.target.id });
+      this.$store.dispatch("getCurrentWeather", { id: id });
+      this.$store.dispatch("getForecastWeather", {
+        longitude: longitude,
+        latitude: latitude,
+      });
     },
 
     showDropdown(e) {
