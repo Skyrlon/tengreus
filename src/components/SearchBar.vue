@@ -1,7 +1,7 @@
 <template>
   <div
     id="searchbar"
-    :class="{ active: isActive, loading: isLoading }"
+    :class="{ active: isActive, loading: isLoading, error: gotError.status }"
     v-clickOutside="hideCityDatalistUl"
   >
     <input
@@ -16,6 +16,12 @@
     />
     <div id="searchbar-dropdown">
       <div class="loading-icon" v-if="isLoading"></div>
+      <div
+        class="error-text"
+        v-if="isLoading === false && gotError.status === true"
+      >
+        {{ gotError.message }}
+      </div>
       <div id="searchbar-dropdown-list">
         <div
           :key="city.key"
@@ -61,6 +67,10 @@ export default {
     return {
       isActive: undefined,
       isLoading: false,
+      gotError: {
+        status: false,
+        message: "",
+      },
       searchCity: "",
       apiData: null,
       citiesList: [],
@@ -88,6 +98,8 @@ export default {
   methods: {
     getCities(val, e) {
       if (this.searchCity.length >= 3) {
+        this.gotError.status = false;
+        this.gotError.message = "";
         this.citiesList = [];
         this.isLoading = true;
         if (e.key == "Shift" || e.keyCode == 16) {
@@ -110,33 +122,39 @@ export default {
     },
 
     fillCitiesList() {
-      for (let i = 0; i < this.apiData.length; i++) {
-        let cityId = this.apiData[i]["fields"]["geoname_id"];
-        let cityName = this.apiData[i]["fields"]["name"];
-        let adminSubdivision;
-        for (let j = 0; j < this.admin1CodesListOrganized.length; j++) {
-          if (
-            this.apiData[i]["fields"]["country_code"] ==
-              this.admin1CodesListOrganized[j].country &&
-            this.apiData[i]["fields"]["admin1_code"] ==
-              this.admin1CodesListOrganized[j].admin1code
-          ) {
-            adminSubdivision = this.admin1CodesListOrganized[j].name;
+      if (this.apiData.length === 0) {
+        this.gotError.status = true;
+        this.gotError.message = "No city found";
+      } else {
+        for (let i = 0; i < this.apiData.length; i++) {
+          let cityId = this.apiData[i]["fields"]["geoname_id"];
+          let cityName = this.apiData[i]["fields"]["name"];
+          let adminSubdivision;
+          for (let j = 0; j < this.admin1CodesListOrganized.length; j++) {
+            if (
+              this.apiData[i]["fields"]["country_code"] ==
+                this.admin1CodesListOrganized[j].country &&
+              this.apiData[i]["fields"]["admin1_code"] ==
+                this.admin1CodesListOrganized[j].admin1code
+            ) {
+              adminSubdivision = this.admin1CodesListOrganized[j].name;
+            }
           }
-        }
-        let countryName = this.apiData[i]["fields"]["country"];
-        let longitude = this.apiData[i]["fields"]["longitude"];
-        let latitude = this.apiData[i]["fields"]["latitude"];
+          let countryName = this.apiData[i]["fields"]["country"];
+          let longitude = this.apiData[i]["fields"]["longitude"];
+          let latitude = this.apiData[i]["fields"]["latitude"];
 
-        this.citiesList.push({
-          id: cityId,
-          name: cityName,
-          subdivision: adminSubdivision,
-          country: countryName,
-          longitude: longitude,
-          latitude: latitude,
-        });
+          this.citiesList.push({
+            id: cityId,
+            name: cityName,
+            subdivision: adminSubdivision,
+            country: countryName,
+            longitude: longitude,
+            latitude: latitude,
+          });
+        }
       }
+
       this.showDropdown(event);
     },
 
@@ -192,6 +210,16 @@ export default {
     box-sizing: border-box;
     border: 1px solid black;
     border-top-style: none;
+  }
+
+  &.error #searchbar-dropdown {
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-top-style: none;
+    & div {
+      margin-top: 1em;
+    }
   }
 
   &-input {
