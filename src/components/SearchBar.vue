@@ -6,7 +6,8 @@
   >
     <input
       v-model="searchCity"
-      @keyup="getCities($event)"
+      v-debounce:300="getCities"
+      debounce-events="keyup"
       @focusin="showDropdown($event)"
       onblur="this.placeholder = 'Entrez le nom d\'une ville'"
       id="searchbar-input"
@@ -58,6 +59,7 @@ export default {
       isActive: undefined,
       isLoading: false,
       searchCity: "",
+      timer: null,
       apiData: null,
       citiesList: [],
       admin1CodesList: Admin1Codes.split(/\n/),
@@ -80,13 +82,14 @@ export default {
       return admin1Array;
     },
   },
+
   methods: {
-    getCities(event) {
+    getCities(val, e) {
       if (this.searchCity.length >= 3) {
         this.citiesList = [];
         this.isLoading = true;
-        if (event.key == "Shift" || event.keyCode == 16) {
-          return;
+        if (e.key == "Shift" || e.keyCode == 16) {
+          this.isLoading = false;
         }
         axios
           .get(
