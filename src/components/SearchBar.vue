@@ -62,7 +62,6 @@ export default {
       isActive: undefined,
       isLoading: false,
       searchCity: "",
-      timer: null,
       apiData: null,
       citiesList: [],
       admin1CodesList: Admin1Codes.split(/\n/),
@@ -98,48 +97,47 @@ export default {
           .get(
             `https://public.opendatasoft.com/api/records/1.0/search/?dataset=geonames-all-cities-with-a-population-1000&q='"${this.searchCity}'&rows=1000&sort=population`
           )
-          .then(
-            (response) =>
-              (this.apiData = response.data.records.filter((data) =>
-                data["fields"]["name"]
-                  .toLowerCase()
-                  .startsWith(this.searchCity.toLowerCase())
-              ))
-          )
-          .then(() => {
-            for (let i = 0; i < this.apiData.length; i++) {
-              let cityId = this.apiData[i]["fields"]["geoname_id"];
-              let cityName = this.apiData[i]["fields"]["name"];
-              let adminSubdivision;
-              for (let j = 0; j < this.admin1CodesListOrganized.length; j++) {
-                if (
-                  this.apiData[i]["fields"]["country_code"] ==
-                    this.admin1CodesListOrganized[j].country &&
-                  this.apiData[i]["fields"]["admin1_code"] ==
-                    this.admin1CodesListOrganized[j].admin1code
-                ) {
-                  adminSubdivision = this.admin1CodesListOrganized[j].name;
-                }
-              }
-              let countryName = this.apiData[i]["fields"]["country"];
-              let longitude = this.apiData[i]["fields"]["longitude"];
-              let latitude = this.apiData[i]["fields"]["latitude"];
-
-              this.citiesList.push({
-                id: cityId,
-                name: cityName,
-                subdivision: adminSubdivision,
-                country: countryName,
-                longitude: longitude,
-                latitude: latitude,
-              });
-            }
-            this.showDropdown(event);
+          .then((response) => {
+            this.apiData = response.data.records.filter((data) =>
+              data["fields"]["name"]
+                .toLowerCase()
+                .startsWith(this.searchCity.toLowerCase())
+            );
           })
-          .then(() => {
-            this.isLoading = false;
-          });
+          .then(this.fillCitiesList)
+          .then(() => (this.isLoading = false));
       }
+    },
+
+    fillCitiesList() {
+      for (let i = 0; i < this.apiData.length; i++) {
+        let cityId = this.apiData[i]["fields"]["geoname_id"];
+        let cityName = this.apiData[i]["fields"]["name"];
+        let adminSubdivision;
+        for (let j = 0; j < this.admin1CodesListOrganized.length; j++) {
+          if (
+            this.apiData[i]["fields"]["country_code"] ==
+              this.admin1CodesListOrganized[j].country &&
+            this.apiData[i]["fields"]["admin1_code"] ==
+              this.admin1CodesListOrganized[j].admin1code
+          ) {
+            adminSubdivision = this.admin1CodesListOrganized[j].name;
+          }
+        }
+        let countryName = this.apiData[i]["fields"]["country"];
+        let longitude = this.apiData[i]["fields"]["longitude"];
+        let latitude = this.apiData[i]["fields"]["latitude"];
+
+        this.citiesList.push({
+          id: cityId,
+          name: cityName,
+          subdivision: adminSubdivision,
+          country: countryName,
+          longitude: longitude,
+          latitude: latitude,
+        });
+      }
+      this.showDropdown(event);
     },
 
     selectCity(e, id, longitude, latitude) {
