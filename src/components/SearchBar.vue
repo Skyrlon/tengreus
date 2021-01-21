@@ -23,7 +23,10 @@
           :id="city.id"
           @click="selectCity($event, city.id, city.longitude, city.latitude)"
         >
-          {{ city.name }}, {{ city.subdivision }}, {{ city.country }}
+          <router-link to="/weather">
+            {{ city.name }}, {{ city.subdivision }},
+            {{ city.country }}
+          </router-link>
         </div>
       </div>
     </div>
