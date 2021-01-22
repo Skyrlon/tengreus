@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 const axios = require("axios");
+import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+
+  plugins: [createPersistedState()],
+
   state: {
     apiKey: process.env.VUE_APP_API_KEY,
     temperatures: {
@@ -40,6 +44,7 @@ export default new Vuex.Store({
     sunset: 10,
     forecast: [],
   },
+
   mutations: {
     LOAD_CURRENT_WEATHER(state, payload) {
       state.city.name = payload.name;
@@ -114,6 +119,7 @@ export default new Vuex.Store({
       }
     }
   },
+
   actions: {
     getCurrentWeather({
       commit,
@@ -136,5 +142,6 @@ export default new Vuex.Store({
         })
     }
   },
+
   modules: {}
 })
