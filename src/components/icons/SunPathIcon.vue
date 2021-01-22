@@ -2,7 +2,7 @@
   <svg viewBox="0 0 100 60" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <rect
-        id="sun-ray"
+        id="sun-path_sun-ray"
         x="-0.5"
         y="-10"
         rx="2"
@@ -11,15 +11,15 @@
         height="5"
         fill="#f7f701"
       />
-      <g id="sun">
-        <use x="0" href="#sun-ray" />
-        <use x="0" href="#sun-ray" transform="rotate(45 0 0)" />
-        <use x="0" href="#sun-ray" transform="rotate(90 0 0)" />
-        <use x="0" href="#sun-ray" transform="rotate(135 0 0)" />
-        <use x="0" href="#sun-ray" transform="rotate(180 0 0)" />
-        <use x="0" href="#sun-ray" transform="rotate(225 0 0)" />
-        <use x="0" href="#sun-ray" transform="rotate(270 0 0)" />
-        <use x="0" href="#sun-ray" transform="rotate(315 0 0)" />
+      <g id="#sun-path_sun">
+        <use x="0" href="#sun-path_sun-ray" />
+        <use x="0" href="#sun-path_sun-ray" transform="rotate(45 0 0)" />
+        <use x="0" href="#sun-path_sun-ray" transform="rotate(90 0 0)" />
+        <use x="0" href="#sun-path_sun-ray" transform="rotate(135 0 0)" />
+        <use x="0" href="#sun-path_sun-ray" transform="rotate(180 0 0)" />
+        <use x="0" href="#sun-path_sun-ray" transform="rotate(225 0 0)" />
+        <use x="0" href="#sun-path_sun-ray" transform="rotate(270 0 0)" />
+        <use x="0" href="#sun-path_sun-ray" transform="rotate(315 0 0)" />
         <circle cx="0" cy="0" r="4" fill="#f7f701" />
       </g>
     </defs>
@@ -32,7 +32,7 @@
     <use
       x="10"
       y="60"
-      href="#sun"
+      href="##sun-path_sun"
       :style="`transform-origin: 50px 60px; transform: rotate(${sunPos(
         time,
         sunRise,

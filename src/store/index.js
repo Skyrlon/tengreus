@@ -23,10 +23,10 @@ export default new Vuex.Store({
       lon: 2.3488,
     },
     timeShift: 0,
-    time: 0,
+    time: 5,
     weather: {
-      main: '',
-      detailed: '',
+      main: 'Clear',
+      detailed: 'clear sky',
     },
     pressure: 0,
     humidity: 100,
@@ -37,7 +37,7 @@ export default new Vuex.Store({
     },
     cloudiness: 1,
     sunrise: 0,
-    sunset: 0,
+    sunset: 10,
     forecast: [],
   },
   mutations: {
