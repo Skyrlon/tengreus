@@ -25,6 +25,7 @@ export default new Vuex.Store({
       id: 2988507,
       lat: 48.85341,
       lon: 2.3488,
+      country: "France",
     },
     timeShift: 0,
     time: 5,
@@ -48,6 +49,7 @@ export default new Vuex.Store({
   mutations: {
     LOAD_CURRENT_WEATHER(state, payload) {
       state.city.name = payload.name;
+      state.city.country = payload.sys.country;
       state.timeShift = payload.timezone;
       state.time = Date.now() / 1000;
       state.sunrise = payload.sys.sunrise;
