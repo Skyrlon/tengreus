@@ -9,6 +9,7 @@ export default new Vuex.Store({
   plugins: [createPersistedState()],
 
   state: {
+    currentView: "Home",
     apiKey: process.env.VUE_APP_API_KEY,
     temperatures: {
       current: -15,

@@ -22,7 +22,7 @@ import WeatherDetails from "../components/WeatherDetails.vue";
 
 export default {
   name: "Weather",
-  created() {
+  mounted() {
     document.title = `Tengreus - ${this.$store.state.city.name}, ${this.$store.state.city.country}`;
   },
   data() {

@@ -1,13 +1,21 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/weather">Weather</router-link>
-    </div>
-    <router-view/>
+    <home v-if="this.$store.state.currentView === 'Home'" />
+    <weather v-if="this.$store.state.currentView === 'Weather'" />
   </div>
 </template>
+
+<script>
+import Home from "./views/Home.vue";
+import Weather from "./views/Weather.vue";
+
+export default {
+  components: {
+    Home,
+    Weather,
+  },
+};
+</script>
 
 <style lang="scss">
 body {
@@ -28,7 +36,7 @@ body {
 
 #nav {
   position: absolute;
-  bottom:0;
+  bottom: 0;
   right: 0;
   padding: 30px;
 

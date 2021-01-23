@@ -29,10 +29,7 @@
           :id="city.id"
           @click="selectCity($event, city.id, city.longitude, city.latitude)"
         >
-          <router-link to="/weather">
-            {{ city.name }}, {{ city.subdivision }},
-            {{ city.country }}
-          </router-link>
+          {{ city.name }}, {{ city.subdivision }}, {{ city.country }}
         </div>
       </div>
     </div>
@@ -166,6 +163,7 @@ export default {
         longitude: longitude,
         latitude: latitude,
       });
+      this.$store.state.currentView = "Weather";
     },
 
     showDropdown(e) {
