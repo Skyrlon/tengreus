@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @beforeunload="window.sessionStorage.clear()">
     <home v-if="this.$store.state.currentView === 'Home'" />
     <weather v-if="this.$store.state.currentView === 'Weather'" />
   </div>
