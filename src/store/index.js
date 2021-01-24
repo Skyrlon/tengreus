@@ -49,6 +49,12 @@ export default new Vuex.Store({
     forecast: [],
   },
 
+  getters: {
+    getTitle: state => {
+      return `${state.city.name}, ${state.city.country}`
+    }
+  },
+
   mutations: {
     LOAD_CURRENT_WEATHER(state, payload) {
       state.city.name = payload.name;

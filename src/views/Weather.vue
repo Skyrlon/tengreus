@@ -1,5 +1,5 @@
 <template>
-  <div class="weather">
+  <div class="weather" @load="setTitle">
     <weather-banner />
     <weather-details />
     <transition name="show-settings">
@@ -19,11 +19,15 @@ import WeatherBanner from "@/components/WeatherBanner.vue";
 import Settings from "@/components/Settings.vue";
 import SettingsIcon from "@/components/icons/SettingsIcon.vue";
 import WeatherDetails from "../components/WeatherDetails.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Weather",
-  mounted() {
-    document.title = `Tengreus - ${this.$store.state.city.name}, ${this.$store.state.city.country}`;
+  computed: {
+    ...mapGetters(["getTitle"]),
+    setTitle() {
+      return (document.title = `Tengreus - ${this.getTitle}`);
+    },
   },
   data() {
     return {
