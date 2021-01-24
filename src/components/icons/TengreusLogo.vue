@@ -17,6 +17,9 @@
         fill="#f7f701"
       />
     </def>
+
+    <path d="M120,1 A40,79.5 90,0 0 80,99" fill="lightblue" />
+    <path d="M120,1 A40,79.5 90,0 1 80,99" fill="lightgrey" />
     <use x="0" href="#sun-ray" />
     <use x="0" href="#sun-ray" transform="rotate(45 30 30)" />
     <use x="0" href="#sun-ray" transform="rotate(90 30 30)" />
