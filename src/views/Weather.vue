@@ -1,7 +1,11 @@
 <template>
   <div class="weather" @load="setTitle">
     <weather-banner />
-    <div class="reload-icon" @click="reloadData">
+    <div
+      class="reload-icon"
+      :class="{ reloading: isReloading }"
+      @click="reloadData"
+    >
       <reload-icon />
     </div>
     <weather-details />
@@ -27,6 +31,7 @@ import ReloadIcon from "../components/icons/ReloadIcon.vue";
 
 export default {
   name: "Weather",
+
   computed: {
     ...mapState(["city"]),
     ...mapGetters(["getTitle"]),
@@ -34,20 +39,28 @@ export default {
       return (document.title = `Tengreus - ${this.getTitle}`);
     },
   },
+
   data() {
     return {
       showSettings: false,
+      isReloading: false,
     };
   },
+
   methods: {
     reloadData() {
+      this.isReloading = true;
       this.$store.dispatch("getCurrentWeather", { id: this.city.id });
       this.$store.dispatch("getForecastWeather", {
         longitude: this.city.lon,
         latitude: this.city.lat,
       });
+      setTimeout(() => {
+        this.isReloading = false;
+      }, 1000);
     },
   },
+
   components: {
     WeatherBanner,
     Settings,
@@ -99,6 +112,9 @@ export default {
   margin-right: auto;
   top: 45%;
   width: 2em;
+  &.reloading {
+    animation: infinite-spin 0.5s infinite linear;
+  }
 }
 
 @keyframes show-up {
@@ -107,6 +123,15 @@ export default {
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes infinite-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
   }
 }
 </style>
