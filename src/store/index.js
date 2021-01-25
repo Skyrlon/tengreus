@@ -59,6 +59,7 @@ export default new Vuex.Store({
     LOAD_CURRENT_WEATHER(state, payload) {
       state.city.name = payload.name;
       state.city.country = payload.sys.country;
+      state.city.id = payload.id;
       state.timeShift = payload.timezone;
       state.time = Date.now() / 1000;
       state.sunrise = payload.sys.sunrise;

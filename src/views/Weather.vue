@@ -1,6 +1,9 @@
 <template>
   <div class="weather" @load="setTitle">
     <weather-banner />
+    <div class="reload-icon" @click="reloadData">
+      <reload-icon />
+    </div>
     <weather-details />
     <transition name="show-settings">
       <settings v-if="showSettings" />
@@ -19,11 +22,13 @@ import WeatherBanner from "@/components/WeatherBanner.vue";
 import Settings from "@/components/Settings.vue";
 import SettingsIcon from "@/components/icons/SettingsIcon.vue";
 import WeatherDetails from "../components/WeatherDetails.vue";
-import { mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
+import ReloadIcon from "../components/icons/ReloadIcon.vue";
 
 export default {
   name: "Weather",
   computed: {
+    ...mapState(["city"]),
     ...mapGetters(["getTitle"]),
     setTitle() {
       return (document.title = `Tengreus - ${this.getTitle}`);
@@ -34,11 +39,21 @@ export default {
       showSettings: false,
     };
   },
+  methods: {
+    reloadData() {
+      this.$store.dispatch("getCurrentWeather", { id: this.city.id });
+      this.$store.dispatch("getForecastWeather", {
+        longitude: this.city.lon,
+        latitude: this.city.lat,
+      });
+    },
+  },
   components: {
     WeatherBanner,
     Settings,
     SettingsIcon,
     WeatherDetails,
+    ReloadIcon,
   },
 };
 </script>
@@ -76,6 +91,14 @@ export default {
   &.active {
     transform: rotate(-180deg);
   }
+}
+
+.reload-icon {
+  margin-top: -1.25em;
+  margin-left: auto;
+  margin-right: auto;
+  top: 45%;
+  width: 2em;
 }
 
 @keyframes show-up {
