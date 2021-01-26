@@ -44,20 +44,29 @@ export default {
     return {
       showSettings: false,
       isReloading: false,
+      clickCount: 0,
     };
   },
 
   methods: {
     reloadData() {
-      this.isReloading = true;
-      this.$store.dispatch("getCurrentWeather", { id: this.city.id });
-      this.$store.dispatch("getForecastWeather", {
-        longitude: this.city.lon,
-        latitude: this.city.lat,
-      });
-      setTimeout(() => {
-        this.isReloading = false;
-      }, 1000);
+      this.clickCount++;
+      if (this.clickCount < 2) {
+        this.isReloading = true;
+        this.$store.dispatch("getCurrentWeather", { id: this.city.id });
+        this.$store.dispatch("getForecastWeather", {
+          longitude: this.city.lon,
+          latitude: this.city.lat,
+        });
+        setTimeout(() => {
+          this.isReloading = false;
+        }, 1000);
+        setTimeout(() => {
+          this.clickCount = 0;
+        }, 300000);
+      } else {
+        return;
+      }
     },
   },
 
