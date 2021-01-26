@@ -1,12 +1,17 @@
 <template>
   <div class="weather" @load="setTitle">
     <weather-banner />
-    <div
-      class="reload-icon"
-      :class="{ reloading: isReloading }"
-      @click="reloadData"
-    >
-      <reload-icon />
+    <div class="sending-data-buttons">
+      <div class="searchbar-container">
+        <search-bar />
+      </div>
+      <div
+        class="reload-icon"
+        :class="{ reloading: isReloading }"
+        @click="reloadData"
+      >
+        <reload-icon />
+      </div>
     </div>
     <weather-details />
     <transition name="show-settings">
@@ -28,6 +33,7 @@ import SettingsIcon from "@/components/icons/SettingsIcon.vue";
 import WeatherDetails from "../components/WeatherDetails.vue";
 import { mapState, mapGetters } from "vuex";
 import ReloadIcon from "../components/icons/ReloadIcon.vue";
+import SearchBar from "@/components/SearchBar.vue";
 
 export default {
   name: "Weather",
@@ -76,6 +82,7 @@ export default {
     SettingsIcon,
     WeatherDetails,
     ReloadIcon,
+    SearchBar,
   },
 };
 </script>
@@ -115,11 +122,23 @@ export default {
   }
 }
 
-.reload-icon {
-  margin-top: -1.25em;
+.sending-data-buttons {
+  position: relative;
+  margin-top: -1em;
   margin-left: auto;
   margin-right: auto;
-  top: 45%;
+  display: flex;
+  flex-direction: row;
+}
+
+.searchbar-container {
+  position: absolute;
+  width: 20vw;
+}
+
+.reload-icon {
+  margin-top: -0.25em;
+  margin-left: 20vw ;
   width: 2em;
   &.reloading {
     animation: infinite-spin 0.5s infinite linear;

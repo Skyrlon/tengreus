@@ -185,12 +185,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #searchbar {
-  margin: auto;
-  margin-top: 1%;
-  width: 20vw;
-
+  width: 100%;
   &.active #searchbar-dropdown {
     display: block;
     box-sizing: border-box;
@@ -224,9 +221,9 @@ export default {
     position: relative;
     z-index: 10;
     box-sizing: border-box;
-    width: 20vw;
+    width: 100%;
     font-size: 1em;
-    border-radius: 20vw;
+    border-radius: 10% / 100%;
     text-align: center;
     border: 1px solid black;
   }
@@ -234,14 +231,15 @@ export default {
   &-dropdown {
     display: none;
     position: relative;
+    z-index: 5;
     margin-top: -0.75em;
     padding: 0;
-    width: 20vw;
+    width: inherit;
     max-height: 20.5em;
     list-style: none;
     background: #fff;
-    border-bottom-left-radius: 0.5vw;
-    border-bottom-right-radius: 0.5vw;
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
     overflow: hidden;
 
     &-list {
