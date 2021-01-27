@@ -156,6 +156,7 @@ export default {
     },
 
     selectCity(e, id, longitude, latitude) {
+      this.$emit("selected-city");
       this.searchCity = e.target.textContent.replace(/\s+/g, " ").trim();
       this.isActive = false;
       this.$store.dispatch("getCurrentWeather", { id: id });

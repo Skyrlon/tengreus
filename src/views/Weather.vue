@@ -1,16 +1,21 @@
 <template>
-  <div class="weather" @load="setTitle">
+  <div class="weather">
     <weather-banner />
     <div class="searchbar-container">
       <div
         class="search-icon"
-        v-if="showSearchBar === false"
-        @click="showSearchBar = !showSearchBar"
+        v-if="!showSearchBar"
+        @click="showSearchBar = true"
       >
         <search-icon />
       </div>
       <div class="searchbar" v-if="showSearchBar">
-        <search-bar />
+        <search-bar
+          @selected-city="
+            showSearchBar = false;
+            setTitle;
+          "
+        />
       </div>
     </div>
     <weather-details />
@@ -61,6 +66,8 @@ export default {
       showSearchBar: false,
     };
   },
+
+  methods: {},
 };
 </script>
 
@@ -104,6 +111,11 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  & .searchbar {
+    position: absolute;
+    margin-top: 0.25em;
+    width: 20vw;
+  }
 }
 
 .search-icon {
@@ -117,11 +129,6 @@ export default {
     margin-left: 5%;
     width: 65%;
   }
-}
-
-.searchbar {
-  position: absolute;
-  width: 20vw;
 }
 
 @keyframes show-up {
