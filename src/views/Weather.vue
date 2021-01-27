@@ -1,16 +1,16 @@
 <template>
   <div class="weather" @load="setTitle">
     <weather-banner />
-    <div class="sending-data-buttons">
-      <div class="searchbar-container">
-        <search-bar />
-      </div>
+    <div class="searchbar-container">
       <div
-        class="reload-icon"
-        :class="{ reloading: isReloading }"
-        @click="reloadData"
+        class="search-icon"
+        v-if="showSearchBar === false"
+        @click="showSearchBar = !showSearchBar"
       >
-        <reload-icon />
+        <search-icon />
+      </div>
+      <div class="searchbar" v-if="showSearchBar">
+        <search-bar />
       </div>
     </div>
     <weather-details />
@@ -32,11 +32,20 @@ import Settings from "@/components/Settings.vue";
 import SettingsIcon from "@/components/icons/SettingsIcon.vue";
 import WeatherDetails from "../components/WeatherDetails.vue";
 import { mapState, mapGetters } from "vuex";
-import ReloadIcon from "../components/icons/ReloadIcon.vue";
+import SearchIcon from "../components/icons/SearchIcon.vue";
 import SearchBar from "@/components/SearchBar.vue";
 
 export default {
   name: "Weather",
+
+  components: {
+    WeatherBanner,
+    Settings,
+    SettingsIcon,
+    WeatherDetails,
+    SearchBar,
+    SearchIcon,
+  },
 
   computed: {
     ...mapState(["city"]),
@@ -49,40 +58,8 @@ export default {
   data() {
     return {
       showSettings: false,
-      isReloading: false,
-      clickCount: 0,
+      showSearchBar: false,
     };
-  },
-
-  methods: {
-    reloadData() {
-      this.clickCount++;
-      if (this.clickCount < 2) {
-        this.isReloading = true;
-        this.$store.dispatch("getCurrentWeather", { id: this.city.id });
-        this.$store.dispatch("getForecastWeather", {
-          longitude: this.city.lon,
-          latitude: this.city.lat,
-        });
-        setTimeout(() => {
-          this.isReloading = false;
-        }, 1000);
-        setTimeout(() => {
-          this.clickCount = 0;
-        }, 300000);
-      } else {
-        return;
-      }
-    },
-  },
-
-  components: {
-    WeatherBanner,
-    Settings,
-    SettingsIcon,
-    WeatherDetails,
-    ReloadIcon,
-    SearchBar,
   },
 };
 </script>
@@ -94,9 +71,6 @@ export default {
   margin: 0 auto;
   width: 100%;
   height: 100%;
-  & .footer {
-    flex: 0 1 40px;
-  }
 }
 
 .show-settings-enter-active {
@@ -122,27 +96,32 @@ export default {
   }
 }
 
-.sending-data-buttons {
+.searchbar-container {
   position: relative;
+  margin: auto;
   margin-top: -1em;
-  margin-left: auto;
-  margin-right: auto;
+  margin-bottom: 0em;
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
-.searchbar-container {
+.search-icon {
+  width: 1.75em;
+  height: 1.75em;
+  border-radius: 100%;
+  border: 2px solid black;
+  background: white;
+  & svg {
+    margin-top: 15%;
+    margin-left: 5%;
+    width: 65%;
+  }
+}
+
+.searchbar {
   position: absolute;
   width: 20vw;
-}
-
-.reload-icon {
-  margin-top: -0.25em;
-  margin-left: 20vw ;
-  width: 2em;
-  &.reloading {
-    animation: infinite-spin 0.5s infinite linear;
-  }
 }
 
 @keyframes show-up {
@@ -151,15 +130,6 @@ export default {
   }
   100% {
     transform: scale(1);
-  }
-}
-
-@keyframes infinite-spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(180deg);
   }
 }
 </style>

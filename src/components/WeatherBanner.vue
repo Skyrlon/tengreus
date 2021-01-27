@@ -1,7 +1,16 @@
 <template>
   <div class="banner">
     <div class="weather-summary">
-      <div class="city-name">{{ city.name }}</div>
+      <div class="city-name">
+        {{ city.name }}
+        <div
+          class="reload-icon"
+          :class="{ reloading: isReloading }"
+          @click="reloadData"
+        >
+          <reload-icon />
+        </div>
+      </div>
       <div class="hour">{{ convertTime(time) }}</div>
       <div class="temperature">
         {{ convertTemperature(temperatures.current) }}{{ tempUnit }}
@@ -28,12 +37,14 @@
 import { mapState } from "vuex";
 import SunPathIcon from "./icons/SunPathIcon.vue";
 import WeatherIcon from "@/components/WeatherIcon.vue";
+import ReloadIcon from "../components/icons/ReloadIcon.vue";
 
 export default {
   name: "WeatherBanner",
   components: {
     SunPathIcon,
     WeatherIcon,
+    ReloadIcon,
   },
   computed: {
     ...mapState([
@@ -47,6 +58,35 @@ export default {
       "weather",
       "moonPhase",
     ]),
+  },
+
+  data() {
+    return {
+      isReloading: false,
+      clickCount: 0,
+    };
+  },
+
+  methods: {
+    reloadData() {
+      this.clickCount++;
+      if (this.clickCount < 2) {
+        this.isReloading = true;
+        this.$store.dispatch("getCurrentWeather", { id: this.city.id });
+        this.$store.dispatch("getForecastWeather", {
+          longitude: this.city.lon,
+          latitude: this.city.lat,
+        });
+        setTimeout(() => {
+          this.isReloading = false;
+        }, 1000);
+        setTimeout(() => {
+          this.clickCount = 0;
+        }, 300000);
+      } else {
+        return;
+      }
+    },
   },
 };
 </script>
@@ -72,6 +112,15 @@ export default {
 .city-name {
   margin: 0;
   font-size: 2.5em;
+  display: flex;
+  flex-direction: row;
+}
+
+.reload-icon {
+  width: 0.75em;
+  &.reloading {
+    animation: infinite-spin 0.5s infinite linear;
+  }
 }
 
 .hour {
@@ -105,8 +154,12 @@ export default {
   width: 7em;
 }
 
-svg {
-  height: 100%;
-  width: 100%;
+@keyframes infinite-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
 }
 </style>
