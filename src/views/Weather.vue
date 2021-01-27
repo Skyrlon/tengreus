@@ -1,22 +1,20 @@
 <template>
-  <div class="weather">
+  <div class="weather" @load="setTitle">
     <weather-banner />
     <div class="searchbar-container">
-      <div
-        class="search-icon"
-        v-if="!showSearchBar"
-        @click="showSearchBar = true"
-      >
+      <div class="search-icon" v-if="!showSearchBar" @click="toggleSearchBar">
         <search-icon />
       </div>
-      <div class="searchbar" v-if="showSearchBar">
-        <search-bar
-          @selected-city="
-            showSearchBar = false;
-            setTitle;
-          "
-        />
-      </div>
+      <transition name="show-searchbar">
+        <div class="searchbar" v-if="showSearchBar">
+          <search-bar
+            @selected-city="
+              showSearchBar = false;
+              setTitle;
+            "
+          />
+        </div>
+      </transition>
     </div>
     <weather-details />
     <transition name="show-settings">
@@ -67,7 +65,13 @@ export default {
     };
   },
 
-  methods: {},
+  methods: {
+    toggleSearchBar() {
+      setTimeout(() => {
+        this.showSearchBar = true;
+      }, 1000);
+    },
+  },
 };
 </script>
 
@@ -106,6 +110,7 @@ export default {
 .searchbar-container {
   position: relative;
   margin: auto;
+  height: 2em;
   margin-top: -1em;
   margin-bottom: 0em;
   display: flex;
@@ -118,12 +123,21 @@ export default {
   }
 }
 
+.show-searchbar-enter-active {
+  animation: extend-showbar 1s;
+}
+
 .search-icon {
   width: 1.75em;
   height: 1.75em;
   border-radius: 100%;
   border: 2px solid black;
   background: white;
+  transition: 200ms;
+  &:active {
+    transition: 200ms;
+    transform: scale(0.75);
+  }
   & svg {
     margin-top: 15%;
     margin-left: 5%;
@@ -137,6 +151,15 @@ export default {
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes extend-showbar {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
   }
 }
 </style>
