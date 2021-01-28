@@ -90,45 +90,82 @@ export default new Vuex.Store({
     },
 
     CHANGE_TEMPERATURE_UNIT(state, payload) {
-      if (payload === "celsius") {
-        state.tempUnit = "°C";
-      } else if (payload === "fahrenheit") {
-        state.tempUnit = "°F";
-      } else if (payload === "kelvin") {
-        state.tempUnit = "K";
+      let unit;
+      switch (payload) {
+        case 'celsius':
+          unit = '°C';
+          break;
+        case 'fahrenheit':
+          unit = '°F';
+          break;
+        case 'kelvin':
+          unit = 'K';
+          break;
       }
+      localStorage.setItem('tempUnit', payload);
+      return state.tempUnit = unit;
     },
 
     CHANGE_PRESSURE_UNIT(state, payload) {
-      if (payload === 'atmosphere') {
-        state.pressureUnit = 'atm';
-      } else if (payload === 'bar') {
-        state.pressureUnit = 'bar';
-      } else if (payload === 'hectopascal') {
-        state.pressureUnit = 'hPa';
-      } else if (payload === 'pascal') {
-        state.pressureUnit = 'Pa';
-      } else if (payload === 'psi') {
-        state.pressureUnit = 'psi';
-      } else if (payload === 'torr') {
-        state.pressureUnit = 'Torr';
+      let unit;
+      switch (payload) {
+        case 'atmosphere':
+          unit = 'atm';
+          break;
+        case 'bar':
+          unit = 'bar';
+          break;
+        case 'hectopascal':
+          unit = 'hPa';
+          break;
+        case 'pascal':
+          unit = 'Pa';
+          break;
+        case 'psi':
+          unit = 'psi';
+          break;
+        case 'torr':
+          unit = 'Torr';
+          break;
       }
+      localStorage.setItem('pressureUnit', payload);
+      return state.pressureUnit = unit;
     },
 
     CHANGE_LENGTH_UNIT(state, payload) {
-      if (payload == "metric") {
-        state.lengthUnit = 'm'
-      } else if (payload == "imperial") {
-        state.lengthUnit = 'mi'
+      let unit;
+      switch (payload) {
+        case 'metric':
+          unit = 'm';
+          break;
+        case 'imperial':
+          unit = 'mi';
+          break;
       }
+      localStorage.setItem('lengthUnit', payload);
+      return state.lengthUnit = unit;
     },
 
     CHANGE_SPEED_UNIT(state, payload) {
-      if (payload == "metric") {
-        state.speedUnit = "km/h";
-      } else if (payload == "imperial") {
-        state.speedUnit = "mi/h";
+      let unit;
+      switch (payload) {
+        case 'metric':
+          unit = 'km/h';
+          break;
+        case 'imperial':
+          unit = 'mi/h';
+          break;
       }
+      localStorage.setItem('speedUnit', payload);
+      return state.speedUnit = unit;
+    },
+
+    RESET_LOCAL_STORAGE(state) {
+      localStorage.clear();
+      state.tempUnit = "°C";
+      state.pressureUnit = 'hPa';
+      state.lengthUnit = 'm';
+      state.speedUnit = 'km/h';
     }
   },
 
