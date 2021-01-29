@@ -41,6 +41,33 @@ import SearchBar from "@/components/SearchBar.vue";
 export default {
   name: "Weather",
 
+  created() {
+    if (localStorage.getItem("tempUnit")) {
+      this.$store.commit(
+        "CHANGE_TEMPERATURE_UNIT",
+        localStorage.getItem("tempUnit")
+      );
+    }
+    if (localStorage.getItem("pressureUnit")) {
+      this.$store.commit(
+        "CHANGE_PRESSURE_UNIT",
+        localStorage.getItem("pressureUnit")
+      );
+    }
+    if (localStorage.getItem("lengthUnit")) {
+      this.$store.commit(
+        "CHANGE_LENGTH_UNIT",
+        localStorage.getItem("lengthUnit")
+      );
+    }
+    if (localStorage.getItem("speedUnit")) {
+      this.$store.commit(
+        "CHANGE_SPEED_UNIT",
+        localStorage.getItem("speedUnit")
+      );
+    }
+  },
+
   components: {
     WeatherBanner,
     Settings,
