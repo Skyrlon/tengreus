@@ -2,32 +2,33 @@
   <div class="weather-icon">
     <sun-icon
       v-if="
-        weatherMain == 'Clear' && isDayOrNight(time, sunrise, sunset) == 'day'
+        weatherMain === 'Clear' && isDayOrNight(time, sunrise, sunset) === 'day'
       "
     />
     <moon-icon
       v-if="
-        weatherMain == 'Clear' && isDayOrNight(time, sunrise, sunset) == 'night'
+        weatherMain === 'Clear' &&
+        isDayOrNight(time, sunrise, sunset) === 'night'
       "
       :moonPhase="moonPhase"
     />
     <cloud-icon
-      v-if="weatherMain == 'Clouds'"
+      v-if="weatherMain === 'Clouds'"
       :cloudiness="weatherDetails"
       :moonPhase="moonPhase"
       :moonOrSun="isDayOrNight(time, sunrise, sunset)"
     />
     <thunderstorm-icon
-      v-if="weatherMain == 'Thunderstorm'"
+      v-if="weatherMain === 'Thunderstorm'"
       :isRaining="
         weatherDetails.includes('rain') || weatherDetails.includes('drizzle')
       "
     />
     <rain-icon
-      v-if="weatherMain == 'Rain'"
+      v-if="weatherMain === 'Rain' || weatherMain === 'Drizzle'"
       :isSnowing="weatherDetails.includes('freezing')"
     />
-    <snow-icon v-if="weatherMain == 'Snow'" />
+    <snow-icon v-if="weatherMain === 'Snow'" />
     <mist-icon
       v-if="
         [
@@ -42,7 +43,7 @@
         ].includes(weatherMain)
       "
     />
-    <tornado-icon v-if="weatherMain == 'Tornado'" />
+    <tornado-icon v-if="weatherMain === 'Tornado'" />
   </div>
 </template>
 
