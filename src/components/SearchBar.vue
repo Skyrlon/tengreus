@@ -38,10 +38,12 @@
 
 <script>
 const axios = require("axios");
-import Admin1Codes from "!!raw-loader!@/assets/admin1CodesASCII.txt";
+import { getDataSet, reduce } from "iso3166-2-db";
+const listOfCountries = reduce(getDataSet(), "en");
 
 export default {
   name: "SearchBar",
+
   directives: {
     clickOutside: {
       bind(el, binding, vnode) {
@@ -71,25 +73,8 @@ export default {
       searchCity: "",
       apiData: null,
       citiesList: [],
-      admin1CodesList: Admin1Codes.split(/\n/),
+      listOfCountries: listOfCountries,
     };
-  },
-  computed: {
-    admin1CodesListOrganized() {
-      let admin1Array = [];
-      for (let i = 0; i < this.admin1CodesList.length; i++) {
-        let array = this.admin1CodesList[i].split(/\t/);
-        let countryInitials = array[0].substring(0, 2);
-        let admin1 = array[0].substring(3, array[0].length);
-        let name = array[1];
-        admin1Array.push({
-          country: countryInitials,
-          admin1code: admin1,
-          name: name,
-        });
-      }
-      return admin1Array;
-    },
   },
 
   methods: {
@@ -126,18 +111,23 @@ export default {
         for (let i = 0; i < this.apiData.length; i++) {
           let cityId = this.apiData[i]["fields"]["geoname_id"];
           let cityName = this.apiData[i]["fields"]["name"];
+          let countryCode = this.apiData[i]["fields"]["country_code"];
           let adminSubdivision;
-          for (let j = 0; j < this.admin1CodesListOrganized.length; j++) {
+          let countryName;
+          for (
+            let j = 0;
+            j < this.listOfCountries[countryCode]["regions"].length;
+            j++
+          ) {
             if (
-              this.apiData[i]["fields"]["country_code"] ==
-                this.admin1CodesListOrganized[j].country &&
-              this.apiData[i]["fields"]["admin1_code"] ==
-                this.admin1CodesListOrganized[j].admin1code
+              this.apiData[i]["fields"]["admin1_code"] ===
+              this.listOfCountries[countryCode]["regions"][j].admin
             ) {
-              adminSubdivision = this.admin1CodesListOrganized[j].name;
+              adminSubdivision = this.listOfCountries[countryCode]["regions"][j]
+                .name;
+              countryName = this.listOfCountries[countryCode].name;
             }
           }
-          let countryName = this.apiData[i]["fields"]["country"];
           let longitude = this.apiData[i]["fields"]["longitude"];
           let latitude = this.apiData[i]["fields"]["latitude"];
 
