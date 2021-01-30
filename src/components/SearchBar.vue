@@ -141,7 +141,13 @@ export default {
           });
         }
       }
-
+      //citiesList transformed in an array [id, citiesList], id become key and citiesList become value
+      //Map accept only unqiue keys, filtering duplicate cities
+      //values() takes only citiesList values
+      //and [...] makes an array
+      this.citiesList = [
+        ...new Map(this.citiesList.map((item) => [item.id, item])).values(),
+      ];
       this.showDropdown(event);
     },
 
