@@ -2,23 +2,42 @@
   <div id="app" @beforeunload="window.sessionStorage.clear()">
     <home v-if="this.$store.state.currentView === 'Home'" />
     <weather v-if="this.$store.state.currentView === 'Weather'" />
+    <transition name="show-settings">
+      <settings v-if="showSettings" />
+    </transition>
+    <div class="settings-icon" :class="{ active: showSettings }">
+      <settings-icon
+        @click.native="showSettings = !showSettings"
+        :isActive="showSettings"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import Home from "./views/Home.vue";
 import Weather from "./views/Weather.vue";
+import Settings from "@/components/Settings.vue";
+import SettingsIcon from "@/components/icons/SettingsIcon.vue";
 
 export default {
   components: {
     Home,
     Weather,
+    Settings,
+    SettingsIcon,
   },
   created() {
     if (localStorage.getItem("lang")) {
       this.$i18n.locale = localStorage.getItem("lang");
     }
   },
+
+  data() {
+    return {
+      showSettings: false,
+    }
+  }
 };
 </script>
 
@@ -38,19 +57,35 @@ body {
   color: #2c3e50;
 }
 
-#nav {
+.show-settings-enter-active {
+  transform-origin: 100% 0%;
+  animation: show-up 0.7s linear;
+}
+
+.show-settings-leave-active {
+  transform-origin: 100% 0%;
+  animation: show-up 0.7s linear reverse;
+}
+
+.settings-icon {
   position: absolute;
-  bottom: 0;
   right: 0;
-  padding: 30px;
+  top: 0;
+  width: 3.5%;
+  height: auto;
+  transform: rotate(0deg);
+  transition: 0.7s;
+  &.active {
+    transform: rotate(-180deg);
+  }
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+@keyframes show-up {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>
