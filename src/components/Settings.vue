@@ -38,8 +38,8 @@
           @change="changeLength($event)"
           v-model="lengthUnitSelected"
         >
-          <option value="metric">metric</option>
-          <option value="imperial">imperial</option>
+          <option value="metric">{{ $t("metric") }}</option>
+          <option value="imperial">{{ $t("imperial") }}</option>
         </select>
       </div>
 
@@ -50,8 +50,20 @@
           @change="changeSpeed($event)"
           v-model="speedUnitSelected"
         >
-          <option value="metric">metric</option>
-          <option value="imperial">imperial</option>
+          <option value="metric">{{ $t("metric") }}</option>
+          <option value="imperial">{{ $t("imperial") }}</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <div>Language :</div>
+        <select
+          id="lang"
+          @change="changeLanguage($event)"
+          v-model="languageSelected"
+        >
+          <option value="en">English</option>
+          <option value="fr">Français</option>
         </select>
       </div>
 
@@ -82,10 +94,11 @@ export default {
 
   data() {
     return {
-      tempUnitSelected: "",
-      pressureUnitSelected: "",
-      lengthUnitSelected: "",
-      speedUnitSelected: "",
+      tempUnitSelected: "celsius",
+      pressureUnitSelected: "hectopascal",
+      lengthUnitSelected: "metric",
+      speedUnitSelected: "metric",
+      languageSelected: "en",
     };
   },
 
@@ -102,12 +115,17 @@ export default {
     changeSpeed(e) {
       this.$store.commit("CHANGE_SPEED_UNIT", e.target.value);
     },
+    changeLanguage(e) {
+      localStorage.setItem("language", this.languageSelected);
+      this.$i18n.locale = e.target.value;
+    },
     resetLocalStorage() {
       this.$store.commit("RESET_LOCAL_STORAGE");
-      this.tempUnitSelected =  "celsius";
-      this.pressureUnitSelected =  "hectopascal";
-      this.lengthUnitSelected =  "metric";
-      this.speedUnitSelected =  "metric";
+      this.tempUnitSelected = "celsius";
+      this.pressureUnitSelected = "hectopascal";
+      this.lengthUnitSelected = "metric";
+      this.speedUnitSelected = "metric";
+      this.languageSelected = "en";
     },
   },
 };

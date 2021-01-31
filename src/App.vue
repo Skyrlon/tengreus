@@ -14,6 +14,11 @@ export default {
     Home,
     Weather,
   },
+  created() {
+    if (localStorage.getItem("lang")) {
+      this.$i18n.locale = localStorage.getItem("lang");
+    }
+  },
 };
 </script>
 
@@ -22,7 +27,6 @@ body {
   margin: 0 auto;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 
 #app {
