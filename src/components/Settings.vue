@@ -1,9 +1,9 @@
 <template>
   <div class="settings">
     <div class="settings-form">
-      <div class="row">Settings :</div>
+      <div class="row">{{ $t("settings") }} :</div>
       <div class="row">
-        <div>Temperature :</div>
+        <div>{{ $t("temperature") }} :</div>
         <select
           id="temperature"
           @change="changeTemperature($event)"
@@ -16,7 +16,7 @@
       </div>
 
       <div class="row">
-        <div>Pressure :</div>
+        <div>{{ $t("pressure") }} :</div>
         <select
           id="pressure"
           @change="changePressure($event)"
@@ -32,7 +32,7 @@
       </div>
 
       <div class="row">
-        <div>Distance :</div>
+        <div>{{ $t("distance") }} :</div>
         <select
           id="distance"
           @change="changeLength($event)"
@@ -44,7 +44,7 @@
       </div>
 
       <div class="row">
-        <div>Speed :</div>
+        <div>{{ $t("speed") }} :</div>
         <select
           id="speed"
           @change="changeSpeed($event)"
@@ -56,7 +56,7 @@
       </div>
 
       <div class="row">
-        <div>Language :</div>
+        <div>{{ $t("language") }} :</div>
         <select
           id="lang"
           @change="changeLanguage($event)"
@@ -90,6 +90,9 @@ export default {
     this.speedUnitSelected = localStorage.getItem("speedUnit")
       ? localStorage.getItem("speedUnit")
       : "metric";
+    this.languageSelected = localStorage.getItem("language")
+      ? localStorage.getItem("language")
+      : "en";
   },
 
   data() {
@@ -121,6 +124,7 @@ export default {
     },
     resetLocalStorage() {
       this.$store.commit("RESET_LOCAL_STORAGE");
+      this.$i18n.locale = "en";
       this.tempUnitSelected = "celsius";
       this.pressureUnitSelected = "hectopascal";
       this.lengthUnitSelected = "metric";
@@ -139,6 +143,7 @@ export default {
   right: 0;
   justify-content: space-between;
   background: green;
+  text-transform: capitalize;
 
   &-form {
     display: flex;

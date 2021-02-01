@@ -82,25 +82,25 @@ const Converters = {
                     let day = dt.getDay();
                     switch (day) {
                         case 0:
-                            dayInLetters = "Monday";
+                            dayInLetters = "monday";
                             break;
                         case 1:
-                            dayInLetters = "Tuesday";
+                            dayInLetters = "tuesday";
                             break;
                         case 2:
-                            dayInLetters = "Wednesday";
+                            dayInLetters = "wednesday";
                             break;
                         case 3:
-                            dayInLetters = "Thursday";
+                            dayInLetters = "thursday";
                             break;
                         case 4:
-                            dayInLetters = "Friday";
+                            dayInLetters = "friday";
                             break;
                         case 5:
-                            dayInLetters = "Saturday";
+                            dayInLetters = "saturday";
                             break;
                         case 6:
-                            dayInLetters = "Sunday";
+                            dayInLetters = "sunday";
                             break;
                     }
                     return dayInLetters;
@@ -109,21 +109,21 @@ const Converters = {
                 getWindDirection(degree) {
                     let direction;
                     if (degree <= 22 || degree >= 338) {
-                        direction = "From North"
+                        direction = "from_north"
                     } else if (degree >= 23 && degree <= 67) {
-                        direction = "From North East"
+                        direction = "from_north_east"
                     } else if (degree >= 68 && degree <= 112) {
-                        direction = "From East"
+                        direction = "from_east"
                     } else if (degree >= 113 && degree <= 157) {
-                        direction = "From South East"
+                        direction = "from_south_east"
                     } else if (degree >= 158 && degree <= 202) {
-                        direction = "From South"
+                        direction = "from_south"
                     } else if (degree >= 203 && degree <= 247) {
-                        direction = "From South West"
+                        direction = "from_south_west"
                     } else if (degree >= 248 && degree <= 292) {
-                        direction = "From West"
+                        direction = "from_west"
                     } else if (degree >= 293 && degree <= 337) {
-                        direction = "From North West"
+                        direction = "from_north_west"
                     }
                     return direction;
                 }

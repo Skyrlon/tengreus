@@ -1,16 +1,16 @@
 <template>
   <div class="weather-details">
     <div class="nav-weather" :class="{ forecast: showForecast }">
-      <span class="nav-weather_current" @click="showForecast = false"
-        >Current</span
-      >
+      <span class="nav-weather_current" @click="showForecast = false">
+        {{ $t("current") }}
+      </span>
       |
-      <span class="nav-weather_forecast" @click="showForecast = true"
-        >Forecast</span
-      >
+      <span class="nav-weather_forecast" @click="showForecast = true">
+        {{ $t("forecast") }}
+      </span>
     </div>
-    <weather-current :isActive="!showForecast"/>
-    <weather-forecast :isActive="showForecast"/>
+    <weather-current :isActive="!showForecast" />
+    <weather-forecast :isActive="showForecast" />
   </div>
 </template>
 
@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       showForecast: false,
-    }
+    };
   },
   components: {
     WeatherCurrent,
@@ -34,5 +34,14 @@ export default {
 <style lang="scss">
 .weather-details {
   position: relative;
+}
+
+.moon-phase {
+  text-transform: none;
+}
+
+.units {
+  display: inline-block;
+  text-transform: none;
 }
 </style>

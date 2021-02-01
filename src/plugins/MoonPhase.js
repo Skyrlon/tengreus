@@ -20,28 +20,28 @@ const MoonPhase = {
                     phase = phase & 7; // 0 and 8 are the same so turn 8 into 0
                     switch (phase) {
                         case 0:
-                            phase = "New Moon";
+                            phase = "new_moon";
                             break;
                         case 1:
-                            phase = "waxing Crescent";
+                            phase = "waxing_crescent";
                             break;
                         case 2:
-                            phase = "First Quarter";
+                            phase = "first_quarter";
                             break;
                         case 3:
-                            phase = "Waxing Gibbous";
+                            phase = "waxing_gibbous";
                             break;
                         case 4:
-                            phase = "Full Moon";
+                            phase = "full_moon";
                             break;
                         case 5:
-                            phase = "Waning Gibbous";
+                            phase = "waning_gibbous";
                             break;
                         case 6:
-                            phase = "Last Quarter";
+                            phase = "last_quarter";
                             break;
                         case 7:
-                            phase = "Waning Crescent";
+                            phase = "waning_crescent";
                             break;
                     }
                     return phase;

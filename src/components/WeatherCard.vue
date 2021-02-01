@@ -1,6 +1,6 @@
 <template>
   <div class="weather-card">
-    <div class="weather-card_title">{{ Title }}</div>
+    <div class="weather-card_title">{{ $t(Title) }}</div>
     <div class="weather-card_icon">
       <weather-icon
         :weatherMain="WeatherData.weather[0].main"

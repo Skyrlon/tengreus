@@ -28,16 +28,16 @@ export default {
     SettingsIcon,
   },
   created() {
-    if (localStorage.getItem("lang")) {
-      this.$i18n.locale = localStorage.getItem("lang");
+    if (localStorage.getItem("language")) {
+      this.$i18n.locale = localStorage.getItem("language");
     }
   },
 
   data() {
     return {
       showSettings: false,
-    }
-  }
+    };
+  },
 };
 </script>
 

@@ -8,7 +8,7 @@
         :Title="dayOfTheWeek(day.dt)"
       >
         <div class="weather-forecast-details-link" @click="showDetails(day)">
-          Details
+          {{ $t("details") }}
         </div>
       </weather-card>
     </div>

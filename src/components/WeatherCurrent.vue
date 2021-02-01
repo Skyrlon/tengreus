@@ -1,31 +1,54 @@
 <template>
   <div class="weather-current" :class="{ active: isActive }">
     <div class="feels-like-temp">
-      Feels like : {{ convertTemperature(temperatures.feelsLike)
-      }}{{ tempUnit }}
+      {{ $t("feels_like") }} : {{ convertTemperature(temperatures.feelsLike) }}
+      <div class="units">
+        {{ tempUnit }}
+      </div>
     </div>
+
     <div class="min-max-temp">
-      Min/max temperature : {{ convertTemperature(temperatures.min) }}/{{
+      Min/Max : {{ convertTemperature(temperatures.min) }}/{{
         convertTemperature(temperatures.max)
-      }}{{ tempUnit }}
+      }}
+      <div class="units">
+        {{ tempUnit }}
+      </div>
     </div>
+
     <div class="pressure">
-      Pressure : {{ convertPressure(pressure) }} {{ pressureUnit }}
+      {{ $t("pressure") }} : {{ convertPressure(pressure) }}
+      <div class="units">
+        {{ pressureUnit }}
+      </div>
     </div>
-    <div class="humidity">Humidity : {{ humidity }}%</div>
+
+    <div class="humidity">{{ $t("humidity") }} : {{ humidity }}%</div>
+
     <div class="visibility">
-      Visibility : {{ convertLength(visibility) }}{{ lengthUnit }}
+      {{ $t("visibility") }} : {{ convertLength(visibility) }}
+      <div class="units">
+        {{ lengthUnit }}
+      </div>
     </div>
+
     <div class="wind">
-      Wind :
+      {{ $t("wind") }} :
       <div class="wind-direction">
         <arrow-icon :degree="wind.deg" />
       </div>
-      {{ getWindDirection(wind.deg) }}
-      {{ convertSpeed(wind.speed) }}{{ speedUnit }}
+      {{ $t(getWindDirection(wind.deg)) }}
+      {{ convertSpeed(wind.speed) }}
+      <div class="units">
+        {{ speedUnit }}
+      </div>
     </div>
-    <div class="cloudiness">Cloudiness : {{ cloudiness }}%</div>
-    <div class="moon-phase">Moon phase : {{ getMoonPhase(time) }}</div>
+
+    <div class="cloudiness">{{ $t("cloudiness") }} : {{ cloudiness }}%</div>
+
+    <div class="moon-phase">
+      {{ $t("moon_phase") }} : {{ $t(getMoonPhase(time)) }}
+    </div>
   </div>
 </template>
 

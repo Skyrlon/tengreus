@@ -9,10 +9,10 @@
       v-debounce:300="getCities"
       debounce-events="keyup"
       @focusin="showDropdown($event)"
-      onblur="this.placeholder = 'Entrez le nom d\'une ville'"
+      @focusout="getPlaceholder($event)"
       id="searchbar-input"
       type="text"
-      placeholder="Entrez le nom d'une ville"
+      :placeholder="$t('placeholder')"
     />
     <div id="searchbar-dropdown">
       <div class="loading-icon" v-if="isLoading"></div>
@@ -44,6 +44,10 @@ const listOfCountries = reduce(getDataSet(), "en");
 export default {
   name: "SearchBar",
 
+  created() {
+    console.log(this.$i18n.messages[this.$i18n.locale].placeholder);
+  },
+
   directives: {
     clickOutside: {
       bind(el, binding, vnode) {
@@ -62,6 +66,7 @@ export default {
       },
     },
   },
+
   data() {
     return {
       isActive: undefined,
@@ -78,6 +83,10 @@ export default {
   },
 
   methods: {
+    getPlaceholder(e) {
+      e.target.placeholder = this.$t('placeholder') ;
+    },
+
     getCities(val, e) {
       if (this.searchCity.length >= 3) {
         this.gotError.status = false;

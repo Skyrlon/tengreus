@@ -6,36 +6,51 @@
         :Title="dayOfTheWeek(ForecastData.dt)"
       >
         <div class="weather-forecast-details-link" @click="$emit('go-back')">
-          Back
+          {{ $t("back") }}
         </div>
       </weather-card>
     </div>
     <div class="weather-forecast-details-text">
       <div class="feels-like-temp">
-        Feels like : {{ convertTemperature(ForecastData.feels_like.day)
-        }}{{ tempUnit }}
+        {{ $t("feels_like") }} :
+        {{ convertTemperature(ForecastData.feels_like.day) }}
+        <div class="units">
+          {{ tempUnit }}
+        </div>
       </div>
       <div class="min-max-temp">
-        Min/max temperature : {{ convertTemperature(ForecastData.temp.min) }}/{{
+        Min/Max : {{ convertTemperature(ForecastData.temp.min) }}/{{
           convertTemperature(ForecastData.temp.max)
-        }}{{ tempUnit }}
+        }}
+        <div class="units">
+          {{ tempUnit }}
+        </div>
       </div>
       <div class="pressure">
-        Pressure : {{ convertPressure(ForecastData.pressure) }}
-        {{ pressureUnit }}
+        {{ $t("pressure") }} : {{ convertPressure(ForecastData.pressure) }}
+        <div class="units">
+          {{ pressureUnit }}
+        </div>
       </div>
-      <div class="humidity">Humidity : {{ ForecastData.humidity }}%</div>
+      <div class="humidity">
+        {{ $t("humidity") }} : {{ ForecastData.humidity }}%
+      </div>
       <div class="wind">
-        Wind :
+        {{ $t("wind") }} :
         <div class="wind-direction">
           <arrow-icon :degree="ForecastData.wind_deg" />
         </div>
-        {{ getWindDirection(ForecastData.wind_deg) }}
-        {{ convertSpeed(ForecastData.wind_speed) }}{{ speedUnit }}
+        {{ $t(getWindDirection(ForecastData.wind_deg)) }}
+        {{ convertSpeed(ForecastData.wind_speed) }}
+        <div class="units">
+          {{ speedUnit }}
+        </div>
       </div>
-      <div class="cloudiness">Cloudiness : {{ ForecastData.clouds }}%</div>
+      <div class="cloudiness">
+        {{ $t("cloudiness") }} : {{ ForecastData.clouds }}%
+      </div>
       <div class="moon-phase">
-        Moon phase : {{ getMoonPhase(ForecastData.dt) }}
+        {{ $t("moon_phase") }} : {{ $t(getMoonPhase(ForecastData.dt)) }}
       </div>
     </div>
   </div>
