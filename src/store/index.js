@@ -175,7 +175,7 @@ export default new Vuex.Store({
       state
     }, payload) {
       axios
-        .get(`https://api.openweathermap.org/data/2.5/weather?id=${payload.id}&appid=${state.apiKey}&units=metric`)
+        .get(`https://api.openweathermap.org/data/2.5/weather?id=${payload.id}&appid=${state.apiKey}&units=metric&lang=${localStorage.getItem("language") || "en"}`)
         .then(result => {
           commit('LOAD_CURRENT_WEATHER', result.data);
         })
@@ -185,7 +185,7 @@ export default new Vuex.Store({
       state
     }, payload) {
       axios
-        .get(`https://api.openweathermap.org/data/2.5/onecall?appid=${state.apiKey}&units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts`)
+        .get(`https://api.openweathermap.org/data/2.5/onecall?appid=${state.apiKey}&units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=${localStorage.getItem("language") || "en"}`)
         .then(result => {
           commit('LOAD_FORECAST_WEATHER', result.data);
         })

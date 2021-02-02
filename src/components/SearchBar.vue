@@ -6,7 +6,7 @@
   >
     <input
       v-model="searchCity"
-      v-debounce:300="getCities"
+      v-debounce:1000="getCities"
       debounce-events="keyup"
       @focusin="showDropdown($event)"
       @focusout="getPlaceholder($event)"
@@ -38,15 +38,9 @@
 
 <script>
 const axios = require("axios");
-import { getDataSet, reduce } from "iso3166-2-db";
-const listOfCountries = reduce(getDataSet(), "en");
 
 export default {
   name: "SearchBar",
-
-  created() {
-    console.log(this.$i18n.messages[this.$i18n.locale].placeholder);
-  },
 
   directives: {
     clickOutside: {
@@ -78,13 +72,13 @@ export default {
       searchCity: "",
       apiData: null,
       citiesList: [],
-      listOfCountries: listOfCountries,
+      userName: process.env.VUE_APP_USER_NAME,
     };
   },
 
   methods: {
     getPlaceholder(e) {
-      e.target.placeholder = this.$t('placeholder') ;
+      e.target.placeholder = this.$t("placeholder");
     },
 
     getCities(val, e) {
@@ -98,14 +92,16 @@ export default {
         }
         axios
           .get(
-            `https://public.opendatasoft.com/api/records/1.0/search/?dataset=geonames-all-cities-with-a-population-1000&q='"${this.searchCity}'&rows=1000&sort=population`
+            `http://api.geonames.org/searchJSON?name_startsWith="${
+              this.searchCity
+            }"&maxRows=1000&username=${this.userName}&cities=cities1000&lang=${
+              localStorage.getItem("language") || "en"
+            }&searchlang=${
+              localStorage.getItem("language") || "en"
+            }&orderby=revelence`
           )
           .then((response) => {
-            this.apiData = response.data.records.filter((data) =>
-              data["fields"]["name"]
-                .toLowerCase()
-                .startsWith(this.searchCity.toLowerCase())
-            );
+            this.apiData = response.data["geonames"];
           })
           .then(this.fillCitiesList)
           .then(() => (this.isLoading = false));
@@ -118,27 +114,12 @@ export default {
         this.gotError.message = "No city found";
       } else {
         for (let i = 0; i < this.apiData.length; i++) {
-          let cityId = this.apiData[i]["fields"]["geoname_id"];
-          let cityName = this.apiData[i]["fields"]["name"];
-          let countryCode = this.apiData[i]["fields"]["country_code"];
-          let adminSubdivision;
-          let countryName;
-          for (
-            let j = 0;
-            j < this.listOfCountries[countryCode]["regions"].length;
-            j++
-          ) {
-            if (
-              this.apiData[i]["fields"]["admin1_code"] ===
-              this.listOfCountries[countryCode]["regions"][j].admin
-            ) {
-              adminSubdivision = this.listOfCountries[countryCode]["regions"][j]
-                .name;
-              countryName = this.listOfCountries[countryCode].name;
-            }
-          }
-          let longitude = this.apiData[i]["fields"]["longitude"];
-          let latitude = this.apiData[i]["fields"]["latitude"];
+          let cityId = this.apiData[i]["geonameId"];
+          let cityName = this.apiData[i]["name"];
+          let adminSubdivision = this.apiData[i]["adminName1"];
+          let countryName = this.apiData[i]["countryName"];
+          let longitude = this.apiData[i]["lng"];
+          let latitude = this.apiData[i]["lat"];
 
           this.citiesList.push({
             id: cityId,
