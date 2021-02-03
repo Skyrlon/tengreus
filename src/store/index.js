@@ -80,6 +80,7 @@ export default new Vuex.Store({
       };
       state.cloudiness = payload.clouds.all;
       state.weather = {
+        id: payload.weather[0].id,
         main: payload.weather[0].main,
         detailed: payload.weather[0].description,
       }

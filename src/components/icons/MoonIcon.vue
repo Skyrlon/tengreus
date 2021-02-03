@@ -6,7 +6,7 @@
       cy="50"
       r="49"
       fill="black"
-      v-if="moonPhase == 'New Moon'"
+      v-if="moonPhase == 'new_moon'"
     />
     <!--full moon-->
     <circle
@@ -14,43 +14,43 @@
       cy="50"
       r="49"
       fill="lightgrey"
-      v-if="moonPhase == 'Full Moon'"
+      v-if="moonPhase == 'full_moon'"
     />
     <!--waxing crescent-->
     <path
       d="M50,1 A49,49 0 0,1 50,99 A25,50 0 0,0 50,1"
       fill="lightgrey"
-      v-if="moonPhase == 'Waxing Crescent'"
+      v-if="moonPhase == 'waxing_crescent'"
     />
     <!--first quarter-->
     <path
       d="M50,1 A49,49 0 0,1 50,99"
       fill="lightgrey"
-      v-if="moonPhase == 'First Quarter'"
+      v-if="moonPhase == 'first_quarter'"
     />
     <!--waxing gibbous-->
     <path
       d="M50,1 A49,49 0 0,1 50,99 A30,50 0 0,1 50,1"
       fill="lightgrey"
-      v-if="moonPhase == 'Waxing Gibbous'"
+      v-if="moonPhase == 'waxing_gibbous'"
     />
     <!--waning gibbous-->
     <path
       d="M50,1 A49,49 0 0,0 50,99 A30,50 0 0,0 50,1"
       fill="lightgrey"
-      v-if="moonPhase == 'Waning Gibbous'"
+      v-if="moonPhase == 'waning_gibbous'"
     />
     <!--last quarter-->
     <path
       d="M50,1 A49,49 0 0,0 50,99"
       fill="lightgrey"
-      v-if="moonPhase == 'Last Quarter'"
+      v-if="moonPhase == 'last_quarter'"
     />
     <!--waning crescent-->
     <path
       d="M50,1 A49,49 0 0,0 50,99 A25,50 0 0,1 50,1"
       fill="lightgrey"
-      v-if="moonPhase == 'Waning Crescent'"
+      v-if="moonPhase == 'waning_crescent'"
     />
     <!-- crater top left-->
     <circle
@@ -60,9 +60,9 @@
       fill="darkgrey"
       transform="skewY(-20) skewX(-20)"
       v-if="
-        moonPhase == 'Last Quarter' ||
-        moonPhase == 'Waning Gibbous' ||
-        moonPhase == 'Full Moon'
+        moonPhase == 'last_quarter' ||
+        moonPhase == 'waning_gibbous' ||
+        moonPhase == 'full_moon'
       "
     />
     <!-- crater top right-->
@@ -73,9 +73,9 @@
       fill="darkgrey"
       transform="skewY(-10) skewX(20)"
       v-if="
-        moonPhase == 'First Quarter' ||
-        moonPhase == 'Waxing Gibbous' ||
-        moonPhase == 'Full Moon'
+        moonPhase == 'first_quarter' ||
+        moonPhase == 'waxing_gibbous' ||
+        moonPhase == 'full_moon'
       "
     />
     <!-- crater bottom left-->
@@ -86,9 +86,9 @@
       fill="darkgrey"
       transform="skewX(20)"
       v-if="
-        moonPhase == 'Last Quarter' ||
-        moonPhase == 'Waning Gibbous' ||
-        moonPhase == 'Full Moon'
+        moonPhase == 'last_quarter' ||
+        moonPhase == 'waning_gibbous' ||
+        moonPhase == 'full_moon'
       "
     />
     <!-- crater middle right-->
@@ -99,9 +99,9 @@
       fill="darkgrey"
       transform="skewY(-10)"
       v-if="
-        moonPhase == 'First Quarter' ||
-        moonPhase == 'Waxing Gibbous' ||
-        moonPhase == 'Full Moon'
+        moonPhase == 'first_quarter' ||
+        moonPhase == 'waxing_gibbous' ||
+        moonPhase == 'full_moon'
       "
     />
     <!-- crater middle left-->
@@ -112,9 +112,9 @@
       fill="darkgrey"
       transform="skewY(-5)"
       v-if="
-        moonPhase == 'Last Quarter' ||
-        moonPhase == 'Waning Gibbous' ||
-        moonPhase == 'Full Moon'
+        moonPhase == 'last_quarter' ||
+        moonPhase == 'waning_gibbous' ||
+        moonPhase == 'full_moon'
       "
     />
   </svg>

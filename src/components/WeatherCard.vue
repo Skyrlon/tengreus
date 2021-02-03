@@ -4,7 +4,7 @@
     <div class="weather-card_icon">
       <weather-icon
         :weatherMain="WeatherData.weather[0].main"
-        :weatherDetails="WeatherData.weather[0].description"
+        :weatherId="WeatherData.weather[0].id"
         :time="WeatherData.dt"
         :sunrise="WeatherData.sunrise"
         :sunset="WeatherData.sunset"

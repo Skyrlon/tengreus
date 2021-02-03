@@ -14,19 +14,17 @@
     />
     <cloud-icon
       v-if="weatherMain === 'Clouds'"
-      :cloudiness="weatherDetails"
+      :cloudiness="getCloudiness(weatherId)"
       :moonPhase="moonPhase"
       :moonOrSun="isDayOrNight(time, sunrise, sunset)"
     />
     <thunderstorm-icon
       v-if="weatherMain === 'Thunderstorm'"
-      :isRaining="
-        weatherDetails.includes('rain') || weatherDetails.includes('drizzle')
-      "
+      :isRaining="isRaining(weatherId)"
     />
     <rain-icon
       v-if="weatherMain === 'Rain' || weatherMain === 'Drizzle'"
-      :isSnowing="weatherDetails.includes('freezing')"
+      :isSnowing="weatherId === 511"
     />
     <snow-icon v-if="weatherMain === 'Snow'" />
     <mist-icon
@@ -71,7 +69,7 @@ export default {
   },
   props: {
     weatherMain: String,
-    weatherDetails: String,
+    weatherId: Number,
     time: Number,
     sunrise: Number,
     sunset: Number,
@@ -83,6 +81,31 @@ export default {
         return "day";
       } else {
         return "night";
+      }
+    },
+    getCloudiness(id) {
+      let cloudiness;
+      switch (id) {
+        case 801:
+          cloudiness = "few clouds";
+          break;
+        case 802:
+          cloudiness = "scattered clouds";
+          break;
+        case 803:
+          cloudiness = "broken clouds";
+          break;
+        case 804:
+          cloudiness = "overcast clouds";
+          break;
+      }
+      return cloudiness;
+    },
+    isRaining(id) {
+      if (id <= 202 || id >= 230) {
+        return true;
+      } else {
+        return false;
       }
     },
   },

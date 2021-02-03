@@ -19,7 +19,7 @@
       <div class="weather-icon-container">
         <weather-icon
           :weatherMain="weather.main"
-          :weatherDetails="weather.detailed"
+          :weatherId="weather.id"
           :time="time"
           :sunrise="sunrise"
           :sunset="sunset"
