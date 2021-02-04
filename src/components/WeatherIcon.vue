@@ -37,10 +37,10 @@
           'Fog',
           'Sand',
           'Ash',
-          'Squall',
         ].includes(weatherMain)
       "
     />
+    <wind-icon v-if="weatherMain === 'Squall'" />
     <tornado-icon v-if="weatherMain === 'Tornado'" />
   </div>
 </template>
@@ -54,6 +54,7 @@ import SnowIcon from "@/components/icons/SnowIcon.vue";
 import MoonIcon from "@/components/icons/MoonIcon.vue";
 import MistIcon from "@/components/icons/MistIcon.vue";
 import TornadoIcon from "@/components/icons/TornadoIcon.vue";
+import WindIcon from "@/components/icons/WindIcon.vue";
 
 export default {
   name: "WeatherIcon",
@@ -66,6 +67,7 @@ export default {
     MoonIcon,
     MistIcon,
     TornadoIcon,
+    WindIcon,
   },
   props: {
     weatherMain: String,
