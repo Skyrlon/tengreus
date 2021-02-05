@@ -1,5 +1,5 @@
 <template>
-  <div class="banner">
+  <div :class="'banner ' + getWeather(weather.main)">
     <div class="weather-summary">
       <div class="city-name">
         {{ city.name }}
@@ -68,6 +68,36 @@ export default {
   },
 
   methods: {
+    getWeather(weather) {
+      if (weather === "Thunderstorm") {
+        return "thunder";
+      } else if (weather === "Drizzle" || weather === "Rain") {
+        return "rain";
+      } else if (weather === "Snow") {
+        return "snow";
+      } else if (["Mist", "Smoke", "Haze", "Fog", "Ash"].includes(weather)) {
+        return "fog";
+      } else if (weather === "Dust" || weather === "Sand") {
+        return "dust";
+      } else if (weather === "Tornado") {
+        return "tornado";
+      } else if (weather === "Squall") {
+        return "wind";
+      } else if (weather === "Clouds") {
+        return "clouds";
+      } else if (
+        weather === "Clear" &&
+        this.time > this.sunrise &&
+        this.time < this.sunset
+      ) {
+        return "sun";
+      } else if (
+        weather === "Clear" &&
+        (this.time < this.sunrise || this.time > this.sunset)
+      ) {
+        return "night";
+      }
+    },
     reloadData() {
       this.clickCount++;
       if (this.clickCount < 2) {
@@ -95,11 +125,40 @@ export default {
 .banner {
   flex: 0 1 auto;
   width: 100%;
-  background-image: url("https://via.placeholder.com/1536x320.png/0000FF?text=Banner");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   color: white;
+  &.thunder {
+    background-image: url("../assets/images/thunder.jpg");
+  }
+  &.rain {
+    background-image: url("../assets/images/rain.jpg");
+  }
+  &.snow {
+    background-image: url("../assets/images/snow.jpg");
+  }
+  &.fog {
+    background-image: url("../assets/images/fog.jpg");
+  }
+  &.dust {
+    background-image: url("../assets/images/dust.jpg");
+  }
+  &.tornado {
+    background-image: url("../assets/images/tornado.jpg");
+  }
+  &.wind {
+    background-image: url("../assets/images/wind.jpg");
+  }
+  &.clouds {
+    background-image: url("../assets/images/clouds.jpg");
+  }
+  &.sun {
+    background-image: url("../assets/images/sun.jpg");
+  }
+  &.night {
+    background-image: url("../assets/images/night.jpg");
+  }
 }
 
 .weather-summary {
