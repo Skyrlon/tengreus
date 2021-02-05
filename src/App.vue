@@ -3,7 +3,7 @@
     <home v-if="this.$store.state.currentView === 'Home'" />
     <weather v-if="this.$store.state.currentView === 'Weather'" />
     <transition name="show-settings">
-      <settings v-if="showSettings" />
+      <settings v-if="showSettings" v-on-clickaway="clickOutsideSettings" />
     </transition>
     <div class="settings-icon" :class="{ active: showSettings }">
       <settings-icon
@@ -19,8 +19,11 @@ import Home from "./views/Home.vue";
 import Weather from "./views/Weather.vue";
 import Settings from "@/components/Settings.vue";
 import SettingsIcon from "@/components/icons/SettingsIcon.vue";
+import { mixin as clickaway } from "vue-clickaway";
 
 export default {
+  mixins: [clickaway],
+
   components: {
     Home,
     Weather,
@@ -37,6 +40,12 @@ export default {
     return {
       showSettings: false,
     };
+  },
+
+  methods: {
+    clickOutsideSettings() {
+      this.showSettings = false;
+    },
   },
 };
 </script>

@@ -2,7 +2,7 @@
   <div
     id="searchbar"
     :class="{ active: isActive, loading: isLoading, error: gotError.status }"
-    v-clickOutside="hideCityDatalistUl"
+    v-on-clickaway="hideCityDatalistUl"
   >
     <input
       v-model="searchCity"
@@ -38,28 +38,11 @@
 
 <script>
 const axios = require("axios");
+import { mixin as clickaway } from "vue-clickaway";
 
 export default {
   name: "SearchBar",
-
-  directives: {
-    clickOutside: {
-      bind(el, binding, vnode) {
-        var vm = vnode.context;
-        var callback = binding.value;
-
-        el.clickOutsideEvent = function (event) {
-          if (!(el == event.target || el.contains(event.target))) {
-            return callback.call(vm, event);
-          }
-        };
-        document.body.addEventListener("click", el.clickOutsideEvent);
-      },
-      unbind(el) {
-        document.body.removeEventListener("click", el.clickOutsideEvent);
-      },
-    },
-  },
+  mixins: [clickaway],
 
   data() {
     return {
