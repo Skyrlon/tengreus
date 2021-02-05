@@ -15,7 +15,7 @@ const Converters = {
                             temperature = value + 273.15;
                             break;
                     }
-                    return temperature;
+                    return Math.round(temperature);
                 },
 
                 convertPressure(value) {

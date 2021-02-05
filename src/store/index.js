@@ -65,10 +65,10 @@ export default new Vuex.Store({
       state.sunrise = payload.sys.sunrise;
       state.sunset = payload.sys.sunset;
       state.temperatures = {
-        current: Math.ceil(payload.main.temp),
-        feelsLike: Math.ceil(payload.main.feels_like),
-        min: Math.ceil(payload.main.temp_min),
-        max: Math.ceil(payload.main.temp_max),
+        current: payload.main.temp,
+        feelsLike: payload.main.feels_like,
+        min: payload.main.temp_min,
+        max: payload.main.temp_max,
       };
       state.pressure = payload.main.pressure;
       state.visibility = payload.visibility;
