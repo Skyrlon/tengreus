@@ -33,6 +33,7 @@ export default {
   border-radius: 10%;
   width: 100%;
   height: 100%;
+  background: #2f73c6;
   &_title {
     margin-top: 5%;
     margin-bottom: 5%;

@@ -7,7 +7,7 @@
   >
     <def>
       <rect
-        id="sun-ray"
+        id="clouds_sun-ray"
         x="-1"
         y="-22"
         rx="2"
@@ -17,14 +17,14 @@
         fill="#f7f701"
       />
       <g id="sun">
-        <use x="0" href="#sun-ray" />
-        <use x="0" href="#sun-ray" transform="rotate(45 0 0)" />
-        <use x="0" href="#sun-ray" transform="rotate(90 0 0)" />
-        <use x="0" href="#sun-ray" transform="rotate(135 0 0)" />
-        <use x="0" href="#sun-ray" transform="rotate(180 0 0)" />
-        <use x="0" href="#sun-ray" transform="rotate(225 0 0)" />
-        <use x="0" href="#sun-ray" transform="rotate(270 0 0)" />
-        <use x="0" href="#sun-ray" transform="rotate(315 0 0)" />
+        <use x="0" href="#clouds_sun-ray" />
+        <use x="0" href="#clouds_sun-ray" transform="rotate(45 0 0)" />
+        <use x="0" href="#clouds_sun-ray" transform="rotate(90 0 0)" />
+        <use x="0" href="#clouds_sun-ray" transform="rotate(135 0 0)" />
+        <use x="0" href="#clouds_sun-ray" transform="rotate(180 0 0)" />
+        <use x="0" href="#clouds_sun-ray" transform="rotate(225 0 0)" />
+        <use x="0" href="#clouds_sun-ray" transform="rotate(270 0 0)" />
+        <use x="0" href="#clouds_sun-ray" transform="rotate(315 0 0)" />
         <circle cx="0" cy="0" r="10" fill="#f7f701" />
       </g>
       <path
