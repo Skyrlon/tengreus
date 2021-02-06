@@ -34,6 +34,7 @@ export default {
 <style lang="scss">
 .weather-details {
   position: relative;
+  height: 50%;
 }
 
 .moon-phase {

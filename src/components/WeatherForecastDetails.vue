@@ -3,7 +3,7 @@
     <div class="weather-forecast-details-icon">
       <weather-card
         :WeatherData="ForecastData"
-        :Title="dayOfTheWeek(ForecastData.dt)"
+        :Day="dayOfTheWeek(ForecastData.dt)"
       >
         <div class="weather-forecast-details-link" @click="$emit('go-back')">
           {{ $t("back") }}

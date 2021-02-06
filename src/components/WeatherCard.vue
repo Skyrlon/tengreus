@@ -1,7 +1,7 @@
 <template>
   <div class="weather-card">
-    <div class="weather-card_title">{{ $t(Title) }}</div>
-    <div class="weather-card_icon">
+    <div class="weather-card_day">{{ $t(Day) }}</div>
+    <div class="weather-card_icon" :title="WeatherData.weather[0].description">
       <weather-icon
         :weatherMain="WeatherData.weather[0].main"
         :weatherId="WeatherData.weather[0].id"
@@ -10,6 +10,12 @@
         :sunset="WeatherData.sunset"
         :moonPhase="getMoonPhase(WeatherData.dt)"
       />
+    </div>
+    <div class="weather-card_temperature">
+      {{ convertTemperature(WeatherData.temp.day) }}
+      {{ this.$store.state.tempUnit }}
+    </div>
+    <div class="weather-card_link">
       <slot></slot>
     </div>
   </div>
@@ -21,7 +27,7 @@ export default {
   components: { WeatherIcon },
   name: "WeatherCard",
   props: {
-    Title: String,
+    Day: String,
     WeatherData: Object,
   },
 };
@@ -29,19 +35,25 @@ export default {
 
 <style lang="scss">
 .weather-card {
+  display: flex;
+  flex-direction: column;
   border: 1px solid;
   border-radius: 10%;
   width: 100%;
   height: 100%;
   background: #2f73c6;
-  &_title {
+  font-size: 1.25em;
+  &_day {
     margin-top: 5%;
     margin-bottom: 5%;
   }
   &_icon {
-    margin-left: 15%;
-    width: 70%;
-    height: auto;
+    margin-left: 20%;
+    width: 60%;
+    height: 60%;
+  }
+  &_link {
+    margin-top: 10%;
   }
 }
 </style>

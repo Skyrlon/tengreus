@@ -5,7 +5,7 @@
         :key="day.dt"
         v-for="day in forecast"
         :WeatherData="day"
-        :Title="dayOfTheWeek(day.dt)"
+        :Day="dayOfTheWeek(day.dt)"
       >
         <div class="weather-forecast-details-link" @click="showDetails(day)">
           {{ $t("details") }}
@@ -54,20 +54,20 @@ export default {
   position: absolute;
   left: 100%;
   width: 100%;
-  height: 200px;
-  transition: 1s;
+  height: 90%;
+  transition: left 1s;
   &.active {
     left: 0;
   }
   &-card-container {
     display: flex;
+    margin-top: 2.5%;
     flex-direction: row;
     justify-content: space-around;
     width: 100%;
-    height: 100%;
     & > div {
       width: 10%;
-      height: 100%;
+      height: 50%;
     }
   }
 }

@@ -123,7 +123,6 @@ export default {
 
 <style lang="scss" scoped>
 .banner {
-  flex: 0 1 auto;
   width: 100%;
   background-repeat: no-repeat;
   background-size: cover;
