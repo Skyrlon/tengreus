@@ -67,7 +67,6 @@ export default {
     width: 100%;
     & > div {
       width: 10%;
-      height: 50%;
     }
   }
 }

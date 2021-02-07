@@ -16,6 +16,8 @@
         {{ convertTemperature(temperatures.current) }}{{ tempUnit }}
       </div>
       <div class="current-weather">{{ weather.detailed }}</div>
+    </div>
+    <div class="icons">
       <div class="weather-icon-container">
         <weather-icon
           :weatherMain="weather.main"
@@ -123,7 +125,10 @@ export default {
 
 <style lang="scss" scoped>
 .banner {
+  display: flex;
+  flex-direction: row;
   width: 100%;
+  height: 50%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -161,15 +166,18 @@ export default {
 }
 
 .weather-summary {
-  position: relative;
-  padding: 5%;
-  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-left: 5%;
+  width: 80%;
+  height: 99%;
   text-align: left;
 }
 
 .city-name {
   margin: 0;
-  font-size: 2.5em;
+  font-size: 2em;
   display: flex;
   flex-direction: row;
 }
@@ -183,31 +191,35 @@ export default {
 
 .hour {
   font-size: 1.75em;
-  padding-top: 0.5em;
 }
 
 .temperature {
   font-size: 1.75em;
-  padding-top: 1.5em;
 }
 
 .current-weather {
   font-size: 1.75em;
-  padding-top: 0.5em;
   text-transform: capitalize;
+}
+
+.icons {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 20%;
+  width: 10%;
+  height: 75%;
 }
 
 .weather-icon-container {
   position: absolute;
-  top: 20%;
-  right: 5%;
+  right: 20px;
   width: 7em;
-  height: 7em;
 }
 
 .sun-path {
   position: absolute;
-  bottom: 10px;
+  bottom: 0;
   right: 20px;
   width: 7em;
 }
