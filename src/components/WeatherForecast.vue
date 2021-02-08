@@ -64,9 +64,23 @@ export default {
     margin-top: 2.5%;
     flex-direction: row;
     justify-content: space-around;
+    flex-wrap: wrap;
     width: 100%;
     & > div {
       width: 10%;
+      @media (min-width: 1025px) and (orientation: landscape) {
+        width: 10%;
+      }
+      @media (max-width: 1024px) and (min-width: 500px) {
+        margin-top: 1%;
+        margin-bottom: 1%;
+        width: 20%;
+      }
+      @media (max-width: 499px) {
+        margin-top: 1%;
+        margin-bottom: 1%;
+        width: 40%;
+      }
     }
   }
 }

@@ -1,53 +1,74 @@
 <template>
   <div class="weather-current" :class="{ active: isActive }">
     <div class="feels-like-temp">
-      {{ $t("feels_like") }} : {{ convertTemperature(temperatures.feelsLike) }}
-      <div class="units">
-        {{ tempUnit }}
+      <div class="fields">{{ $t("feels_like") }} :</div>
+      <div class="value">
+        {{ convertTemperature(temperatures.feelsLike) }}
+        <div class="units">
+          {{ tempUnit }}
+        </div>
       </div>
     </div>
 
     <div class="min-max-temp">
-      Min/Max : {{ convertTemperature(temperatures.min) }}/{{
-        convertTemperature(temperatures.max)
-      }}
-      <div class="units">
-        {{ tempUnit }}
+      <div class="fields">Min/Max :</div>
+      <div class="value">
+        {{ convertTemperature(temperatures.min) }}/{{
+          convertTemperature(temperatures.max)
+        }}
+        <div class="units">
+          {{ tempUnit }}
+        </div>
       </div>
     </div>
 
     <div class="pressure">
-      {{ $t("pressure") }} : {{ convertPressure(pressure) }}
-      <div class="units">
-        {{ pressureUnit }}
+      <div class="fields">{{ $t("pressure") }} :</div>
+      <div class="value">
+        {{ convertPressure(pressure) }}
+        <div class="units">
+          {{ pressureUnit }}
+        </div>
       </div>
     </div>
 
-    <div class="humidity">{{ $t("humidity") }} : {{ humidity }}%</div>
+    <div class="humidity">
+      <div class="fields">{{ $t("humidity") }} :</div>
+      <div class="value">{{ humidity }}%</div>
+    </div>
 
     <div class="visibility">
-      {{ $t("visibility") }} : {{ convertLength(visibility) }}
-      <div class="units">
-        {{ lengthUnit }}
+      <div class="fields">{{ $t("visibility") }} :</div>
+      <div class="value">
+        {{ convertLength(visibility) }}
+        <div class="units">
+          {{ lengthUnit }}
+        </div>
       </div>
     </div>
 
     <div class="wind">
-      {{ $t("wind") }} :
-      <div class="wind-direction">
-        <arrow-icon :degree="wind.deg" />
-      </div>
-      {{ $t(getWindDirection(wind.deg)) }}
-      {{ convertSpeed(wind.speed) }}
-      <div class="units">
-        {{ speedUnit }}
+      <div class="fields">{{ $t("wind") }} :</div>
+      <div class="value">
+        <div class="wind-direction">
+          <arrow-icon :degree="wind.deg" />
+        </div>
+        {{ $t(getWindDirection(wind.deg)) }}
+        {{ convertSpeed(wind.speed) }}
+        <div class="units">
+          {{ speedUnit }}
+        </div>
       </div>
     </div>
 
-    <div class="cloudiness">{{ $t("cloudiness") }} : {{ cloudiness }}%</div>
+    <div class="cloudiness">
+      <div class="fields">{{ $t("cloudiness") }} :</div>
+      <div class="value">{{ cloudiness }}%</div>
+    </div>
 
     <div class="moon-phase">
-      {{ $t("moon_phase") }} : {{ $t(getMoonPhase(time)) }}
+      <div class="fields">{{ $t("moon_phase") }} :</div>
+      <div class="value">{{ $t(getMoonPhase(time)) }}</div>
     </div>
   </div>
 </template>
@@ -90,6 +111,11 @@ export default {
   flex-wrap: wrap;
   left: -100%;
   width: 100%;
+  height: 50%;
+  box-sizing: border-box;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 2.5%;
   font-size: medium;
   text-align: left;
   flex: 1 1 auto;
@@ -99,10 +125,22 @@ export default {
     left: 0;
   }
   & > div {
+    display: flex;
+    justify-content: space-between;
     box-sizing: border-box;
-    margin-top: 3em;
-    padding-left: 5em;
-    width: 50%;
+    border-top: 2px solid lightgrey;
+    padding-left: 0.5em;
+    padding-right: 1em;
+    @media (orientation: landscape) {
+      padding-top: 1.25%;
+      padding-bottom: 1.25%;
+      width: 45%;
+    }
+    @media (orientation: portrait) {
+      padding-top: 2.5%;
+      padding-bottom: 2.5%;
+      width: 100%;
+    }
   }
   & .wind-direction {
     display: inline-block;

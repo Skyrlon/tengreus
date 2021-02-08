@@ -168,7 +168,7 @@ export default {
 .weather-summary {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   padding-left: 5%;
   width: 80%;
   height: 99%;
