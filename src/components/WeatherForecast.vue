@@ -1,5 +1,5 @@
 <template>
-  <div class="weather-forecast" :class="{ active: isActive }">
+  <div class="weather-forecast">
     <div class="weather-forecast-card-container" v-if="!showForecastDetails">
       <weather-card
         :key="day.dt"
@@ -28,9 +28,6 @@ import WeatherForecastDetails from "./WeatherForecastDetails.vue";
 export default {
   components: { WeatherCard, WeatherForecastDetails },
   name: "WeatherForecast",
-  props: {
-    isActive: Boolean,
-  },
   data() {
     return {
       showForecastDetails: false,
@@ -52,13 +49,9 @@ export default {
 <style lang="scss">
 .weather-forecast {
   position: absolute;
-  left: 100%;
+  left: 0%;
   width: 100%;
   height: 90%;
-  transition: left 1s;
-  &.active {
-    left: 0;
-  }
   &-card-container {
     display: flex;
     margin-top: 2.5%;

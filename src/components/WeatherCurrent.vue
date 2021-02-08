@@ -80,9 +80,6 @@ import ArrowIcon from "@/components/icons/ArrowIcon.vue";
 export default {
   name: "WeatherCurrent",
   components: { ArrowIcon },
-  props: {
-    isActive: Boolean,
-  },
   computed: {
     ...mapState([
       "tempUnit",
@@ -109,7 +106,7 @@ export default {
   position: absolute;
   display: flex;
   flex-wrap: wrap;
-  left: -100%;
+  left: 0%;
   width: 100%;
   height: 50%;
   box-sizing: border-box;
@@ -120,10 +117,6 @@ export default {
   text-align: left;
   flex: 1 1 auto;
   justify-content: space-between;
-  transition: 1s;
-  &.active {
-    left: 0;
-  }
   & > div {
     display: flex;
     justify-content: space-between;

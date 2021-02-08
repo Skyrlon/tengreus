@@ -9,8 +9,12 @@
         {{ $t("forecast") }}
       </span>
     </div>
-    <weather-current :isActive="!showForecast" />
-    <weather-forecast :isActive="showForecast" />
+    <transition name="slide-current">
+      <weather-current v-if="!showForecast" />
+    </transition>
+    <transition name="slide-forecast">
+      <weather-forecast v-if="showForecast" />
+    </transition>
   </div>
 </template>
 
@@ -36,6 +40,25 @@ export default {
   position: relative;
 }
 
+.nav-weather {
+  &_current {
+    display: inline-block;
+    text-decoration: underline #6495ed 0.25em;
+  }
+  &_forecast {
+    display: inline-block;
+    text-decoration: none;
+  }
+  &.forecast {
+    & .nav-weather_forecast {
+      text-decoration: underline #6495ed 0.25em;
+    }
+    & .nav-weather_current {
+      text-decoration: none;
+    }
+  }
+}
+
 .moon-phase {
   text-transform: none;
 }
@@ -43,5 +66,24 @@ export default {
 .units {
   display: inline-block;
   text-transform: none;
+}
+
+.slide-current-leave-active,
+.slide-current-enter-active,
+.slide-forecast-leave-active,
+.slide-forecast-enter-active {
+  transition: 1s;
+}
+.slide-current-enter {
+  transform: translate(-100%, 0);
+}
+.slide-current-leave-to {
+  transform: translate(-100%, 0);
+}
+.slide-forecast-enter {
+  transform: translate(100%, 0);
+}
+.slide-forecast-leave-to {
+  transform: translate(100%, 0);
 }
 </style>
