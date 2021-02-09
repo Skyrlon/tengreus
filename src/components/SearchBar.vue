@@ -196,6 +196,10 @@ export default {
     border-radius: 10% / 100%;
     text-align: center;
     border: 1px solid black;
+    font-family: LexendMega, Avenir, Helvetica, Arial, sans-serif;
+    &::placeholder {
+      font-family: LexendMega, Avenir, Helvetica, Arial, sans-serif;
+    }
   }
 
   &-dropdown {

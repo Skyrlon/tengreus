@@ -51,6 +51,10 @@ export default {
 </script>
 
 <style lang="scss">
+@font-face {
+  font-family: "LexendMega";
+  src: url("./assets/LexendMega-Regular.ttf") format("truetype");
+}
 body {
   margin: 0 auto;
   width: 100%;
@@ -61,7 +65,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: LexendMega, Avenir, Helvetica, Arial, sans-serif;
   text-align: center;
   color: #2c3e50;
   background: #f7f7f7;

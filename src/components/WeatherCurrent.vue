@@ -1,5 +1,5 @@
 <template>
-  <div class="weather-current" :class="{ active: isActive }">
+  <div class="weather-current">
     <div class="feels-like-temp">
       <div class="fields">{{ $t("feels_like") }} :</div>
       <div class="value">
