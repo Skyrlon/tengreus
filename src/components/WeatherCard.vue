@@ -1,7 +1,10 @@
 <template>
   <div class="weather-card">
     <div class="weather-card_day">{{ $t(Day) }}</div>
-    <div class="weather-card_icon" :title="WeatherData.weather[0].description">
+    <div class="weather-card_icon">
+      <div class="tooltip">
+        {{ WeatherData.weather[0].description }}
+      </div>
       <weather-icon
         :weatherMain="WeatherData.weather[0].main"
         :weatherId="WeatherData.weather[0].id"
@@ -48,9 +51,41 @@ export default {
     margin-bottom: 5%;
   }
   &_icon {
-    margin-left: 20%;
-    width: 60%;
-    height: 60%;
+    position: relative;
+    margin: auto;
+    width: 100%;
+    &:hover .tooltip, .weather-card_icon:active .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+    & .tooltip {
+      visibility: hidden;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 0.5em 0em;
+      position: absolute;
+      font-size: 0.5em;
+      top: 1.75em;
+      left: 0;
+      right: 0;
+      margin-right: auto;
+      margin-left: auto;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s;
+      &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #555 transparent transparent transparent;
+      }
+    }
   }
   &_link {
     margin-top: 10%;
