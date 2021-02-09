@@ -40,5 +40,7 @@
   "from_south": "from south",
   "from_south_west": "from south west",
   "from_west": "from west",
-  "from_north_west": "from north west"
+  "from_north_west": "from north west",
+  "day": "day",
+  "night": "night"
 }

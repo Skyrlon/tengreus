@@ -40,5 +40,7 @@
     "from_south": "du sud",
     "from_south_west": "du sud ouest",
     "from_west": "de l'ouest",
-    "from_north_west": "du nord ouest"
+    "from_north_west": "du nord ouest",
+    "day": "jour",
+    "night": "nuit"
 }

@@ -15,7 +15,10 @@
       />
     </div>
     <div class="weather-card_temperature">
+      {{ $t("day") }} / {{ $t("night") }} <br />
       {{ convertTemperature(WeatherData.temp.day) }}
+      {{ this.$store.state.tempUnit }} /
+      {{ convertTemperature(WeatherData.temp.night) }}
       {{ this.$store.state.tempUnit }}
     </div>
     <div class="weather-card_link">
@@ -54,7 +57,8 @@ export default {
     position: relative;
     margin: auto;
     width: 100%;
-    &:hover .tooltip, .weather-card_icon:active .tooltip {
+    &:hover .tooltip,
+    .weather-card_icon:active .tooltip {
       visibility: visible;
       opacity: 1;
     }
@@ -66,7 +70,7 @@ export default {
       border-radius: 6px;
       padding: 0.5em 0em;
       position: absolute;
-      font-size: 0.5em;
+      font-size: 0.75em;
       top: 1.75em;
       left: 0;
       right: 0;
@@ -87,8 +91,11 @@ export default {
       }
     }
   }
+  &_temperature {
+    font-size: 0.75em;
+  }
   &_link {
-    margin-top: 10%;
+    margin-top: 2.5%;
   }
 }
 </style>
