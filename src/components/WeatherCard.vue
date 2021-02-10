@@ -48,7 +48,7 @@ export default {
   width: 100%;
   height: 100%;
   background: #2f73c6;
-  font-size: 1.25em;
+  font-size: 100%;
   &_day {
     margin-top: 5%;
     margin-bottom: 5%;
@@ -78,21 +78,11 @@ export default {
       margin-left: auto;
       z-index: 1;
       opacity: 0;
-      transition: opacity 0.3s;
-      &::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: #555 transparent transparent transparent;
-      }
+      transition: opacity 0.5s;
     }
   }
   &_temperature {
-    font-size: 0.75em;
+    font-size: 100%;
   }
   &_link {
     margin-top: 2.5%;

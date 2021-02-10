@@ -42,5 +42,6 @@
   "from_west": "from west",
   "from_north_west": "from north west",
   "day": "day",
-  "night": "night"
+  "night": "night",
+  "sun_rise_set": "sunrise and sunset"
 }

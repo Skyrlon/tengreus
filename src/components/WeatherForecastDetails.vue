@@ -12,45 +12,66 @@
     </div>
     <div class="weather-forecast-details-text">
       <div class="feels-like-temp">
-        {{ $t("feels_like") }} :
-        {{ convertTemperature(ForecastData.feels_like.day) }}
-        <div class="units">
-          {{ tempUnit }}
+        <div class="fields">{{ $t("feels_like") }}</div>
+        <div class="value">
+          {{ convertTemperature(ForecastData.feels_like.day) }}
+          <div class="units">
+            {{ tempUnit }}
+          </div>
         </div>
       </div>
       <div class="min-max-temp">
-        Min/Max : {{ convertTemperature(ForecastData.temp.min) }}/{{
-          convertTemperature(ForecastData.temp.max)
-        }}
-        <div class="units">
-          {{ tempUnit }}
+        <div class="fields">Min/Max</div>
+        <div class="value">
+          {{ convertTemperature(ForecastData.temp.min) }}/{{
+            convertTemperature(ForecastData.temp.max)
+          }}
+          <div class="units">
+            {{ tempUnit }}
+          </div>
         </div>
       </div>
       <div class="pressure">
-        {{ $t("pressure") }} : {{ convertPressure(ForecastData.pressure) }}
-        <div class="units">
-          {{ pressureUnit }}
+        <div class="fields">{{ $t("pressure") }}</div>
+        <div class="value">
+          {{ convertPressure(ForecastData.pressure) }}
+          <div class="units">
+            {{ pressureUnit }}
+          </div>
         </div>
       </div>
       <div class="humidity">
-        {{ $t("humidity") }} : {{ ForecastData.humidity }}%
+        <div class="fields">{{ $t("humidity") }}</div>
+        <div class="value">{{ ForecastData.humidity }}%</div>
       </div>
       <div class="wind">
-        {{ $t("wind") }} :
-        <div class="wind-direction">
-          <arrow-icon :degree="ForecastData.wind_deg" />
-        </div>
-        {{ $t(getWindDirection(ForecastData.wind_deg)) }}
-        {{ convertSpeed(ForecastData.wind_speed) }}
-        <div class="units">
-          {{ speedUnit }}
+        <div class="fields">{{ $t("wind") }}</div>
+        <div class="value">
+          <div class="wind-direction">
+            <arrow-icon :degree="ForecastData.wind_deg" />
+          </div>
+          {{ $t(getWindDirection(ForecastData.wind_deg)) }}
+          {{ convertSpeed(ForecastData.wind_speed) }}
+          <div class="units">
+            {{ speedUnit }}
+          </div>
         </div>
       </div>
       <div class="cloudiness">
-        {{ $t("cloudiness") }} : {{ ForecastData.clouds }}%
+        <div class="fields">{{ $t("cloudiness") }}</div>
+        <div class="value">{{ ForecastData.clouds }}%</div>
       </div>
       <div class="moon-phase">
-        {{ $t("moon_phase") }} : {{ $t(getMoonPhase(ForecastData.dt)) }}
+        <div class="fields">{{ $t("moon_phase") }}</div>
+        <div class="value">{{ $t(getMoonPhase(ForecastData.dt)) }}</div>
+      </div>
+      <div class="sun-rise-set">
+        <div class="fields">{{ $t("sun_rise_set") }}</div>
+        <div class="value">
+          {{ $t(convertTime(ForecastData.sunrise)) }}-{{
+            $t(convertTime(ForecastData.sunset))
+          }}
+        </div>
       </div>
     </div>
   </div>
@@ -75,25 +96,80 @@ export default {
 
 <style lang="scss">
 .weather-forecast-details {
+  position: absolute;
   display: flex;
   width: 100%;
   flex-direction: row;
-  & > div:nth-child(1) {
-    width: 20%;
+  justify-content: space-around;
+  box-sizing: border-box;
+  padding-top: 2.5%;
+  padding-right: 5%;
+  padding-right: 5%;
+  &-icon {
+    margin-left: 1%;
+    width: 10%;
+    @media (min-width: 1025px) and (orientation: landscape) {
+      width: 10%;
+    }
+    @media (max-width: 1024px) and (min-width: 500px) {
+      margin-top: 1%;
+      margin-bottom: 1%;
+      width: 20%;
+    }
+    @media (max-width: 600px) {
+      margin-top: 1%;
+      margin-bottom: 1%;
+      width: 40%;
+    }
   }
   &-text {
     display: flex;
     flex-wrap: wrap;
+    width: 90%;
+    font-size: 1em;
+    margin-left: 1%;
+    text-align: left;
+    @media (min-width: 1025px) and (orientation: landscape) {
+      width: 90%;
+    }
+    @media (max-width: 1024px) and (min-width: 500px) {
+      margin-top: 1%;
+      margin-bottom: 1%;
+      width: 80%;
+    }
+    @media (max-width: 600px) {
+      margin-top: 1%;
+      margin-bottom: 1%;
+      width: 60%;
+    }
+
     & > div {
+      display: flex;
+      justify-content: space-between;
       box-sizing: border-box;
-      margin-top: 3em;
-      padding-left: 5em;
-      width: 50%;
+      border-top: 2px solid lightgrey;
+      padding-left: 0.5em;
+      padding-right: 1em;
+      margin-left: 0.5%;
+      margin-right: 0.5%;
+      @media (orientation: landscape) {
+        padding-top: 1.25%;
+        padding-bottom: 1.25%;
+        width: 45%;
+      }
+      @media (orientation: portrait) {
+        padding-top: 2.5%;
+        padding-bottom: 2.5%;
+        width: 100%;
+      }
     }
     & .wind-direction {
       display: inline-block;
       width: 1em;
       height: 1em;
+    }
+    & .sun-rise-set {
+      text-transform: none;
     }
   }
 }

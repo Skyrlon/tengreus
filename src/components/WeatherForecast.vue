@@ -69,7 +69,7 @@ export default {
         margin-bottom: 1%;
         width: 20%;
       }
-      @media (max-width: 499px) {
+      @media (max-width: 600px) {
         margin-top: 1%;
         margin-bottom: 1%;
         width: 40%;
