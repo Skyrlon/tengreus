@@ -18,6 +18,12 @@
           <div class="units">
             {{ tempUnit }}
           </div>
+          ({{ $t("day") }}) <br />
+          {{ convertTemperature(ForecastData.feels_like.night) }}
+          <div class="units">
+            {{ tempUnit }}
+          </div>
+          ({{ $t("night") }})
         </div>
       </div>
       <div class="min-max-temp">
@@ -103,8 +109,8 @@ export default {
   justify-content: space-around;
   box-sizing: border-box;
   padding-top: 2.5%;
-  padding-right: 5%;
-  padding-right: 5%;
+  padding-left: 1%;
+  padding-right: 1%;
   &-icon {
     margin-left: 1%;
     width: 10%;
@@ -170,6 +176,9 @@ export default {
     }
     & .sun-rise-set {
       text-transform: none;
+    }
+    & .value {
+      text-align: right;
     }
   }
 }

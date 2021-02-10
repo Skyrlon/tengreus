@@ -16,8 +16,7 @@
     </div>
     <div class="weather-card_temperature">
       {{ $t("day") }} / {{ $t("night") }} <br />
-      {{ convertTemperature(WeatherData.temp.day) }}
-      {{ this.$store.state.tempUnit }} /
+      {{ convertTemperature(WeatherData.temp.day) }} /
       {{ convertTemperature(WeatherData.temp.night) }}
       {{ this.$store.state.tempUnit }}
     </div>
@@ -46,7 +45,6 @@ export default {
   border: 1px solid;
   border-radius: 10%;
   width: 100%;
-  height: 100%;
   background: #2f73c6;
   font-size: 100%;
   &_day {
