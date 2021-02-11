@@ -1,7 +1,7 @@
 <template>
   <div
     id="app"
-    :class="{ dark: darkTheme }"
+    :class="{ dark: this.$store.state.darkTheme }"
     @beforeunload="window.sessionStorage.clear()"
   >
     <home v-if="this.$store.state.currentView === 'Home'" />
@@ -41,6 +41,9 @@ export default {
   created() {
     if (localStorage.getItem("language")) {
       this.$i18n.locale = localStorage.getItem("language");
+    }
+    if (localStorage.getItem("darktheme")) {
+      this.darkTheme = localStorage.getItem("darktheme");
     }
   },
 

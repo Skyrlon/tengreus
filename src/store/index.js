@@ -11,6 +11,7 @@ export default new Vuex.Store({
   })],
 
   state: {
+    darkTheme: false,
     currentView: "Home",
     apiKey: process.env.VUE_APP_API_KEY,
     temperatures: {
@@ -161,12 +162,17 @@ export default new Vuex.Store({
       return state.speedUnit = unit;
     },
 
+    TOGGLE_DARK_THEME(state) {
+      state.darkTheme = !state.darkTheme;
+    },
+
     RESET_LOCAL_STORAGE(state) {
       localStorage.clear();
       state.tempUnit = "°C";
       state.pressureUnit = 'hPa';
       state.lengthUnit = 'm';
       state.speedUnit = 'km/h';
+      state.darkTheme = false;
     }
   },
 
