@@ -104,8 +104,8 @@ export default {
       ? localStorage.getItem("language")
       : "en";
     this.toggleOn = localStorage.getItem("darktheme")
-      ? localStorage.getItem("darktheme") === "true" //localStorage accepts only string
-      : false;
+      ? localStorage.getItem("darktheme")
+      : "off";
   },
 
   data() {
@@ -115,7 +115,7 @@ export default {
       lengthUnitSelected: "metric",
       speedUnitSelected: "metric",
       languageSelected: "en",
-      toggleOn: false,
+      toggleOn: "off",
     };
   },
 
@@ -137,8 +137,8 @@ export default {
       this.$i18n.locale = e.target.value;
     },
     toggleDarkTheme() {
-      this.$store.commit("TOGGLE_DARK_THEME");
-      this.toggleOn = !this.toggleOn;
+      this.toggleOn = this.toggleOn === "on" ? "off" : "on";
+      this.$emit("toggle-dark-theme", this.toggleOn);
       localStorage.setItem("darktheme", this.toggleOn);
     },
     resetLocalStorage() {
@@ -149,7 +149,8 @@ export default {
       this.lengthUnitSelected = "metric";
       this.speedUnitSelected = "metric";
       this.languageSelected = "en";
-      this.toggleOn = false;
+      this.toggleOn = "off";
+      this.$emit("toggle-dark-theme", this.toggleOn);
     },
   },
 };

@@ -1,36 +1,41 @@
 <template>
-    <svg
-      class="toggle"
-      :class="{ on: isOn }"
-      viewBox="0 0 50 30"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <line
-        class="switch"
-        y2="15"
-        x2="35"
-        y1="15"
-        x1="15"
-        stroke-width="30"
-        stroke-linecap="var(--linecap)"
-      />
-      <line
-        class="knob"
-        y2="15"
-        x2="15"
-        y1="15"
-        x1="15"
-        stroke-width="20"
-        stroke-linecap="var(--linecap)"
-      />
-    </svg>
+  <svg
+    class="toggle"
+    :class="{ on: onOrOff(isOn) }"
+    viewBox="0 0 50 30"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <line
+      class="switch"
+      y2="15"
+      x2="35"
+      y1="15"
+      x1="15"
+      stroke-width="30"
+      stroke-linecap="var(--linecap)"
+    />
+    <line
+      class="knob"
+      y2="15"
+      x2="15"
+      y1="15"
+      x1="15"
+      stroke-width="20"
+      stroke-linecap="var(--linecap)"
+    />
+  </svg>
 </template>
 
 <script>
 export default {
   name: "ToggleIcon",
   props: {
-    isOn: Boolean,
+    isOn: String,
+  },
+  methods: {
+    onOrOff(value) {
+      return value === "on" ? true : false;
+    },
   },
 };
 </script>

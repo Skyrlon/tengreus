@@ -1,7 +1,7 @@
 <template>
   <div
     id="app"
-    :class="{ dark: this.$store.state.darkTheme }"
+    :class="{ dark: darkTheme }"
     @beforeunload="window.sessionStorage.clear()"
   >
     <home v-if="this.$store.state.currentView === 'Home'" />
@@ -10,7 +10,7 @@
       <settings
         v-if="showSettings"
         v-on-clickaway="clickOutsideSettings"
-        @toggle-dark-theme="darkTheme = !darkTheme"
+        @toggle-dark-theme="toggleDarkTheme"
       />
     </transition>
     <div class="settings-icon" :class="{ active: showSettings }">
@@ -43,20 +43,24 @@ export default {
       this.$i18n.locale = localStorage.getItem("language");
     }
     if (localStorage.getItem("darktheme")) {
-      this.darkTheme = localStorage.getItem("darktheme");
+      this.darkTheme =
+        localStorage.getItem("darktheme") === "on" ? true : false;
     }
   },
 
   data() {
     return {
       showSettings: false,
-      darkTheme: false,
+      darkTheme: "off",
     };
   },
 
   methods: {
     clickOutsideSettings() {
       this.showSettings = false;
+    },
+    toggleDarkTheme(value) {
+      this.darkTheme = value === "on" ? true : false;
     },
   },
 };
