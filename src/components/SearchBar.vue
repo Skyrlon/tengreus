@@ -248,6 +248,21 @@ export default {
   }
 }
 
+#app.dark {
+  & #searchbar {
+    &-input {
+      border: 1px solid white;
+      color: var(--darktheme-font-color);
+      background-color: var(--darktheme-background-color);
+    }
+    &-dropdown {
+      border: 1px solid white;
+      color: var(--darktheme-font-color);
+      background-color: var(--darktheme-background-color);
+    }
+  }
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

@@ -74,6 +74,8 @@ body {
 }
 
 #app {
+  --darktheme-font-color: #dddddd;
+  --darktheme-background-color: #21242c;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -83,8 +85,8 @@ body {
   background: #f7f7f7;
   overflow-x: hidden;
   &.dark {
-    background: #21242c;
-    color: #dddddd;
+    background: var(--darktheme-background-color);
+    color: var(--darktheme-font-color);
   }
 }
 
