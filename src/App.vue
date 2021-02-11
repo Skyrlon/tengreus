@@ -1,9 +1,17 @@
 <template>
-  <div id="app" @beforeunload="window.sessionStorage.clear()">
+  <div
+    id="app"
+    :class="{ dark: darkTheme }"
+    @beforeunload="window.sessionStorage.clear()"
+  >
     <home v-if="this.$store.state.currentView === 'Home'" />
     <weather v-if="this.$store.state.currentView === 'Weather'" />
     <transition name="show-settings">
-      <settings v-if="showSettings" v-on-clickaway="clickOutsideSettings" />
+      <settings
+        v-if="showSettings"
+        v-on-clickaway="clickOutsideSettings"
+        @toggle-dark-theme="darkTheme = !darkTheme"
+      />
     </transition>
     <div class="settings-icon" :class="{ active: showSettings }">
       <settings-icon
@@ -39,6 +47,7 @@ export default {
   data() {
     return {
       showSettings: false,
+      darkTheme: false,
     };
   },
 
@@ -70,6 +79,10 @@ body {
   color: #2c3e50;
   background: #f7f7f7;
   overflow-x: hidden;
+  &.dark {
+    background: #21242c;
+    color: #dddddd;
+  }
 }
 
 .show-settings-enter-active {

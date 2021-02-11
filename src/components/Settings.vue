@@ -68,6 +68,13 @@
       </div>
 
       <div class="row">
+        Dark Theme
+        <div class="toggle-icon" @click="toggleDarkTheme">
+          <toggle-icon :isOn="toggleOn" />
+        </div>
+      </div>
+
+      <div class="row">
         <button @click="resetLocalStorage">Reset</button>
       </div>
     </div>
@@ -75,7 +82,10 @@
 </template>
 
 <script>
+import ToggleIcon from "./icons/ToggleIcon.vue";
+
 export default {
+  components: { ToggleIcon },
   name: "Settings",
   created() {
     this.tempUnitSelected = localStorage.getItem("tempUnit")
@@ -102,6 +112,7 @@ export default {
       lengthUnitSelected: "metric",
       speedUnitSelected: "metric",
       languageSelected: "en",
+      toggleOn: false,
     };
   },
 
@@ -121,6 +132,10 @@ export default {
     changeLanguage(e) {
       localStorage.setItem("language", this.languageSelected);
       this.$i18n.locale = e.target.value;
+    },
+    toggleDarkTheme() {
+      this.$emit("toggle-dark-theme");
+      this.toggleOn = !this.toggleOn;
     },
     resetLocalStorage() {
       this.$store.commit("RESET_LOCAL_STORAGE");
@@ -154,6 +169,9 @@ export default {
       display: flex;
       padding: 1em;
     }
+  }
+  & .toggle-icon {
+    width: 2.5vw;
   }
 }
 </style>
