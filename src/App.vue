@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       showSettings: false,
-      darkTheme: "off",
+      darkTheme: false,
     };
   },
 

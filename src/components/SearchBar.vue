@@ -1,5 +1,5 @@
 <template>
-  <div
+  <label
     id="searchbar"
     :class="{ active: isActive, loading: isLoading, error: gotError.status }"
     v-on-clickaway="hideCityDatalistUl"
@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </label>
 </template>
 
 <script>
@@ -83,10 +83,27 @@ export default {
               localStorage.getItem("language") || "en"
             }&orderby=revelence`
           )
+          .catch((error) => {
+            if (error.response) {
+              // Request made and server responded
+              throw error;
+            } else if (error.request) {
+              // The request was made but no response was received
+              throw error;
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              throw error;
+            }
+          })
           .then((response) => {
             this.apiData = response.data["geonames"];
+            this.fillCitiesList();
           })
-          .then(this.fillCitiesList)
+          .catch((error) => {
+            console.log(error);
+            this.gotError.status = true;
+            this.gotError.message = error.message;
+          })
           .then(() => (this.isLoading = false));
       }
     },
@@ -121,7 +138,7 @@ export default {
       this.citiesList = [
         ...new Map(this.citiesList.map((item) => [item.id, item])).values(),
       ];
-      this.showDropdown(event);
+      this.showDropdown();
     },
 
     selectCity(e, id, longitude, latitude) {
