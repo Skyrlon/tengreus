@@ -141,16 +141,15 @@ export default {
       this.showDropdown();
     },
 
-    selectCity(e, id, longitude, latitude) {
+    async selectCity(e, id, longitude, latitude) {
       this.$emit("selected-city");
       this.searchCity = e.target.textContent.replace(/\s+/g, " ").trim();
       this.isActive = false;
-      this.$store.dispatch("getCurrentWeather", { id: id });
-      this.$store.dispatch("getForecastWeather", {
+      await this.$store.dispatch("getWeather", {
+        id: id,
         longitude: longitude,
         latitude: latitude,
       });
-      this.$store.state.currentView = "Weather";
     },
 
     showDropdown(e) {

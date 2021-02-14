@@ -56,6 +56,11 @@ export default new Vuex.Store({
   },
 
   mutations: {
+
+    SWITCH_PAGE(state, payload) {
+      state.currentView = payload;
+    },
+
     LOAD_CURRENT_WEATHER(state, payload) {
       state.city.name = payload.name;
       state.city.country = payload.sys.country;
@@ -87,7 +92,7 @@ export default new Vuex.Store({
     },
 
     LOAD_FORECAST_WEATHER(state, payload) {
-      [state.forecast] = [payload.daily]
+      [state.forecast] = [payload.daily];
     },
 
     CHANGE_TEMPERATURE_UNIT(state, payload) {
@@ -171,6 +176,14 @@ export default new Vuex.Store({
   },
 
   actions: {
+    async getWeather({
+      dispatch
+    }, payload) {
+      await dispatch('getCurrentWeather', payload);
+      await dispatch('getForecastWeather', payload);
+
+    },
+
     getCurrentWeather({
       commit,
       state
@@ -181,15 +194,24 @@ export default new Vuex.Store({
           commit('LOAD_CURRENT_WEATHER', result.data);
         })
     },
+
     getForecastWeather({
       commit,
-      state
+      state,
+      dispatch
     }, payload) {
       axios
         .get(`https://api.openweathermap.org/data/2.5/onecall?appid=${state.apiKey}&units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=${localStorage.getItem("language") || "en"}`)
         .then(result => {
           commit('LOAD_FORECAST_WEATHER', result.data);
+          dispatch('switchPage', 'Weather')
         })
+    },
+
+    switchPage({
+      commit
+    }, payload) {
+      commit("SWITCH_PAGE", payload);
     }
   },
 
