@@ -129,39 +129,52 @@ export default {
   flex-direction: row;
   width: 100%;
   height: 50%;
+  background: black;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   color: white;
   &.thunder {
     background-image: url("../assets/images/thunder.jpg");
+    background-color: #3a3b90;
   }
   &.rain {
     background-image: url("../assets/images/rain.jpg");
+    background-color: #929ba0;
   }
   &.snow {
     background-image: url("../assets/images/snow.jpg");
+    background-color: #d8d7dc;
+    color: #2c3e50;
   }
   &.fog {
     background-image: url("../assets/images/fog.jpg");
+    background-color: #dcd6ca;
+    color: #2c3e50;
   }
   &.dust {
     background-image: url("../assets/images/dust.jpg");
+    background-color: #e5c8aa;
   }
   &.tornado {
     background-image: url("../assets/images/tornado.jpg");
+    background-color: #928d8db0;
   }
   &.wind {
     background-image: url("../assets/images/wind.jpg");
+    background-color: #479add;
   }
   &.clouds {
     background-image: url("../assets/images/clouds.jpg");
+    background-color: #015a96;
   }
   &.sun {
     background-image: url("../assets/images/sun.jpg");
+    background-color: #468ad3;
   }
   &.night {
     background-image: url("../assets/images/night.jpg");
+    background-color: #09090a;
   }
 }
 
