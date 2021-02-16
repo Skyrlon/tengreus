@@ -137,6 +137,7 @@ body {
   height: auto;
   transform: rotate(0deg);
   transition: 0.7s;
+  cursor: pointer;
   &.active {
     transform: rotate(-180deg);
   }

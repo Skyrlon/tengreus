@@ -110,7 +110,7 @@ export default {
   & .searchbar {
     position: absolute;
     margin-top: 0.25em;
-    width: 20vw;
+    width: 20em;
   }
 }
 

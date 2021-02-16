@@ -84,6 +84,7 @@ export default {
   }
   &_link {
     margin-top: 2.5%;
+    cursor: pointer;
   }
 }
 </style>

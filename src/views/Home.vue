@@ -32,6 +32,6 @@ export default {
 .searchbar-container {
   margin: auto;
   margin-top: 1%;
-  width: 20vw;
+  width: 20em;
 }
 </style>

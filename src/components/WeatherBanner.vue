@@ -211,6 +211,7 @@ export default {
 
 .reload-icon {
   width: 0.75em;
+  cursor: pointer;
   &.reloading {
     animation: infinite-spin 0.5s infinite linear;
   }

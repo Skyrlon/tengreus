@@ -44,10 +44,12 @@ export default {
   &_current {
     display: inline-block;
     text-decoration: underline #6495ed 0.25em;
+    cursor: pointer;
   }
   &_forecast {
     display: inline-block;
     text-decoration: none;
+    cursor: pointer;
   }
   &.forecast {
     & .nav-weather_forecast {
