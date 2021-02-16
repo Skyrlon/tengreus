@@ -13,8 +13,14 @@
       id="searchbar-input"
       type="text"
       :placeholder="$t('placeholder')"
+      autocomplete="off"
     />
-    <div id="searchbar-dropdown">
+
+    <vue-custom-scrollbar
+      id="searchbar-dropdown"
+      class="scroll-area"
+      :settings="settings"
+    >
       <div class="loading-icon" v-if="isLoading"></div>
       <div
         class="error-text"
@@ -32,17 +38,22 @@
           {{ city.name }}, {{ city.subdivision }}, {{ city.country }}
         </div>
       </div>
-    </div>
+    </vue-custom-scrollbar>
   </label>
 </template>
 
 <script>
 const axios = require("axios");
 import { mixin as clickaway } from "vue-clickaway";
+import vueCustomScrollbar from "vue-custom-scrollbar";
+import "vue-custom-scrollbar/dist/vueScrollbar.css";
 
 export default {
   name: "SearchBar",
+
   mixins: [clickaway],
+
+  components: { vueCustomScrollbar },
 
   data() {
     return {
@@ -56,6 +67,11 @@ export default {
       apiData: null,
       citiesList: [],
       userName: process.env.VUE_APP_USER_NAME,
+      settings: {
+        suppressScrollY: false,
+        suppressScrollX: true,
+        wheelPropagation: false,
+      },
     };
   },
 
@@ -226,7 +242,6 @@ export default {
     padding: 0;
     width: inherit;
     max-height: 20.5em;
-    list-style: none;
     background: #fff;
     border-bottom-left-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
