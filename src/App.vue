@@ -17,6 +17,7 @@
       <settings-icon
         @click.native="showSettings = !showSettings"
         :isActive="showSettings"
+        :isBlackOrWhite="getSettingsIconColor"
       />
     </div>
   </div>
@@ -53,6 +54,30 @@ export default {
       showSettings: false,
       darkTheme: false,
     };
+  },
+
+  computed: {
+    getSettingsIconColor() {
+      let color;
+      if (
+        this.$store.state.weather.main === "Drizzle" ||
+        this.$store.state.weather.main === "Rain" ||
+        this.$store.state.weather.main === "Clouds" ||
+        (this.$store.state.weather.main === "Clear" &&
+          (this.$store.state.time < this.$store.state.sunrise ||
+            this.$store.state.time > this.$store.state.sunset))
+      ) {
+        color = "white";
+      } else if (
+        this.$store.state.currentView === "Home" &&
+        this.darkTheme === true
+      ) {
+        color = "white";
+      } else {
+        color = "black";
+      }
+      return color;
+    },
   },
 
   methods: {
@@ -108,7 +133,7 @@ body {
   position: absolute;
   right: 0;
   top: 0;
-  width: 3.5%;
+  width: 2.5em;
   height: auto;
   transform: rotate(0deg);
   transition: 0.7s;

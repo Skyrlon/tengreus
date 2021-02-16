@@ -8,7 +8,7 @@
           :class="{ reloading: isReloading }"
           @click="reloadData"
         >
-          <reload-icon />
+          <reload-icon :isBlackOrWhite="getReloadIconColor" />
         </div>
       </div>
       <div class="hour">{{ convertTime(time) }}</div>
@@ -60,6 +60,19 @@ export default {
       "weather",
       "moonPhase",
     ]),
+    getReloadIconColor() {
+      let color;
+      if (
+        ["rain", "night", "clouds", "tornado"].includes(
+          this.getWeather(this.weather.main)
+        )
+      ) {
+        color = "white";
+      } else {
+        color = "black";
+      }
+      return color;
+    },
   },
 
   data() {
@@ -100,6 +113,7 @@ export default {
         return "night";
       }
     },
+
     reloadData() {
       this.clickCount++;
       if (this.clickCount < 2) {
