@@ -108,7 +108,7 @@ export default new Vuex.Store({
           unit = 'K';
           break;
       }
-      localStorage.setItem('tempUnit', payload);
+      localStorage.setItem('tempUnit', unit);
       return state.tempUnit = unit;
     },
 
@@ -134,7 +134,7 @@ export default new Vuex.Store({
           unit = 'Torr';
           break;
       }
-      localStorage.setItem('pressureUnit', payload);
+      localStorage.setItem('pressureUnit', unit);
       return state.pressureUnit = unit;
     },
 
@@ -148,7 +148,7 @@ export default new Vuex.Store({
           unit = 'mi';
           break;
       }
-      localStorage.setItem('lengthUnit', payload);
+      localStorage.setItem('lengthUnit', this.$i18n.messages[this.$i18n.locale][payload]);
       return state.lengthUnit = unit;
     },
 
@@ -162,7 +162,7 @@ export default new Vuex.Store({
           unit = 'mi/h';
           break;
       }
-      localStorage.setItem('speedUnit', payload);
+      localStorage.setItem('speedUnit', this.$i18n.messages[this.$i18n.locale][payload]);
       return state.speedUnit = unit;
     },
 

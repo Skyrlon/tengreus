@@ -4,67 +4,52 @@
       <div class="row">{{ $t("settings") }} :</div>
       <div class="row">
         <div>{{ $t("temperature") }} :</div>
-        <select
-          id="temperature"
-          @change="changeTemperature($event)"
-          v-model="tempUnitSelected"
-        >
-          <option value="celsius">°C</option>
-          <option value="fahrenheit">°F</option>
-          <option value="kelvin">K</option>
-        </select>
+        <custom-select
+          :optionValue="tempValuesArray"
+          :optionText="tempTextArray"
+          :selectOption="changeTemperature"
+          :optionSelected="tempUnitSelected"
+        />
       </div>
 
       <div class="row">
         <div>{{ $t("pressure") }} :</div>
-        <select
-          id="pressure"
-          @change="changePressure($event)"
-          v-model="pressureUnitSelected"
-        >
-          <option value="atmosphere">atm</option>
-          <option value="bar">bar</option>
-          <option value="hectopascal">hPa</option>
-          <option value="pascal">Pa</option>
-          <option value="psi">psi</option>
-          <option value="torr">Torr</option>
-        </select>
+        <custom-select
+          :optionValue="pressureValuesArray"
+          :optionText="pressureTextArray"
+          :selectOption="changePressure"
+          :optionSelected="pressureUnitSelected"
+        />
       </div>
 
       <div class="row">
         <div>{{ $t("distance") }} :</div>
-        <select
-          id="distance"
-          @change="changeLength($event)"
-          v-model="lengthUnitSelected"
-        >
-          <option value="metric">{{ $t("metric") }}</option>
-          <option value="imperial">{{ $t("imperial") }}</option>
-        </select>
+        <custom-select
+          :optionValue="measurementSystemValuesArray"
+          :optionText="measurementSystemTextArray"
+          :selectOption="changeLength"
+          :optionSelected="lengthUnitSelected"
+        />
       </div>
 
       <div class="row">
         <div>{{ $t("speed") }} :</div>
-        <select
-          id="speed"
-          @change="changeSpeed($event)"
-          v-model="speedUnitSelected"
-        >
-          <option value="metric">{{ $t("metric") }}</option>
-          <option value="imperial">{{ $t("imperial") }}</option>
-        </select>
+        <custom-select
+          :optionValue="measurementSystemValuesArray"
+          :optionText="measurementSystemTextArray"
+          :selectOption="changeSpeed"
+          :optionSelected="speedUnitSelected"
+        />
       </div>
 
       <div class="row">
         <div>{{ $t("language") }} :</div>
-        <select
-          id="lang"
-          @change="changeLanguage($event)"
-          v-model="languageSelected"
-        >
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-        </select>
+        <custom-select
+          :optionValue="languageValuesArray"
+          :optionText="languageTextArray"
+          :selectOption="changeLanguage"
+          :optionSelected="languageSelected"
+        />
       </div>
 
       <div class="row">
@@ -83,26 +68,27 @@
 
 <script>
 import ToggleIcon from "./icons/ToggleIcon.vue";
+import CustomSelect from "./CustomSelect.vue";
 
 export default {
-  components: { ToggleIcon },
+  components: { ToggleIcon, CustomSelect },
   name: "Settings",
   created() {
     this.tempUnitSelected = localStorage.getItem("tempUnit")
       ? localStorage.getItem("tempUnit")
-      : "celsius";
+      : "°C";
     this.pressureUnitSelected = localStorage.getItem("pressureUnit")
       ? localStorage.getItem("pressureUnit")
-      : "hectopascal";
+      : "hPa";
     this.lengthUnitSelected = localStorage.getItem("lengthUnit")
       ? localStorage.getItem("lengthUnit")
-      : "metric";
+      : this.$i18n.messages[this.$i18n.locale].metric;
     this.speedUnitSelected = localStorage.getItem("speedUnit")
       ? localStorage.getItem("speedUnit")
-      : "metric";
+      : this.$i18n.messages[this.$i18n.locale].metric;
     this.languageSelected = localStorage.getItem("language")
       ? localStorage.getItem("language")
-      : "en";
+      : "english";
     this.toggleOn = localStorage.getItem("darktheme")
       ? localStorage.getItem("darktheme")
       : "off";
@@ -110,31 +96,55 @@ export default {
 
   data() {
     return {
-      tempUnitSelected: "celsius",
-      pressureUnitSelected: "hectopascal",
-      lengthUnitSelected: "metric",
-      speedUnitSelected: "metric",
+      tempValuesArray: ["celsius", "fahrenheit", "kelvin"],
+      tempTextArray: ["°C", "°F", "K"],
+      tempUnitSelected: "°C",
+      pressureValuesArray: [
+        "atmosphere",
+        "bar",
+        "hectopascal",
+        "pascal",
+        "psi",
+        "torr",
+      ],
+      pressureTextArray: ["atm", "bar", "hPa", "Pa", "psi", "Torr"],
+      pressureUnitSelected: "hPa",
+      measurementSystemValuesArray: ["metric", "imperial"],
+      measurementSystemTextArray: [
+        this.$i18n.messages[this.$i18n.locale].metric,
+        this.$i18n.messages[this.$i18n.locale].imperial,
+      ],
+      lengthUnitSelected: this.$i18n.messages[this.$i18n.locale].metric,
+      speedUnitSelected: this.$i18n.messages[this.$i18n.locale].metric,
+      languageValuesArray: ["en", "fr"],
+      languageTextArray: ["english", "français"],
       languageSelected: "en",
       toggleOn: "off",
     };
   },
 
   methods: {
-    changeTemperature(e) {
-      this.$store.commit("CHANGE_TEMPERATURE_UNIT", e.target.value);
+    changeTemperature(value, text) {
+      this.tempUnitSelected = text;
+      this.$store.commit("CHANGE_TEMPERATURE_UNIT", value);
     },
-    changePressure(e) {
-      this.$store.commit("CHANGE_PRESSURE_UNIT", e.target.value);
+    changePressure(value, text) {
+      this.pressureUnitSelected = text;
+
+      this.$store.commit("CHANGE_PRESSURE_UNIT", value);
     },
-    changeLength(e) {
-      this.$store.commit("CHANGE_LENGTH_UNIT", e.target.value);
+    changeLength(value, text) {
+      this.lengthUnitSelected = text;
+      this.$store.commit("CHANGE_LENGTH_UNIT", value);
     },
-    changeSpeed(e) {
-      this.$store.commit("CHANGE_SPEED_UNIT", e.target.value);
+    changeSpeed(value, text) {
+      this.speedUnitSelected = text;
+      this.$store.commit("CHANGE_SPEED_UNIT", value);
     },
-    changeLanguage(e) {
-      localStorage.setItem("language", this.languageSelected);
-      this.$i18n.locale = e.target.value;
+    changeLanguage(value, text) {
+      this.languageSelected = text;
+      localStorage.setItem("language", value);
+      this.$i18n.locale = value;
     },
     toggleDarkTheme() {
       this.toggleOn = this.toggleOn === "on" ? "off" : "on";
@@ -144,11 +154,11 @@ export default {
     resetLocalStorage() {
       this.$store.commit("RESET_LOCAL_STORAGE");
       this.$i18n.locale = "en";
-      this.tempUnitSelected = "celsius";
-      this.pressureUnitSelected = "hectopascal";
+      this.tempUnitSelected = "°C";
+      this.pressureUnitSelected = "hPa";
       this.lengthUnitSelected = "metric";
       this.speedUnitSelected = "metric";
-      this.languageSelected = "en";
+      this.languageSelected = "english";
       this.toggleOn = "off";
       this.$emit("toggle-dark-theme", this.toggleOn);
     },
