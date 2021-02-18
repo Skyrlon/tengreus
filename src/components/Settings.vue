@@ -77,18 +77,29 @@ export default {
     this.tempUnitSelected = localStorage.getItem("tempUnit")
       ? localStorage.getItem("tempUnit")
       : "°C";
+
     this.pressureUnitSelected = localStorage.getItem("pressureUnit")
       ? localStorage.getItem("pressureUnit")
       : "hPa";
+
     this.lengthUnitSelected = localStorage.getItem("lengthUnit")
       ? localStorage.getItem("lengthUnit")
       : this.$i18n.messages[this.$i18n.locale].metric;
+
     this.speedUnitSelected = localStorage.getItem("speedUnit")
       ? localStorage.getItem("speedUnit")
       : this.$i18n.messages[this.$i18n.locale].metric;
-    this.languageSelected = localStorage.getItem("language")
-      ? localStorage.getItem("language")
-      : "english";
+
+    if (localStorage.getItem("language")) {
+      if (localStorage.getItem("language") === "en") {
+        this.languageSelected = "english";
+      } else if (localStorage.getItem("language") === "fr") {
+        this.languageSelected = "français";
+      }
+    } else {
+      this.languageSelected = "english";
+    }
+
     this.toggleOn = localStorage.getItem("darktheme")
       ? localStorage.getItem("darktheme")
       : "off";
@@ -110,17 +121,25 @@ export default {
       pressureTextArray: ["atm", "bar", "hPa", "Pa", "psi", "Torr"],
       pressureUnitSelected: "hPa",
       measurementSystemValuesArray: ["metric", "imperial"],
-      measurementSystemTextArray: [
-        this.$i18n.messages[this.$i18n.locale].metric,
-        this.$i18n.messages[this.$i18n.locale].imperial,
-      ],
-      lengthUnitSelected: this.$i18n.messages[this.$i18n.locale].metric,
-      speedUnitSelected: this.$i18n.messages[this.$i18n.locale].metric,
       languageValuesArray: ["en", "fr"],
       languageTextArray: ["english", "français"],
       languageSelected: "en",
       toggleOn: "off",
     };
+  },
+  computed: {
+    measurementSystemTextArray() {
+      return [
+        this.$i18n.messages[this.$i18n.locale].metric,
+        this.$i18n.messages[this.$i18n.locale].imperial,
+      ];
+    },
+    lengthUnitSelected() {
+      return this.$i18n.messages[this.$i18n.locale].metric;
+    },
+    speedUnitSelected() {
+      return this.$i18n.messages[this.$i18n.locale].metric;
+    },
   },
 
   methods: {
@@ -130,7 +149,6 @@ export default {
     },
     changePressure(value, text) {
       this.pressureUnitSelected = text;
-
       this.$store.commit("CHANGE_PRESSURE_UNIT", value);
     },
     changeLength(value, text) {
