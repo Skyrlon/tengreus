@@ -48,52 +48,54 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .custom-select {
   position: relative;
-  width: 10em;
+  width: 100%;
 }
 
 .select-selected {
-  background-color: DodgerBlue;
-}
-
-.select-selected:after {
-  position: absolute;
-  content: "";
-  top: 14px;
-  right: 10px;
-  width: 0;
-  height: 0;
-  border: 6px solid transparent;
-  border-color: #fff transparent transparent transparent;
-}
-
-.select-selected.active:after {
-  border-color: transparent transparent #fff transparent;
-  top: 7px;
+  border: 1px solid var(--base-font-color);
+  &:after {
+    position: absolute;
+    content: "";
+    top: 50%;
+    right: 5%;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top-color: var(--base-font-color);
+  }
+  &.active:after {
+    border-bottom-color: var(--base-font-color);
+    border-top-color: transparent;
+    top: 25%;
+  }
 }
 
 .select-items div,
 .select-selected {
-  color: #ffffff;
-  padding: 8px 16px;
-  border: 1px solid transparent;
-  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  text-transform: none;
   cursor: pointer;
   user-select: none;
 }
 
 .select-items {
   position: absolute;
-  background-color: DodgerBlue;
+  background-color: var(--base-background-color);
   top: 100%;
   left: 0;
   right: 0;
   z-index: 99;
-}
-
-.select-items div:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  border-left: 1px solid var(--base-font-color);
+  border-right: 1px solid var(--base-font-color);
+  & div {
+    border-bottom: 1px solid var(--base-font-color);
+    &:hover {
+      background-color: var(--darktheme-font-color);
+    }
+  }
 }
 </style>

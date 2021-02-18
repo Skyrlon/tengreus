@@ -4,52 +4,62 @@
       <div class="row">{{ $t("settings") }} :</div>
       <div class="row">
         <div>{{ $t("temperature") }} :</div>
-        <custom-select
-          :optionValue="tempValuesArray"
-          :optionText="tempTextArray"
-          :selectOption="changeTemperature"
-          :optionSelected="tempUnitSelected"
-        />
+        <div class="select-container">
+          <custom-select
+            :optionValue="tempValuesArray"
+            :optionText="tempTextArray"
+            :selectOption="changeTemperature"
+            :optionSelected="tempUnitSelected"
+          />
+        </div>
       </div>
 
       <div class="row">
         <div>{{ $t("pressure") }} :</div>
-        <custom-select
-          :optionValue="pressureValuesArray"
-          :optionText="pressureTextArray"
-          :selectOption="changePressure"
-          :optionSelected="pressureUnitSelected"
-        />
+        <div class="select-container">
+          <custom-select
+            :optionValue="pressureValuesArray"
+            :optionText="pressureTextArray"
+            :selectOption="changePressure"
+            :optionSelected="pressureUnitSelected"
+          />
+        </div>
       </div>
 
       <div class="row">
         <div>{{ $t("distance") }} :</div>
-        <custom-select
-          :optionValue="measurementSystemValuesArray"
-          :optionText="measurementSystemTextArray"
-          :selectOption="changeLength"
-          :optionSelected="lengthUnitSelected"
-        />
+        <div class="select-container">
+          <custom-select
+            :optionValue="measurementSystemValuesArray"
+            :optionText="measurementSystemTextArray"
+            :selectOption="changeLength"
+            :optionSelected="lengthUnitSelected"
+          />
+        </div>
       </div>
 
       <div class="row">
         <div>{{ $t("speed") }} :</div>
-        <custom-select
-          :optionValue="measurementSystemValuesArray"
-          :optionText="measurementSystemTextArray"
-          :selectOption="changeSpeed"
-          :optionSelected="speedUnitSelected"
-        />
+        <div class="select-container">
+          <custom-select
+            :optionValue="measurementSystemValuesArray"
+            :optionText="measurementSystemTextArray"
+            :selectOption="changeSpeed"
+            :optionSelected="speedUnitSelected"
+          />
+        </div>
       </div>
 
       <div class="row">
         <div>{{ $t("language") }} :</div>
-        <custom-select
-          :optionValue="languageValuesArray"
-          :optionText="languageTextArray"
-          :selectOption="changeLanguage"
-          :optionSelected="languageSelected"
-        />
+        <div class="select-container">
+          <custom-select
+            :optionValue="languageValuesArray"
+            :optionText="languageTextArray"
+            :selectOption="changeLanguage"
+            :optionSelected="languageSelected"
+          />
+        </div>
       </div>
 
       <div class="row">
@@ -188,10 +198,13 @@ export default {
 .settings {
   position: absolute;
   display: flex;
+  z-index: 97;
   top: 0;
   right: 0;
+  color: var(--base-font-color);
+  background: var(--base-background-color);
+  border: 1px solid var(--base-font-color);
   justify-content: space-between;
-  background: green;
   text-transform: capitalize;
 
   &-form {
@@ -202,10 +215,14 @@ export default {
     & .row {
       display: flex;
       padding: 1em;
+      & .select-container {
+        width: 10em;
+        font-size: 0.75em;
+      }
     }
   }
   & .toggle-icon {
-    width: 2.5vw;
+    width: 2.5em;
   }
 }
 </style>

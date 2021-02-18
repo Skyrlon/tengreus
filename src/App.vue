@@ -105,13 +105,15 @@ body {
 #app {
   --darktheme-font-color: #dddddd;
   --darktheme-background-color: #21242c;
+  --base-font-color: #2c3e50;
+  --base-background-color: #f7f7f7;
   position: absolute;
   width: 100%;
   height: 100%;
   font-family: LexendMega, Avenir, Helvetica, Arial, sans-serif;
   text-align: center;
-  color: #2c3e50;
-  background: #f7f7f7;
+  color: var(--base-font-color);
+  background: var(--base-background-color);
   overflow-x: hidden;
   &.dark {
     background: var(--darktheme-background-color);
@@ -133,6 +135,7 @@ body {
   position: absolute;
   right: 0;
   top: 0;
+  z-index: 98;
   width: 2.5em;
   height: auto;
   transform: rotate(0deg);
