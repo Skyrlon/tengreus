@@ -84,17 +84,34 @@ export default {
 
 .select-items {
   position: absolute;
-  background-color: var(--base-background-color);
   top: 100%;
   left: 0;
   right: 0;
   z-index: 99;
   border-left: 1px solid var(--base-font-color);
   border-right: 1px solid var(--base-font-color);
+  background-color: var(--base-background-color);
   & div {
     border-bottom: 1px solid var(--base-font-color);
     &:hover {
       background-color: var(--darktheme-font-color);
+    }
+  }
+}
+
+#app.dark .custom-select {
+  & .select-selected {
+    border: 1px solid var(--darktheme-font-color);
+  }
+  & .select-items {
+    background-color: var(--darktheme-background-color);
+    border-left: 1px solid var(--darktheme-font-color);
+    border-right: 1px solid var(--darktheme-font-color);
+    & div {
+      border-bottom: 1px solid var(--darktheme-font-color);
+      &:hover {
+        background-color: var(--base-font-color);
+      }
     }
   }
 }

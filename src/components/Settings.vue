@@ -221,4 +221,14 @@ export default {
     width: 2.5em;
   }
 }
+
+#app.dark {
+  & .settings {
+    border: 1px solid transparent;
+    border-color: transparent transparent var(--darktheme-font-color)
+      var(--darktheme-font-color);
+    color: var(--darktheme-font-color);
+    background-color: var(--darktheme-background-color);
+  }
+}
 </style>
