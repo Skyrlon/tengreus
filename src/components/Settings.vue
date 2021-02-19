@@ -33,7 +33,7 @@
             :optionValue="measurementSystemValuesArray"
             :optionText="measurementSystemTextArray"
             :selectOption="changeLength"
-            :optionSelected="lengthUnitSelected"
+            :optionSelected="$t(lengthUnitSelected)"
           />
         </div>
       </div>
@@ -45,7 +45,7 @@
             :optionValue="measurementSystemValuesArray"
             :optionText="measurementSystemTextArray"
             :selectOption="changeSpeed"
-            :optionSelected="speedUnitSelected"
+            :optionSelected="$t(speedUnitSelected)"
           />
         </div>
       </div>
@@ -94,11 +94,11 @@ export default {
 
     this.lengthUnitSelected = localStorage.getItem("lengthUnit")
       ? localStorage.getItem("lengthUnit")
-      : this.$i18n.messages[this.$i18n.locale].metric;
+      : "metric";
 
     this.speedUnitSelected = localStorage.getItem("speedUnit")
       ? localStorage.getItem("speedUnit")
-      : this.$i18n.messages[this.$i18n.locale].metric;
+      : "metric";
 
     if (localStorage.getItem("language")) {
       if (localStorage.getItem("language") === "en") {
@@ -117,6 +117,8 @@ export default {
 
   data() {
     return {
+      lengthUnitSelected: "metric",
+      speedUnitSelected: "metric",
       tempValuesArray: ["celsius", "fahrenheit", "kelvin"],
       tempTextArray: ["°C", "°F", "K"],
       tempUnitSelected: "°C",
@@ -138,17 +140,9 @@ export default {
     };
   },
   computed: {
+    //data doesn't refresh value, unlike computed
     measurementSystemTextArray() {
-      return [
-        this.$i18n.messages[this.$i18n.locale].metric,
-        this.$i18n.messages[this.$i18n.locale].imperial,
-      ];
-    },
-    lengthUnitSelected() {
-      return this.$i18n.messages[this.$i18n.locale].metric;
-    },
-    speedUnitSelected() {
-      return this.$i18n.messages[this.$i18n.locale].metric;
+      return [this.$t("metric"), this.$t("imperial")];
     },
   },
 
@@ -161,12 +155,14 @@ export default {
       this.pressureUnitSelected = text;
       this.$store.commit("CHANGE_PRESSURE_UNIT", value);
     },
+    // eslint-disable-next-line no-unused-vars
     changeLength(value, text) {
-      this.lengthUnitSelected = text;
+      this.lengthUnitSelected = value;
       this.$store.commit("CHANGE_LENGTH_UNIT", value);
     },
+    // eslint-disable-next-line no-unused-vars
     changeSpeed(value, text) {
-      this.speedUnitSelected = text;
+      this.speedUnitSelected = value;
       this.$store.commit("CHANGE_SPEED_UNIT", value);
     },
     changeLanguage(value, text) {

@@ -148,7 +148,7 @@ export default new Vuex.Store({
           unit = 'mi';
           break;
       }
-      localStorage.setItem('lengthUnit', this.$i18n.messages[this.$i18n.locale][payload]);
+      localStorage.setItem('lengthUnit', payload);
       return state.lengthUnit = unit;
     },
 
@@ -162,7 +162,7 @@ export default new Vuex.Store({
           unit = 'mi/h';
           break;
       }
-      localStorage.setItem('speedUnit', this.$i18n.messages[this.$i18n.locale][payload]);
+      localStorage.setItem('speedUnit', payload);
       return state.speedUnit = unit;
     },
 
