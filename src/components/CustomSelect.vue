@@ -9,14 +9,14 @@
     </div>
     <div class="select-items" v-if="showDropdown">
       <div
-        :key="option.value"
+        :key="option"
         v-for="option in optionArray"
         @click="
-          selectOption(option.value, option.text);
+          selectOption(option);
           showDropdown = !showDropdown;
         "
       >
-        {{ option.text }}
+        {{ option }}
       </div>
     </div>
   </div>
@@ -32,8 +32,7 @@ export default {
 
   props: {
     optionSelected: String,
-    optionValue: Array,
-    optionText: Array,
+    optionArray: Array,
     selectOption: Function,
   },
 
@@ -41,16 +40,6 @@ export default {
     return {
       showDropdown: false,
     };
-  },
-
-  computed: {
-    optionArray() {
-      let array = [];
-      for (let i = 0; i < this.optionValue.length; i++) {
-        array.push({ value: this.optionValue[i], text: this.optionText[i] });
-      }
-      return array;
-    },
   },
 
   methods: {

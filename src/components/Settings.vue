@@ -6,8 +6,7 @@
         <div>{{ $t("temperature") }} :</div>
         <div class="select-container">
           <custom-select
-            :optionValue="tempValuesArray"
-            :optionText="tempTextArray"
+            :optionArray="tempArray"
             :selectOption="changeTemperature"
             :optionSelected="tempUnitSelected"
           />
@@ -18,8 +17,7 @@
         <div>{{ $t("pressure") }} :</div>
         <div class="select-container">
           <custom-select
-            :optionValue="pressureValuesArray"
-            :optionText="pressureTextArray"
+            :optionArray="pressureArray"
             :selectOption="changePressure"
             :optionSelected="pressureUnitSelected"
           />
@@ -30,8 +28,7 @@
         <div>{{ $t("distance") }} :</div>
         <div class="select-container">
           <custom-select
-            :optionValue="measurementSystemValuesArray"
-            :optionText="measurementSystemTextArray"
+            :optionArray="measurementSystemArray"
             :selectOption="changeLength"
             :optionSelected="$t(lengthUnitSelected)"
           />
@@ -42,8 +39,7 @@
         <div>{{ $t("speed") }} :</div>
         <div class="select-container">
           <custom-select
-            :optionValue="measurementSystemValuesArray"
-            :optionText="measurementSystemTextArray"
+            :optionArray="measurementSystemArray"
             :selectOption="changeSpeed"
             :optionSelected="$t(speedUnitSelected)"
           />
@@ -54,8 +50,7 @@
         <div>{{ $t("language") }} :</div>
         <div class="select-container">
           <custom-select
-            :optionValue="languageValuesArray"
-            :optionText="languageTextArray"
+            :optionArray="languageArray"
             :selectOption="changeLanguage"
             :optionSelected="languageSelected"
           />
@@ -119,62 +114,68 @@ export default {
     return {
       lengthUnitSelected: "metric",
       speedUnitSelected: "metric",
-      tempValuesArray: ["celsius", "fahrenheit", "kelvin"],
-      tempTextArray: ["°C", "°F", "K"],
+      tempArray: ["°C", "°F", "K"],
       tempUnitSelected: "°C",
-      pressureValuesArray: [
-        "atmosphere",
-        "bar",
-        "hectopascal",
-        "pascal",
-        "psi",
-        "torr",
-      ],
-      pressureTextArray: ["atm", "bar", "hPa", "Pa", "psi", "Torr"],
+      pressureArray: ["atm", "bar", "hPa", "Pa", "psi", "Torr"],
       pressureUnitSelected: "hPa",
-      measurementSystemValuesArray: ["metric", "imperial"],
-      languageValuesArray: ["en", "fr"],
-      languageTextArray: ["english", "français"],
+      languageArray: ["english", "français"],
       languageSelected: "en",
       toggleOn: "off",
     };
   },
   computed: {
     //data doesn't refresh value, unlike computed
-    measurementSystemTextArray() {
+    measurementSystemArray() {
       return [this.$t("metric"), this.$t("imperial")];
     },
   },
 
   methods: {
-    changeTemperature(value, text) {
-      this.tempUnitSelected = text;
+    changeTemperature(value) {
+      this.tempUnitSelected = value;
       this.$store.commit("CHANGE_TEMPERATURE_UNIT", value);
     },
-    changePressure(value, text) {
-      this.pressureUnitSelected = text;
+
+    changePressure(value) {
+      this.pressureUnitSelected = value;
       this.$store.commit("CHANGE_PRESSURE_UNIT", value);
     },
-    // eslint-disable-next-line no-unused-vars
-    changeLength(value, text) {
+
+    changeLength(value) {
+      let valueNotTranslated;
+      if (value === "métrique" || value === "impérial") {
+        valueNotTranslated = value === "métrique" ? "metric" : "imperial";
+      } else {
+        valueNotTranslated = value;
+      }
       this.lengthUnitSelected = value;
-      this.$store.commit("CHANGE_LENGTH_UNIT", value);
+      this.$store.commit("CHANGE_LENGTH_UNIT", valueNotTranslated);
     },
-    // eslint-disable-next-line no-unused-vars
-    changeSpeed(value, text) {
+
+    changeSpeed(value) {
+      let valueNotTranslated;
+      if (value === "métrique" || value === "impérial") {
+        valueNotTranslated = value === "métrique" ? "metric" : "imperial";
+      } else {
+        valueNotTranslated = value;
+      }
       this.speedUnitSelected = value;
-      this.$store.commit("CHANGE_SPEED_UNIT", value);
+      this.$store.commit("CHANGE_SPEED_UNIT", valueNotTranslated);
     },
-    changeLanguage(value, text) {
-      this.languageSelected = text;
-      localStorage.setItem("language", value);
-      this.$i18n.locale = value;
+
+    changeLanguage(value) {
+      let language = value === "english" ? "en" : "fr";
+      this.languageSelected = value;
+      localStorage.setItem("language", language);
+      this.$i18n.locale = language;
     },
+
     toggleDarkTheme() {
       this.toggleOn = this.toggleOn === "on" ? "off" : "on";
       this.$emit("toggle-dark-theme", this.toggleOn);
       localStorage.setItem("darktheme", this.toggleOn);
     },
+
     resetLocalStorage() {
       this.$store.commit("RESET_LOCAL_STORAGE");
       this.$i18n.locale = "en";

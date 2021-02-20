@@ -96,46 +96,13 @@ export default new Vuex.Store({
     },
 
     CHANGE_TEMPERATURE_UNIT(state, payload) {
-      let unit;
-      switch (payload) {
-        case 'celsius':
-          unit = '°C';
-          break;
-        case 'fahrenheit':
-          unit = '°F';
-          break;
-        case 'kelvin':
-          unit = 'K';
-          break;
-      }
-      localStorage.setItem('tempUnit', unit);
-      return state.tempUnit = unit;
+      localStorage.setItem('tempUnit', payload);
+      return state.tempUnit = payload;
     },
 
     CHANGE_PRESSURE_UNIT(state, payload) {
-      let unit;
-      switch (payload) {
-        case 'atmosphere':
-          unit = 'atm';
-          break;
-        case 'bar':
-          unit = 'bar';
-          break;
-        case 'hectopascal':
-          unit = 'hPa';
-          break;
-        case 'pascal':
-          unit = 'Pa';
-          break;
-        case 'psi':
-          unit = 'psi';
-          break;
-        case 'torr':
-          unit = 'Torr';
-          break;
-      }
-      localStorage.setItem('pressureUnit', unit);
-      return state.pressureUnit = unit;
+      localStorage.setItem('pressureUnit', payload);
+      return state.pressureUnit = payload;
     },
 
     CHANGE_LENGTH_UNIT(state, payload) {
