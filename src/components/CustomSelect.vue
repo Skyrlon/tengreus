@@ -1,5 +1,5 @@
 <template>
-  <div class="custom-select">
+  <div class="custom-select" v-on-clickaway="hideDropdown">
     <div
       class="select-selected"
       @click="showDropdown = !showDropdown"
@@ -23,19 +23,26 @@
 </template>
 
 <script>
+import { mixin as clickaway } from "vue-clickaway";
+
 export default {
   name: "CustomSelect",
+
+  mixins: [clickaway],
+
   props: {
     optionSelected: String,
     optionValue: Array,
     optionText: Array,
     selectOption: Function,
   },
+
   data() {
     return {
       showDropdown: false,
     };
   },
+
   computed: {
     optionArray() {
       let array = [];
@@ -43,6 +50,12 @@ export default {
         array.push({ value: this.optionValue[i], text: this.optionText[i] });
       }
       return array;
+    },
+  },
+
+  methods: {
+    hideDropdown() {
+      this.showDropdown = false;
     },
   },
 };
