@@ -65,7 +65,9 @@
       </div>
 
       <div class="row">
-        <button @click="resetLocalStorage">Reset</button>
+        <div @click="resetLocalStorage" class="reset-button">
+          {{ $t("reset") }}
+        </div>
       </div>
     </div>
   </div>
@@ -227,6 +229,18 @@ export default {
   }
   & .toggle-icon {
     width: 2.5em;
+    cursor: pointer;
+  }
+  & .reset-button {
+    padding: 0.25em;
+    max-width: 15em;
+    border: medium solid var(--base-font-color);
+    border-radius: 0.5em;
+    cursor: pointer;
+    user-select: none;
+    &:active {
+      box-shadow: 0 0 0.5em -0.1em var(--base-font-color);
+    }
   }
 }
 
@@ -237,6 +251,12 @@ export default {
       var(--darktheme-font-color);
     color: var(--darktheme-font-color);
     background-color: var(--darktheme-background-color);
+  }
+  & .reset-button {
+    border: medium solid var(--darktheme-font-color);
+    &:active {
+      box-shadow: 0 0 1em -0.05em var(--darktheme-font-color);
+    }
   }
 }
 </style>

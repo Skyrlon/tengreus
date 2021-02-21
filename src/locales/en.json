@@ -44,5 +44,6 @@
   "day": "day",
   "night": "night",
   "sun_rise_set": "sunrise and sunset",
-  "dark_theme": "dark theme"
+  "dark_theme": "dark theme",
+  "reset": "reset"
 }
