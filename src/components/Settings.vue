@@ -200,22 +200,39 @@ export default {
   z-index: 97;
   top: 0;
   right: 0;
-  width: 25%;
   color: var(--base-font-color);
   background: var(--base-background-color);
   border: 1px solid var(--base-font-color);
   justify-content: space-between;
   text-transform: capitalize;
+  @media (min-width: 1025px) {
+    width: 30%;
+    height: 60%;
+  }
+  @media (max-width: 1024px) and (min-width: 601px) {
+    width: 50%;
+    height: 50%;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
+    height: 100%;
+  }
+  @media (max-width: 1024px) and (orientation: landscape) {
+    width: 100%;
+    height: 100%;
+  }
 
   &-form {
     display: flex;
     flex-direction: column;
     justify-content: left;
     width: 90%;
+    justify-content: space-around;
+    padding-left: 1em;
+    padding-bottom: 1em;
 
     & .row {
       display: flex;
-      padding: 1em;
       width: 100%;
       justify-content: space-between;
       &:nth-child(3) .select-container {
