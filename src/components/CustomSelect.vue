@@ -79,7 +79,6 @@ export default {
 .select-selected {
   padding-top: 5%;
   padding-bottom: 5%;
-  text-transform: none;
   cursor: pointer;
   user-select: none;
 }
@@ -104,6 +103,13 @@ export default {
 #app.dark .custom-select {
   & .select-selected {
     border: 1px solid var(--darktheme-font-color);
+    &::after {
+      border-top-color: var(--darktheme-font-color);
+    }
+    &.active:after {
+      border-bottom-color: var(--darktheme-font-color);
+      border-top-color: transparent;
+    }
   }
   & .select-items {
     background-color: var(--darktheme-background-color);

@@ -43,5 +43,5 @@
     "from_north_west": "du nord ouest",
     "day": "jour",
     "night": "nuit",
-    "sun_rise_set": "Lever et Coucher du Soleil"
+    "sun_rise_set": "Lever et Coucher du Soleil","dark_theme": "thème sombre"
 }

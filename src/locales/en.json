@@ -43,5 +43,6 @@
   "from_north_west": "from north west",
   "day": "day",
   "night": "night",
-  "sun_rise_set": "sunrise and sunset"
+  "sun_rise_set": "sunrise and sunset",
+  "dark_theme": "dark theme"
 }

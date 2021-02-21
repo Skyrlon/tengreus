@@ -58,7 +58,7 @@
       </div>
 
       <div class="row">
-        Dark Theme
+        {{ $t("dark_theme") }}
         <div class="toggle-icon" @click="toggleDarkTheme">
           <toggle-icon :isOn="toggleOn" />
         </div>
@@ -198,6 +198,7 @@ export default {
   z-index: 97;
   top: 0;
   right: 0;
+  width: 25%;
   color: var(--base-font-color);
   background: var(--base-background-color);
   border: 1px solid var(--base-font-color);
@@ -208,10 +209,16 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: left;
+    width: 90%;
 
     & .row {
       display: flex;
       padding: 1em;
+      width: 100%;
+      justify-content: space-between;
+      &:nth-child(3) .select-container {
+        text-transform: none;
+      }
       & .select-container {
         width: 10em;
         font-size: 0.75em;

@@ -65,7 +65,8 @@ export default {
         this.$store.state.weather.main === "Clouds" ||
         (this.$store.state.weather.main === "Clear" &&
           (this.$store.state.time < this.$store.state.sunrise ||
-            this.$store.state.time > this.$store.state.sunset))
+            this.$store.state.time > this.$store.state.sunset)) ||
+        (this.showSettings && this.darkTheme)
       ) {
         color = "white";
       } else if (
