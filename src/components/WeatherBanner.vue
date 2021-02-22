@@ -1,35 +1,39 @@
 <template>
   <div :class="'banner ' + getWeather(weather.main)">
-    <div class="weather-summary">
-      <div class="city-name">
-        {{ city.name }}
-        <div
-          class="reload-icon"
-          :class="{ reloading: isReloading }"
-          @click="reloadData"
-        >
-          <reload-icon :isBlackOrWhite="getReloadIconColor" />
+    <div class="banner-content">
+      <div class="weather-summary">
+        <div class="weather-summary_row city-name">
+          {{ city.name }}
+          <div
+            class="reload-icon"
+            :class="{ reloading: isReloading }"
+            @click="reloadData"
+          >
+            <reload-icon :isBlackOrWhite="getReloadIconColor" />
+          </div>
+        </div>
+        <div class="weather-summary_row hour">{{ convertTime(time) }}</div>
+        <div class="weather-summary_row temperature">
+          {{ convertTemperature(temperatures.current) }}{{ tempUnit }}
+        </div>
+        <div class="weather-summary_row current-weather">
+          {{ weather.detailed }}
         </div>
       </div>
-      <div class="hour">{{ convertTime(time) }}</div>
-      <div class="temperature">
-        {{ convertTemperature(temperatures.current) }}{{ tempUnit }}
-      </div>
-      <div class="current-weather">{{ weather.detailed }}</div>
-    </div>
-    <div class="icons">
-      <div class="weather-icon-container">
-        <weather-icon
-          :weatherMain="weather.main"
-          :weatherId="weather.id"
-          :time="time"
-          :sunrise="sunrise"
-          :sunset="sunset"
-          :moonPhase="getMoonPhase(time)"
-        />
-      </div>
-      <div class="sun-path">
-        <sun-path-icon :time="time" :sunRise="sunrise" :sunSet="sunset" />
+      <div class="icons">
+        <div class="weather-icon-container">
+          <weather-icon
+            :weatherMain="weather.main"
+            :weatherId="weather.id"
+            :time="time"
+            :sunrise="sunrise"
+            :sunset="sunset"
+            :moonPhase="getMoonPhase(time)"
+          />
+        </div>
+        <div class="sun-path">
+          <sun-path-icon :time="time" :sunRise="sunrise" :sunSet="sunset" />
+        </div>
       </div>
     </div>
   </div>
@@ -139,8 +143,6 @@ export default {
 
 <style lang="scss" scoped>
 .banner {
-  display: flex;
-  flex-direction: row;
   width: 100%;
   height: 50%;
   background: black;
@@ -190,6 +192,14 @@ export default {
     background-image: url("../assets/images/night.jpg");
     background-color: #09090a;
   }
+  &-content {
+    margin-left: 0;
+    width: 90%;
+    height: 99%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
 }
 
 .weather-summary {
@@ -197,36 +207,36 @@ export default {
   flex-direction: column;
   justify-content: space-evenly;
   padding-left: 5%;
-  width: 80%;
   height: 99%;
+  width: 80%;
   text-align: left;
+  @media (orientation: landscape) {
+    width: 90%;
+  }
+  @media (orientation: portrait) {
+    width: 50%;
+  }
+  &_row {
+    font-size: calc(16px + (26 - 16) * ((100vw - 300px) / (1600 - 300)));
+  }
 }
 
 .city-name {
-  margin: 0;
-  font-size: 2em;
   display: flex;
   flex-direction: row;
 }
 
 .reload-icon {
-  width: 0.75em;
+  padding-top: 0.2em;
+  padding-left: 0.2em;
+  width: calc(16px + (26 - 16) * ((100vw - 300px) / (1600 - 300)));
   cursor: pointer;
   &.reloading {
     animation: infinite-spin 0.5s infinite linear;
   }
 }
 
-.hour {
-  font-size: 1.75em;
-}
-
-.temperature {
-  font-size: 1.75em;
-}
-
 .current-weather {
-  font-size: 1.75em;
   text-transform: capitalize;
 }
 
@@ -235,21 +245,22 @@ export default {
   flex-direction: column;
   position: relative;
   top: 20%;
-  width: 10%;
   height: 75%;
+  justify-content: space-between;
+  @media (orientation: landscape) {
+    width: 10%;
+  }
+  @media (orientation: portrait) {
+    width: 20%;
+  }
 }
 
 .weather-icon-container {
-  position: absolute;
-  right: 20px;
-  width: 7em;
+  width: 100%;
 }
 
 .sun-path {
-  position: absolute;
-  bottom: 0;
-  right: 20px;
-  width: 7em;
+  width: 100%;
 }
 
 @keyframes infinite-spin {
