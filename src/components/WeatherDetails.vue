@@ -38,9 +38,11 @@ export default {
 <style lang="scss">
 .weather-details {
   position: relative;
+  height: 49%;
 }
 
 .nav-weather {
+  user-select: none;
   &_current {
     display: inline-block;
     text-decoration: underline #6495ed 0.25em;

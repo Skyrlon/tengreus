@@ -1,7 +1,7 @@
 <template>
   <div class="weather-current">
     <div class="feels-like-temp">
-      <div class="fields">{{ $t("feels_like") }} :</div>
+      <div class="fields">{{ $t("feels_like") }}</div>
       <div class="value">
         {{ convertTemperature(temperatures.feelsLike) }}
         <div class="units">
@@ -11,7 +11,7 @@
     </div>
 
     <div class="min-max-temp">
-      <div class="fields">Min/Max :</div>
+      <div class="fields">Min/Max</div>
       <div class="value">
         {{ convertTemperature(temperatures.min) }}/{{
           convertTemperature(temperatures.max)
@@ -23,7 +23,7 @@
     </div>
 
     <div class="pressure">
-      <div class="fields">{{ $t("pressure") }} :</div>
+      <div class="fields">{{ $t("pressure") }}</div>
       <div class="value">
         {{ convertPressure(pressure) }}
         <div class="units">
@@ -33,12 +33,12 @@
     </div>
 
     <div class="humidity">
-      <div class="fields">{{ $t("humidity") }} :</div>
+      <div class="fields">{{ $t("humidity") }}</div>
       <div class="value">{{ humidity }}%</div>
     </div>
 
     <div class="visibility">
-      <div class="fields">{{ $t("visibility") }} :</div>
+      <div class="fields">{{ $t("visibility") }}</div>
       <div class="value">
         {{ convertLength(visibility) }}
         <div class="units">
@@ -48,12 +48,14 @@
     </div>
 
     <div class="wind">
-      <div class="fields">{{ $t("wind") }} :</div>
+      <div class="fields">{{ $t("wind") }}</div>
       <div class="value">
         <div class="wind-direction">
-          <arrow-icon :degree="wind.deg" />
+          <div class="arrow">
+            <arrow-icon :degree="wind.deg" />
+          </div>
+          {{ $t(getWindDirection(wind.deg)) }}
         </div>
-        {{ $t(getWindDirection(wind.deg)) }}
         {{ convertSpeed(wind.speed) }}
         <div class="units">
           {{ speedUnit }}
@@ -62,12 +64,12 @@
     </div>
 
     <div class="cloudiness">
-      <div class="fields">{{ $t("cloudiness") }} :</div>
+      <div class="fields">{{ $t("cloudiness") }}</div>
       <div class="value">{{ cloudiness }}%</div>
     </div>
 
     <div class="moon-phase">
-      <div class="fields">{{ $t("moon_phase") }} :</div>
+      <div class="fields">{{ $t("moon_phase") }}</div>
       <div class="value">{{ $t(getMoonPhase(time)) }}</div>
     </div>
   </div>
@@ -112,10 +114,8 @@ export default {
   box-sizing: border-box;
   padding-left: 5%;
   padding-right: 5%;
-  padding-top: 2.5%;
-  font-size: medium;
-  text-align: left;
-  flex: 1 1 auto;
+  padding-top: 1%;
+  text-align: right;
   justify-content: space-between;
   & > div {
     display: flex;
@@ -125,20 +125,29 @@ export default {
     padding-left: 0.5em;
     padding-right: 1em;
     @media (orientation: landscape) {
-      padding-top: 1.25%;
-      padding-bottom: 1.25%;
+      font-size: 95%;
+      align-items: center;
       width: 45%;
+      height: 49%;
     }
     @media (orientation: portrait) {
-      padding-top: 2.5%;
-      padding-bottom: 2.5%;
+      align-items: center;
       width: 100%;
+      height: 24%;
+    }
+    & .fields {
+      text-align: left;
+    }
+    & .value {
+      text-align: right;
     }
   }
   & .wind-direction {
-    display: inline-block;
-    width: 1em;
-    height: 1em;
+    & .arrow {
+      display: inline-block;
+      width: 1.25em;
+      height: 1.25em;
+    }
   }
 }
 </style>
