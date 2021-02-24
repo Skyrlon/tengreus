@@ -1,5 +1,5 @@
 <template>
-  <div :class="'banner ' + getWeather(weather.main)">
+  <div :class="'banner ' + getWeather(current.weather.main)">
     <div class="banner-content">
       <div class="weather-summary">
         <div class="weather-summary_row city-name">
@@ -12,27 +12,33 @@
             <reload-icon :isBlackOrWhite="getReloadIconColor" />
           </div>
         </div>
-        <div class="weather-summary_row hour">{{ convertTime(time) }}</div>
+        <div class="weather-summary_row hour">
+          {{ convertTime(current.time) }}
+        </div>
         <div class="weather-summary_row temperature">
-          {{ convertTemperature(temperatures.current) }}{{ tempUnit }}
+          {{ convertTemperature(current.temperatures.current) }}{{ tempUnit }}
         </div>
         <div class="weather-summary_row current-weather">
-          {{ weather.detailed }}
+          {{ current.weather.detailed }}
         </div>
       </div>
       <div class="icons">
         <div class="weather-icon-container">
           <weather-icon
-            :weatherMain="weather.main"
-            :weatherId="weather.id"
-            :time="time"
-            :sunrise="sunrise"
-            :sunset="sunset"
-            :moonPhase="getMoonPhase(time)"
+            :weatherMain="current.weather.main"
+            :weatherId="current.weather.id"
+            :time="current.time"
+            :sunrise="current.sunrise"
+            :sunset="current.sunset"
+            :moonPhase="getMoonPhase(current.time)"
           />
         </div>
         <div class="sun-path">
-          <sun-path-icon :time="time" :sunRise="sunrise" :sunSet="sunset" />
+          <sun-path-icon
+            :time="current.time"
+            :sunRise="current.sunrise"
+            :sunSet="current.sunset"
+          />
         </div>
       </div>
     </div>
@@ -53,22 +59,12 @@ export default {
     ReloadIcon,
   },
   computed: {
-    ...mapState([
-      "tempUnit",
-      "temperatures",
-      "city",
-      "time",
-      "sunrise",
-      "sunset",
-      "currentTemp",
-      "weather",
-      "moonPhase",
-    ]),
+    ...mapState(["tempUnit", "city", "current"]),
     getReloadIconColor() {
       let color;
       if (
         ["rain", "night", "clouds", "tornado"].includes(
-          this.getWeather(this.weather.main)
+          this.getWeather(this.current.weather.main)
         )
       ) {
         color = "white";
@@ -106,13 +102,14 @@ export default {
         return "clouds";
       } else if (
         weather === "Clear" &&
-        this.time > this.sunrise &&
-        this.time < this.sunset
+        this.current.time > this.current.sunrise &&
+        this.current.time < this.current.sunset
       ) {
         return "sun";
       } else if (
         weather === "Clear" &&
-        (this.time < this.sunrise || this.time > this.sunset)
+        (this.current.time < this.current.sunrise ||
+          this.current.time > this.current.sunset)
       ) {
         return "night";
       }

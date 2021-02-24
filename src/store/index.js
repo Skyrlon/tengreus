@@ -13,12 +13,6 @@ export default new Vuex.Store({
   state: {
     currentView: "Home",
     apiKey: process.env.VUE_APP_API_KEY,
-    temperatures: {
-      current: -15,
-      feelsLike: -10,
-      min: -11,
-      max: -9,
-    },
     tempUnit: "°C",
     pressureUnit: 'hPa',
     lengthUnit: 'm',
@@ -31,21 +25,7 @@ export default new Vuex.Store({
       country: "France",
     },
     timeShift: 0,
-    time: 5,
-    weather: {
-      main: 'Clear',
-      detailed: 'clear sky',
-    },
-    pressure: 0,
-    humidity: 100,
-    visibility: 16093,
-    wind: {
-      speed: 1.5, // in m/s
-      deg: 350,
-    },
-    cloudiness: 1,
-    sunrise: 0,
-    sunset: 10,
+    current: {},
     forecast: [],
   },
 
@@ -62,29 +42,30 @@ export default new Vuex.Store({
     },
 
     LOAD_CURRENT_WEATHER(state, payload) {
+      const current = state.current;
       state.city.name = payload.name;
       state.city.country = payload.sys.country;
       state.city.id = payload.id;
       state.timeShift = payload.timezone;
-      state.time = Date.now() / 1000;
-      state.sunrise = payload.sys.sunrise;
-      state.sunset = payload.sys.sunset;
-      state.temperatures = {
+
+      current.time = Date.now() / 1000;
+      current.sunrise = payload.sys.sunrise;
+      current.sunset = payload.sys.sunset;
+      current.temperatures = {
         current: payload.main.temp,
         feelsLike: payload.main.feels_like,
         min: payload.main.temp_min,
         max: payload.main.temp_max,
       };
-      state.pressure = payload.main.pressure;
-      state.visibility = payload.visibility;
-      state.humidity = payload.main.humidity;
-      state.wind = {
+      current.pressure = payload.main.pressure;
+      current.visibility = payload.visibility;
+      current.humidity = payload.main.humidity;
+      current.wind = {
         speed: payload.wind.speed,
         deg: payload.wind.deg,
-        gust: payload.wind.gust,
       };
-      state.cloudiness = payload.clouds.all;
-      state.weather = {
+      current.cloudiness = payload.clouds.all;
+      current.weather = {
         id: payload.weather[0].id,
         main: payload.weather[0].main,
         detailed: payload.weather[0].description,
