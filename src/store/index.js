@@ -25,7 +25,7 @@ export default new Vuex.Store({
 
   getters: {
     getTitle: state => {
-      return `${state.city.name}, ${state.city.country}`
+      return `${state.city.name[localStorage.getItem("language") || "en"]}, ${state.city.country}`
     }
   },
 
@@ -36,9 +36,11 @@ export default new Vuex.Store({
     },
 
     LOAD_CURRENT_WEATHER(state, payload) {
-
       state.city = {
-        name: payload.name,
+        name: {
+          en: payload.name,
+          fr: ""
+        },
         country: payload.sys.country,
         id: payload.id,
         lon: payload.coord.lon,
@@ -67,10 +69,18 @@ export default new Vuex.Store({
         weather: {
           id: payload.weather[0].id,
           main: payload.weather[0].main,
-          detailed: payload.weather[0].description,
+          detailed: {
+            en: payload.weather[0].description,
+            fr: ""
+          },
         }
       };
       state.current.time = Date.now() / 1000; //time provided by api is inaccurate
+    },
+
+    LOAD_FRENCH_CURRENT_WEATHER(state, payload) {
+      state.city.name.fr = payload.name;
+      state.current.weather.detailed.fr = payload.weather[0].description;
     },
 
     LOAD_FORECAST_WEATHER(state, payload) {
@@ -99,8 +109,19 @@ export default new Vuex.Store({
           weather: {
             id: payload.daily[i].weather[0].id,
             main: payload.daily[i].weather[0].main,
-            detailed: payload.daily[i].weather[0].description,
+            detailed: {
+              en: payload.daily[i].weather[0].description,
+              fr: "",
+            },
           }
+        }
+      }
+    },
+
+    LOAD_FRENCH_FORECAST_WEATHER(state, payload) {
+      if (state.forecast.length === 8) {
+        for (let i = 0; i < payload.daily.length; i++) {
+          state.forecast[i].weather.detailed.fr = payload.daily[i].weather[0].description;
         }
       }
     },
@@ -157,31 +178,53 @@ export default new Vuex.Store({
       dispatch
     }, payload) {
       await dispatch('getCurrentWeather', payload);
+      await dispatch('getFrenchCurrentWeather', payload);
       await dispatch('getForecastWeather', payload);
-
+      await dispatch('getFrenchForecastWeather', payload);
+      dispatch('switchPage', 'Weather')
     },
 
     getCurrentWeather({
       commit,
       state
     }, payload) {
-      axios
-        .get(`https://api.openweathermap.org/data/2.5/weather?id=${payload.id}&appid=${state.apiKey}&units=metric&lang=${localStorage.getItem("language") || "en"}`)
+      return axios
+        .get(`https://api.openweathermap.org/data/2.5/weather?id=${payload.id}&appid=${state.apiKey}&units=metric&lang=en`)
         .then(result => {
           commit('LOAD_CURRENT_WEATHER', result.data);
+        });
+    },
+
+    getFrenchCurrentWeather({
+      commit,
+      state
+    }, payload) {
+      return axios
+        .get(`https://api.openweathermap.org/data/2.5/weather?id=${payload.id}&appid=${state.apiKey}&units=metric&lang=fr`)
+        .then(result => {
+          commit('LOAD_FRENCH_CURRENT_WEATHER', result.data);
         })
     },
 
     getForecastWeather({
       commit,
-      state,
-      dispatch
+      state
     }, payload) {
-      axios
-        .get(`https://api.openweathermap.org/data/2.5/onecall?appid=${state.apiKey}&units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=${localStorage.getItem("language") || "en"}`)
+      return axios
+        .get(`https://api.openweathermap.org/data/2.5/onecall?appid=${state.apiKey}&units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=en`)
         .then(result => {
           commit('LOAD_FORECAST_WEATHER', result.data);
-          dispatch('switchPage', 'Weather')
+        });
+    },
+
+    getFrenchForecastWeather({
+      commit,
+      state
+    }, payload) {
+      return axios
+        .get(`https://api.openweathermap.org/data/2.5/onecall?appid=${state.apiKey}&units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=fr`)
+        .then(result => {
+          commit('LOAD_FRENCH_FORECAST_WEATHER', result.data);
         })
     },
 

@@ -3,7 +3,7 @@
     <div class="banner-content">
       <div class="weather-summary">
         <div class="weather-summary_row city-name">
-          {{ city.name }}
+          {{ city.name[this.$i18n.locale || "en"] }}
           <div
             class="reload-icon"
             :class="{ reloading: isReloading }"
@@ -19,7 +19,7 @@
           {{ convertTemperature(current.temperatures.current) }}{{ tempUnit }}
         </div>
         <div class="weather-summary_row current-weather">
-          {{ current.weather.detailed }}
+          {{ current.weather.detailed[this.$i18n.locale || "en"] }}
         </div>
       </div>
       <div class="icons">

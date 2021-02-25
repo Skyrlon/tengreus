@@ -3,7 +3,7 @@
     <div class="weather-card_day">{{ $t(Day) }}</div>
     <div class="weather-card_icon">
       <div class="tooltip">
-        {{ WeatherData.weather.detailed }}
+        {{ WeatherData.weather.detailed[this.$i18n.locale || "en"] }}
       </div>
       <weather-icon
         :weatherMain="WeatherData.weather.main"
@@ -34,9 +34,6 @@ export default {
   props: {
     Day: String,
     WeatherData: Object,
-  },
-  created() {
-    console.log(this.convertTime(this.WeatherData.time));
   },
 };
 </script>
