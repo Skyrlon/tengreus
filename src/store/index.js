@@ -17,13 +17,7 @@ export default new Vuex.Store({
     pressureUnit: 'hPa',
     lengthUnit: 'm',
     speedUnit: 'km/h',
-    city: {
-      name: "Paris",
-      id: 2988507,
-      lat: 48.85341,
-      lon: 2.3488,
-      country: "France",
-    },
+    city: {},
     timeShift: 0,
     current: {},
     forecast: [],
@@ -42,38 +36,73 @@ export default new Vuex.Store({
     },
 
     LOAD_CURRENT_WEATHER(state, payload) {
-      const current = state.current;
-      state.city.name = payload.name;
-      state.city.country = payload.sys.country;
-      state.city.id = payload.id;
+
+      state.city = {
+        name: payload.name,
+        country: payload.sys.country,
+        id: payload.id,
+        lon: payload.coord.lon,
+        lat: payload.coord.lat,
+      };
+
       state.timeShift = payload.timezone;
 
-      current.time = Date.now() / 1000;
-      current.sunrise = payload.sys.sunrise;
-      current.sunset = payload.sys.sunset;
-      current.temperatures = {
-        current: payload.main.temp,
-        feelsLike: payload.main.feels_like,
-        min: payload.main.temp_min,
-        max: payload.main.temp_max,
+      state.current = {
+        sunrise: payload.sys.sunrise,
+        sunset: payload.sys.sunset,
+        temperatures: {
+          current: payload.main.temp,
+          feelsLike: payload.main.feels_like,
+          min: payload.main.temp_min,
+          max: payload.main.temp_max,
+        },
+        pressure: payload.main.pressure,
+        visibility: payload.visibility,
+        humidity: payload.main.humidity,
+        wind: {
+          speed: payload.wind.speed,
+          deg: payload.wind.deg,
+        },
+        cloudiness: payload.clouds.all,
+        weather: {
+          id: payload.weather[0].id,
+          main: payload.weather[0].main,
+          detailed: payload.weather[0].description,
+        }
       };
-      current.pressure = payload.main.pressure;
-      current.visibility = payload.visibility;
-      current.humidity = payload.main.humidity;
-      current.wind = {
-        speed: payload.wind.speed,
-        deg: payload.wind.deg,
-      };
-      current.cloudiness = payload.clouds.all;
-      current.weather = {
-        id: payload.weather[0].id,
-        main: payload.weather[0].main,
-        detailed: payload.weather[0].description,
-      }
+      state.current.time = Date.now() / 1000; //time provided by api is inaccurate
     },
 
     LOAD_FORECAST_WEATHER(state, payload) {
-      [state.forecast] = [payload.daily];
+      for (let i = 0; i < payload.daily.length; i++) {
+        state.forecast[i] = {
+          time: payload.daily[i].dt,
+          sunrise: payload.daily[i].sunrise,
+          sunset: payload.daily[i].sunset,
+          temperatures: {
+            day: payload.daily[i].temp.day,
+            night: payload.daily[i].temp.night,
+            min: payload.daily[i].temp.min,
+            max: payload.daily[i].temp.max,
+            feelsLike: {
+              day: payload.daily[i].feels_like.day,
+              night: payload.daily[i].feels_like.night,
+            },
+          },
+          pressure: payload.daily[i].pressure,
+          humidity: payload.daily[i].humidity,
+          wind: {
+            speed: payload.daily[i].wind_speed,
+            deg: payload.daily[i].wind_deg,
+          },
+          cloudiness: payload.daily[i].clouds,
+          weather: {
+            id: payload.daily[i].weather[0].id,
+            main: payload.daily[i].weather[0].main,
+            detailed: payload.daily[i].weather[0].description,
+          }
+        }
+      }
     },
 
     CHANGE_TEMPERATURE_UNIT(state, payload) {

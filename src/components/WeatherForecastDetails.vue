@@ -3,7 +3,7 @@
     <div class="weather-forecast-details-icon">
       <weather-card
         :WeatherData="ForecastData"
-        :Day="dayOfTheWeek(ForecastData.dt)"
+        :Day="dayOfTheWeek(ForecastData.time)"
       >
         <div class="weather-forecast-details-link" @click="$emit('go-back')">
           {{ $t("back") }}
@@ -14,12 +14,12 @@
       <div class="feels-like-temp">
         <div class="fields">{{ $t("feels_like") }}</div>
         <div class="value">
-          {{ convertTemperature(ForecastData.feels_like.day) }}
+          {{ convertTemperature(ForecastData.temperatures.feelsLike.day) }}
           <div class="units">
             {{ tempUnit }}
           </div>
           ({{ $t("day") }}) <br />
-          {{ convertTemperature(ForecastData.feels_like.night) }}
+          {{ convertTemperature(ForecastData.temperatures.feelsLike.night) }}
           <div class="units">
             {{ tempUnit }}
           </div>
@@ -29,8 +29,8 @@
       <div class="min-max-temp">
         <div class="fields">Min/Max</div>
         <div class="value">
-          {{ convertTemperature(ForecastData.temp.min) }}/{{
-            convertTemperature(ForecastData.temp.max)
+          {{ convertTemperature(ForecastData.temperatures.min) }}/{{
+            convertTemperature(ForecastData.temperatures.max)
           }}
           <div class="units">
             {{ tempUnit }}
@@ -54,10 +54,12 @@
         <div class="fields">{{ $t("wind") }}</div>
         <div class="value">
           <div class="wind-direction">
-            <arrow-icon :degree="ForecastData.wind_deg" />
+            <div class="arrow">
+              <arrow-icon :degree="ForecastData.wind.deg" />
+            </div>
+            {{ $t(getWindDirection(ForecastData.wind.deg)) }}
           </div>
-          {{ $t(getWindDirection(ForecastData.wind_deg)) }}
-          {{ convertSpeed(ForecastData.wind_speed) }}
+          {{ convertSpeed(ForecastData.wind.speed) }}
           <div class="units">
             {{ speedUnit }}
           </div>
@@ -65,18 +67,17 @@
       </div>
       <div class="cloudiness">
         <div class="fields">{{ $t("cloudiness") }}</div>
-        <div class="value">{{ ForecastData.clouds }}%</div>
+        <div class="value">{{ ForecastData.cloudiness }}%</div>
       </div>
       <div class="moon-phase">
         <div class="fields">{{ $t("moon_phase") }}</div>
-        <div class="value">{{ $t(getMoonPhase(ForecastData.dt)) }}</div>
+        <div class="value">{{ $t(getMoonPhase(ForecastData.time)) }}</div>
       </div>
       <div class="sun-rise-set">
         <div class="fields">{{ $t("sun_rise_set") }}</div>
         <div class="value">
-          {{ $t(convertTime(ForecastData.sunrise)) }}-{{
-            $t(convertTime(ForecastData.sunset))
-          }}
+          {{ convertTime(ForecastData.sunrise) }} -
+          {{ convertTime(ForecastData.sunset) }}
         </div>
       </div>
     </div>
@@ -132,7 +133,6 @@ export default {
     display: flex;
     flex-wrap: wrap;
     width: 90%;
-    font-size: 1em;
     margin-left: 1%;
     text-align: left;
     @media (min-width: 1025px) and (orientation: landscape) {
@@ -170,9 +170,11 @@ export default {
       }
     }
     & .wind-direction {
-      display: inline-block;
-      width: 1em;
-      height: 1em;
+      & .arrow {
+        display: inline-block;
+        width: 1.25em;
+        height: 1.25em;
+      }
     }
     & .sun-rise-set {
       text-transform: none;

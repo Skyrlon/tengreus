@@ -5,7 +5,7 @@
         :key="day.dt"
         v-for="day in forecast"
         :WeatherData="day"
-        :Day="dayOfTheWeek(day.dt)"
+        :Day="dayOfTheWeek(day.time)"
       >
         <div class="weather-forecast-details-link" @click="showDetails(day)">
           {{ $t("details") }}

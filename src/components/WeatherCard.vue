@@ -3,21 +3,21 @@
     <div class="weather-card_day">{{ $t(Day) }}</div>
     <div class="weather-card_icon">
       <div class="tooltip">
-        {{ WeatherData.weather[0].description }}
+        {{ WeatherData.weather.detailed }}
       </div>
       <weather-icon
-        :weatherMain="WeatherData.weather[0].main"
-        :weatherId="WeatherData.weather[0].id"
-        :time="WeatherData.dt"
+        :weatherMain="WeatherData.weather.main"
+        :weatherId="WeatherData.weather.id"
+        :time="WeatherData.time"
         :sunrise="WeatherData.sunrise"
         :sunset="WeatherData.sunset"
-        :moonPhase="getMoonPhase(WeatherData.dt)"
+        :moonPhase="getMoonPhase(WeatherData.time)"
       />
     </div>
     <div class="weather-card_temperature">
       {{ $t("day") }} / {{ $t("night") }} <br />
-      {{ convertTemperature(WeatherData.temp.day) }} /
-      {{ convertTemperature(WeatherData.temp.night) }}
+      {{ convertTemperature(WeatherData.temperatures.day) }} /
+      {{ convertTemperature(WeatherData.temperatures.night) }}
       {{ this.$store.state.tempUnit }}
     </div>
     <div class="weather-card_link">
@@ -34,6 +34,9 @@ export default {
   props: {
     Day: String,
     WeatherData: Object,
+  },
+  created() {
+    console.log(this.convertTime(this.WeatherData.time));
   },
 };
 </script>
