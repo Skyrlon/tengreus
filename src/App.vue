@@ -59,16 +59,22 @@ export default {
   computed: {
     getSettingsIconColor() {
       let color;
-      if (
-        this.$store.state.weather.main === "Drizzle" ||
-        this.$store.state.weather.main === "Rain" ||
-        this.$store.state.weather.main === "Clouds" ||
-        (this.$store.state.weather.main === "Clear" &&
-          (this.$store.state.time < this.$store.state.sunrise ||
-            this.$store.state.time > this.$store.state.sunset)) ||
-        (this.showSettings && this.darkTheme)
-      ) {
-        color = "white";
+
+      if (this.$store.state.currentView === "Weather") {
+        if (
+          this.$store.state.current.weather.main === "Drizzle" ||
+          this.$store.state.current.weather.main === "Rain" ||
+          this.$store.state.current.weather.main === "Clouds" ||
+          (this.$store.state.current.weather.main === "Clear" &&
+            (this.$store.state.current.time <
+              this.$store.state.current.sunrise ||
+              this.$store.state.current.time >
+                this.$store.state.current.sunset))
+        ) {
+          color = "white";
+        } else {
+          color = "black";
+        }
       } else if (
         this.$store.state.currentView === "Home" &&
         this.darkTheme === true
@@ -76,6 +82,14 @@ export default {
         color = "white";
       } else {
         color = "black";
+      }
+
+      if (this.showSettings === true) {
+        if (this.darkTheme === true) {
+          color = "white";
+        } else {
+          color = "black";
+        }
       }
       return color;
     },
