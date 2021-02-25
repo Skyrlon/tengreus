@@ -4,13 +4,14 @@
     :class="{ dark: darkTheme }"
     @beforeunload="window.sessionStorage.clear()"
   >
-    <home v-if="this.$store.state.currentView === 'Home'" />
-    <weather v-if="this.$store.state.currentView === 'Weather'" />
+    <home v-if="this.currentView === 'Home'" />
+    <weather v-if="this.currentView === 'Weather'" />
     <transition name="show-settings">
       <settings
         v-if="showSettings"
         v-on-clickaway="clickOutsideSettings"
         @toggle-dark-theme="toggleDarkTheme"
+        v-on:language-changed="changeTitle"
       />
     </transition>
     <div class="settings-icon" :class="{ active: showSettings }">
@@ -29,6 +30,7 @@ import Weather from "./views/Weather.vue";
 import Settings from "@/components/Settings.vue";
 import SettingsIcon from "@/components/icons/SettingsIcon.vue";
 import { mixin as clickaway } from "vue-clickaway";
+import { mapState } from "vuex";
 
 export default {
   mixins: [clickaway],
@@ -47,6 +49,9 @@ export default {
       this.darkTheme =
         localStorage.getItem("darktheme") === "on" ? true : false;
     }
+    if (sessionStorage.getItem("title")) {
+      document.title = sessionStorage.getItem("title");
+    }
   },
 
   data() {
@@ -56,7 +61,25 @@ export default {
     };
   },
 
+  watch: {
+    currentView(newValue, oldValue) {
+      if (oldValue === "Home" && newValue === "Weather") {
+        this.setTitle;
+      }
+    },
+  },
+
   computed: {
+    ...mapState(["currentView", "city"]),
+
+    setTitle() {
+      let title = `Tengreus - ${
+        this.city.name[localStorage.getItem("language") || "en"]
+      }, ${this.city.country}`;
+      sessionStorage.setItem("title", title);
+      return (document.title = title);
+    },
+
     getSettingsIconColor() {
       let color;
 
@@ -96,9 +119,18 @@ export default {
   },
 
   methods: {
+    changeTitle() {
+      let title = `Tengreus - ${
+        this.city.name[localStorage.getItem("language") || "en"]
+      }, ${this.city.country}`;
+      sessionStorage.setItem("title", title);
+      document.title = title;
+    },
+
     clickOutsideSettings() {
       this.showSettings = false;
     },
+
     toggleDarkTheme(value) {
       this.darkTheme = value === "on" ? true : false;
     },

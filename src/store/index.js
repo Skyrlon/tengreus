@@ -23,12 +23,6 @@ export default new Vuex.Store({
     forecast: [],
   },
 
-  getters: {
-    getTitle: state => {
-      return `${state.city.name[localStorage.getItem("language") || "en"]}, ${state.city.country}`
-    }
-  },
-
   mutations: {
 
     SWITCH_PAGE(state, payload) {

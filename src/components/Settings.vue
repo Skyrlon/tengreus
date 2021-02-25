@@ -170,6 +170,7 @@ export default {
       this.languageSelected = value;
       localStorage.setItem("language", language);
       this.$i18n.locale = language;
+      this.$emit("language-changed");
     },
 
     toggleDarkTheme() {

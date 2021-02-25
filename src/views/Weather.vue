@@ -1,5 +1,5 @@
 <template>
-  <div class="weather" @load="setTitle">
+  <div class="weather">
     <weather-banner />
     <div class="searchbar-container">
       <div class="search-icon" v-if="!showSearchBar" @click="toggleSearchBar">
@@ -67,9 +67,6 @@ export default {
   computed: {
     ...mapState(["city"]),
     ...mapGetters(["getTitle"]),
-    setTitle() {
-      return (document.title = `Tengreus - ${this.getTitle}`);
-    },
   },
 
   data() {
