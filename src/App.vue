@@ -32,6 +32,10 @@ import SettingsIcon from "@/components/icons/SettingsIcon.vue";
 import { mixin as clickaway } from "vue-clickaway";
 import { mapState } from "vuex";
 
+const countries = require("i18n-iso-countries");
+countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
+countries.registerLocale(require("i18n-iso-countries/langs/fr.json"));
+
 export default {
   mixins: [clickaway],
 
@@ -73,9 +77,16 @@ export default {
     ...mapState(["currentView", "city"]),
 
     setTitle() {
+      let country = countries.getName(
+        this.city.country,
+        localStorage.getItem("language") || "en",
+        {
+          select: "official",
+        }
+      );
       let title = `Tengreus - ${
         this.city.name[localStorage.getItem("language") || "en"]
-      }, ${this.city.country}`;
+      }, ${country}`;
       sessionStorage.setItem("title", title);
       return (document.title = title);
     },
@@ -120,9 +131,16 @@ export default {
 
   methods: {
     changeTitle() {
+      let country = countries.getName(
+        this.city.country,
+        localStorage.getItem("language") || "en",
+        {
+          select: "official",
+        }
+      );
       let title = `Tengreus - ${
         this.city.name[localStorage.getItem("language") || "en"]
-      }, ${this.city.country}`;
+      }, ${country}`;
       sessionStorage.setItem("title", title);
       document.title = title;
     },
