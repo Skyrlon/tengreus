@@ -5,13 +5,16 @@
     @beforeunload="window.sessionStorage.clear()"
   >
     <home v-if="this.currentView === 'Home'" />
-    <weather v-if="this.currentView === 'Weather'" />
+    <weather
+      v-if="this.currentView === 'Weather'"
+      @selected-city="changeTitle"
+    />
     <transition name="show-settings">
       <settings
         v-if="showSettings"
         v-on-clickaway="clickOutsideSettings"
         @toggle-dark-theme="toggleDarkTheme"
-        v-on:language-changed="changeTitle"
+        @language-changed="changeTitle"
       />
     </transition>
     <div class="settings-icon" :class="{ active: showSettings }">

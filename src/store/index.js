@@ -175,7 +175,8 @@ export default new Vuex.Store({
       await dispatch('getFrenchCurrentWeather', payload);
       await dispatch('getForecastWeather', payload);
       await dispatch('getFrenchForecastWeather', payload);
-      dispatch('switchPage', 'Weather')
+      await dispatch('switchPage', 'Weather');
+      return;
     },
 
     getCurrentWeather({
@@ -225,7 +226,7 @@ export default new Vuex.Store({
     switchPage({
       commit
     }, payload) {
-      commit("SWITCH_PAGE", payload);
+      return commit("SWITCH_PAGE", payload);
     }
   },
 

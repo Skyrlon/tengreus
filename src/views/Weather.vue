@@ -7,7 +7,12 @@
       </div>
       <transition name="show-searchbar">
         <div class="searchbar" v-if="showSearchBar">
-          <search-bar @selected-city="showSearchBar = false" />
+          <search-bar
+            @selected-city="
+              showSearchBar = false;
+              selectedCity();
+            "
+          />
         </div>
       </transition>
     </div>
@@ -70,6 +75,10 @@ export default {
   },
 
   methods: {
+    selectedCity() {
+      this.$emit("selected-city");
+    },
+
     toggleSearchBar() {
       setTimeout(() => {
         this.showSearchBar = true;
