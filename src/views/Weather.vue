@@ -7,12 +7,7 @@
       </div>
       <transition name="show-searchbar">
         <div class="searchbar" v-if="showSearchBar">
-          <search-bar
-            @selected-city="
-              showSearchBar = false;
-              setTitle;
-            "
-          />
+          <search-bar @selected-city="showSearchBar = false" />
         </div>
       </transition>
     </div>
@@ -23,7 +18,7 @@
 <script>
 import WeatherBanner from "@/components/WeatherBanner.vue";
 import WeatherDetails from "../components/WeatherDetails.vue";
-import { mapState, mapGetters } from "vuex";
+import { mapState } from "vuex";
 import SearchIcon from "../components/icons/SearchIcon.vue";
 import SearchBar from "@/components/SearchBar.vue";
 
@@ -66,7 +61,6 @@ export default {
 
   computed: {
     ...mapState(["city"]),
-    ...mapGetters(["getTitle"]),
   },
 
   data() {

@@ -38,6 +38,7 @@
             :time="current.time"
             :sunRise="current.sunrise"
             :sunSet="current.sunset"
+            :textColor="getReloadIconColor"
           />
         </div>
       </div>
@@ -258,6 +259,15 @@ export default {
 
 .sun-path {
   width: 100%;
+
+  &_sunrise {
+    left: -0.25em;
+    font-size: 90%;
+  }
+  &_sunset {
+    right: -0.75em;
+    font-size: 90%;
+  }
 }
 
 @keyframes infinite-spin {
