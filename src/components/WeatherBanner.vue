@@ -10,6 +10,7 @@
             @click="reloadData"
           >
             <reload-icon :isBlackOrWhite="getReloadIconColor" />
+            <div class="reload-icon_tooltip">Wait {{ tooltipText }}</div>
           </div>
         </div>
         <div class="weather-summary_row hour">
@@ -80,6 +81,10 @@ export default {
     return {
       isReloading: false,
       clickCount: 0,
+      showTimeLeft: false,
+      showDuration: 0,
+      timeOutStart: 0,
+      tooltipText: "",
     };
   },
 
@@ -117,22 +122,36 @@ export default {
     },
 
     reloadData() {
+      let timeLeft, timeLeftMinutes, timeLeftSecondes, myInterval;
       this.clickCount++;
       if (this.clickCount < 2) {
-        this.isReloading = true;
-        this.$store.dispatch("getCurrentWeather", { id: this.city.id });
-        this.$store.dispatch("getForecastWeather", {
+        this.$store.dispatch("getWeather", {
+          id: this.city.id,
           longitude: this.city.lon,
           latitude: this.city.lat,
         });
         setTimeout(() => {
           this.isReloading = false;
         }, 1000);
+        this.timeOutStart = Date.now();
+        console.log(this.timeOutStart);
         setTimeout(() => {
           this.clickCount = 0;
         }, 300000);
-      } else {
-        return;
+      } else if (this.showTimeLeft === false && this.showDuration === 0) {
+        this.showTimeLeft = true;
+        myInterval = setInterval(() => {
+          this.showDuration++;
+          timeLeft = (this.timeOutStart + 300000 - Date.now()) / 1000;
+          timeLeftMinutes = Math.floor(timeLeft / 60);
+          timeLeftSecondes = Math.floor(timeLeft % 60);
+          this.tooltipText = timeLeftMinutes + ":" + timeLeftSecondes;
+          if (this.showDuration >= 5) {
+            clearInterval(myInterval);
+            this.showTimeLeft = false;
+            this.showDuration = 0;
+          }
+        }, 1000);
       }
     },
   },
@@ -225,12 +244,32 @@ export default {
 }
 
 .reload-icon {
+  position: relative;
   padding-top: 0.2em;
   padding-left: 0.2em;
   width: calc(16px + (26 - 16) * ((100vw - 300px) / (1600 - 300)));
   cursor: pointer;
   &.reloading {
     animation: infinite-spin 0.5s infinite linear;
+  }
+  &_tooltip {
+    position: absolute;
+    top: -25%;
+    left: 150%;
+    padding: 25%;
+    background-color: var(--darktheme-background-color);
+    font-size: 75%;
+    &::after {
+      content: " ";
+      position: absolute;
+      top: 50%;
+      right: 100%;
+      margin-top: -10px;
+      border-width: 10px;
+      border-style: solid;
+      border-color: transparent var(--darktheme-background-color) transparent
+        transparent;
+    }
   }
 }
 
