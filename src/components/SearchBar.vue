@@ -157,7 +157,7 @@ export default {
       this.showDropdown();
     },
 
-    async selectCity(e, id, longitude, latitude) {
+    selectCity(e, id, longitude, latitude) {
       this.searchCity = e.target.textContent.replace(/\s+/g, " ").trim();
       this.isActive = false;
       this.$store

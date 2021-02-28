@@ -32,7 +32,8 @@ export default new Vuex.Store({
     LOAD_CURRENT_WEATHER(state, payload) {
       state.city = {
         name: {
-          en: payload.name
+          en: payload.name,
+          fr: "",
         },
         country: payload.sys.country,
         id: payload.id,
@@ -63,7 +64,8 @@ export default new Vuex.Store({
           id: payload.weather[0].id,
           main: payload.weather[0].main,
           detailed: {
-            en: payload.weather[0].description
+            en: payload.weather[0].description,
+            fr: "",
           },
         }
       };
@@ -103,6 +105,7 @@ export default new Vuex.Store({
             main: payload.daily[i].weather[0].main,
             detailed: {
               en: payload.daily[i].weather[0].description,
+              fr: "",
             },
           }
         }
@@ -165,15 +168,23 @@ export default new Vuex.Store({
   },
 
   actions: {
-    async getWeather({
+    getWeather({
       dispatch
     }, payload) {
-      dispatch('getCurrentWeather', payload);
-      await dispatch('getFrenchCurrentWeather', payload);
-      dispatch('getForecastWeather', payload);
-      await dispatch('getFrenchForecastWeather', payload);
-      await dispatch('switchPage', 'Weather');
-      return;
+      dispatch('getCurrentWeather', payload).then(() =>
+          dispatch('getFrenchCurrentWeather', payload)
+        )
+        .then(() =>
+          dispatch('getForecastWeather', payload)
+        )
+        .then(() =>
+          dispatch('getFrenchForecastWeather', payload)
+        )
+        .then(() => dispatch('switchPage', 'Weather')).then(() => {
+          return;
+        })
+        .catch(() => dispatch('switchPage', 'Error'));
+
     },
 
     getCurrentWeather({
