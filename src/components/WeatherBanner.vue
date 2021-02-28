@@ -10,7 +10,9 @@
             @click="reloadData"
           >
             <reload-icon :isBlackOrWhite="getReloadIconColor" />
-            <div class="reload-icon_tooltip">Wait {{ tooltipText }}</div>
+            <div class="reload-icon_tooltip" v-if="showTimeLeft">
+              Wait {{ tooltipText }}
+            </div>
           </div>
         </div>
         <div class="weather-summary_row hour">
@@ -125,28 +127,38 @@ export default {
       let timeLeft, timeLeftMinutes, timeLeftSecondes, myInterval;
       this.clickCount++;
       if (this.clickCount < 2) {
-        this.$store.dispatch("getWeather", {
-          id: this.city.id,
-          longitude: this.city.lon,
-          latitude: this.city.lat,
-        });
-        setTimeout(() => {
-          this.isReloading = false;
-        }, 1000);
-        this.timeOutStart = Date.now();
-        console.log(this.timeOutStart);
-        setTimeout(() => {
-          this.clickCount = 0;
-        }, 300000);
+        this.isReloading = true;
+        this.$store
+          .dispatch("getWeather", {
+            id: this.city.id,
+            longitude: this.city.lon,
+            latitude: this.city.lat,
+          })
+          .then(() => {
+            //reloading icon stop spin after getting data
+            this.isReloading = false;
+            //get time when data is received
+            this.timeOutStart = Date.now();
+            setTimeout(() => {
+              this.clickCount = 0;
+            }, 300000);
+          });
       } else if (this.showTimeLeft === false && this.showDuration === 0) {
         this.showTimeLeft = true;
+        //setInterval only start after 1s, calculate time left and show it in minutes:secondes format
+        timeLeft = (this.timeOutStart + 300000 - Date.now()) / 1000;
+        timeLeftMinutes = Math.floor(timeLeft / 60);
+        timeLeftSecondes = Math.floor(timeLeft % 60);
+        this.tooltipText = timeLeftMinutes + ":" + timeLeftSecondes;
         myInterval = setInterval(() => {
+          //calculate time left each seconde
           this.showDuration++;
           timeLeft = (this.timeOutStart + 300000 - Date.now()) / 1000;
           timeLeftMinutes = Math.floor(timeLeft / 60);
           timeLeftSecondes = Math.floor(timeLeft % 60);
           this.tooltipText = timeLeftMinutes + ":" + timeLeftSecondes;
-          if (this.showDuration >= 5) {
+          //after 5s, tooltip disapars
+          if (this.showDuration > 5) {
             clearInterval(myInterval);
             this.showTimeLeft = false;
             this.showDuration = 0;

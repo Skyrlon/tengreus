@@ -32,8 +32,7 @@ export default new Vuex.Store({
     LOAD_CURRENT_WEATHER(state, payload) {
       state.city = {
         name: {
-          en: payload.name,
-          fr: ""
+          en: payload.name
         },
         country: payload.sys.country,
         id: payload.id,
@@ -64,8 +63,7 @@ export default new Vuex.Store({
           id: payload.weather[0].id,
           main: payload.weather[0].main,
           detailed: {
-            en: payload.weather[0].description,
-            fr: ""
+            en: payload.weather[0].description
           },
         }
       };
@@ -105,7 +103,6 @@ export default new Vuex.Store({
             main: payload.daily[i].weather[0].main,
             detailed: {
               en: payload.daily[i].weather[0].description,
-              fr: "",
             },
           }
         }
@@ -171,9 +168,9 @@ export default new Vuex.Store({
     async getWeather({
       dispatch
     }, payload) {
-      await dispatch('getCurrentWeather', payload);
+      dispatch('getCurrentWeather', payload);
       await dispatch('getFrenchCurrentWeather', payload);
-      await dispatch('getForecastWeather', payload);
+      dispatch('getForecastWeather', payload);
       await dispatch('getFrenchForecastWeather', payload);
       await dispatch('switchPage', 'Weather');
       return;
