@@ -116,8 +116,8 @@ export default {
           color = "black";
         }
       } else if (
-        this.$store.state.currentView === "Home" &&
-        this.darkTheme === true
+        (this.$store.state.currentView === "Home" && this.darkTheme === true) ||
+        (this.$store.state.currentView === "Error" && this.darkTheme === true)
       ) {
         color = "white";
       } else {

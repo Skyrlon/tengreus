@@ -12,6 +12,7 @@ export default new Vuex.Store({
 
   state: {
     currentView: "Home",
+    errorText: '',
     apiKey: process.env.VUE_APP_API_KEY,
     tempUnit: "°C",
     pressureUnit: 'hPa',
@@ -26,7 +27,10 @@ export default new Vuex.Store({
   mutations: {
 
     SWITCH_PAGE(state, payload) {
-      state.currentView = payload;
+      state.currentView = payload.page;
+      if (payload.message) {
+        state.errorText = payload.message;
+      }
     },
 
     LOAD_CURRENT_WEATHER(state, payload) {
@@ -180,10 +184,15 @@ export default new Vuex.Store({
         .then(() =>
           dispatch('getFrenchForecastWeather', payload)
         )
-        .then(() => dispatch('switchPage', 'Weather')).then(() => {
+        .then(() => dispatch('switchPage', {
+          page: 'Weather'
+        })).then(() => {
           return;
         })
-        .catch(() => dispatch('switchPage', 'Error'));
+        .catch((error) => dispatch('switchPage', {
+          page: 'Error',
+          message: error.message
+        }));
 
     },
 
