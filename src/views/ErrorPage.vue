@@ -50,6 +50,7 @@ export default {
     top: 1em;
     left: 1em;
     width: 3em;
+    cursor: pointer;
   }
 }
 
@@ -62,6 +63,11 @@ export default {
 
 #app.dark {
   & .error-page {
+    & .back-icon {
+      & path {
+        fill: var(--darktheme-font-color);
+      }
+    }
     & .sad-smiley {
       & path {
         stroke: var(--darktheme-font-color);

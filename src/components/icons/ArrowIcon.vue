@@ -6,8 +6,8 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
   >
     <path
-      d="M45,1 V80 H40 L50,99 L60,80 H55 V1 z"
-      stroke="black"
+      d="M40,1 V75 H25 L50,99 L75,75 H60 V1 z"
+      stroke="transparent"
       fill="black"
       :transform="`rotate(${degree} 50 50)`"
     />

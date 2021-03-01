@@ -136,6 +136,14 @@ export default {
   }
 }
 
+#app.dark {
+  & .arrow {
+    & path {
+      fill: var(--darktheme-font-color);
+    }
+  }
+}
+
 @keyframes extend-showbar {
   0% {
     transform: scaleX(0);
