@@ -1,5 +1,8 @@
 <template>
   <div class="error-page">
+    <div class="back-icon" @click="goBackToHome()">
+      <arrow-icon :degree="90" />
+    </div>
     <div class="sad-smiley">
       <svg
         viewBox="0 0 100 100"
@@ -20,11 +23,18 @@
 
 <script>
 import { mapState } from "vuex";
+import ArrowIcon from "../components/icons/ArrowIcon.vue";
 
 export default {
+  components: { ArrowIcon },
   name: "ErrorPage",
   computed: {
-    ...mapState(["errorText"]),
+    ...mapState(["errorText", "currentView"]),
+  },
+  methods: {
+    goBackToHome() {
+      this.$store.commit("SWITCH_PAGE", { page: "Home" });
+    },
   },
 };
 </script>
@@ -35,21 +45,27 @@ export default {
   margin: 0 auto;
   width: 40%;
   margin-top: 10%;
+  & .back-icon {
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    width: 3em;
+  }
 }
 
 .sad-smiley {
   width: 20%;
-  & svg {
-    & path {
-      stroke: var(--base-font-color);
-    }
+  & path {
+    stroke: var(--base-font-color);
   }
 }
 
 #app.dark {
-  .error-page {
-    & path {
-      stroke: var(--darktheme-font-color);
+  & .error-page {
+    & .sad-smiley {
+      & path {
+        stroke: var(--darktheme-font-color);
+      }
     }
   }
 }
