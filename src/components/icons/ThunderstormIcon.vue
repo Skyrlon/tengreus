@@ -5,7 +5,7 @@
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
   >
-    <def>
+    <defs>
       <path
         id="rain"
         d="M30, 51 v 49"
@@ -14,7 +14,7 @@
         stroke-dasharray="5"
         transform="skewX(-10)"
       />
-    </def>
+    </defs>
     <path
       d="M 20,50 
         a 10,10 0 0,1 0,-25

@@ -1,6 +1,6 @@
 <template>
   <svg viewBox="0 0 100 100">
-    <def>
+    <defs>
       <path
         id="rain"
         d="M30, 51 v 49"
@@ -27,7 +27,7 @@
           style="transform-origin: 1px 5px; transform: rotate(120deg)"
         />
       </g>
-    </def>
+    </defs>
     <path
       d="M 20,50 a 10,10 0 0,1 0,-25 a 10,10 0 0,1 15,-5 a 5,5 0 0,1 40,5 a 10,10 0 0,1 0,25 Z"
       fill="lightgrey"

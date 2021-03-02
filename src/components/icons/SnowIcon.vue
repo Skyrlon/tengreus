@@ -1,6 +1,6 @@
 <template>
   <svg viewBox="0 0 100 100">
-    <def>
+    <defs>
       <g id="snowflake">
         <rect width="2" height="10" rx="1" fill="white" />
         <rect
@@ -19,7 +19,7 @@
           style="transform-origin: 1px 5px; transform: rotate(120deg)"
         />
       </g>
-    </def>
+    </defs>
     <path
       d="M 20,50 
                a 10,10 0 0,1 0,-25

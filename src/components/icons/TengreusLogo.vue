@@ -5,7 +5,7 @@
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
   >
-    <def>
+    <defs>
       <rect
         id="logo_sun-ray"
         x="29"
@@ -20,7 +20,7 @@
         <stop offset="25%" stop-color="lightblue" />
         <stop offset="75%" stop-color="grey" />
       </linearGradient>
-    </def>
+    </defs>
     <ellipse cx="100" cy="50" rx="99" ry="49" fill="url(#blue-to-grey)" />
     <use x="0" href="#logo_sun-ray" />
     <use x="0" href="#logo_sun-ray" transform="rotate(45 30 30)" />
