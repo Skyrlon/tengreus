@@ -19,7 +19,7 @@
         </svg>
       </div>
       <div class="error-page_content-text">
-        <div class="error-page_content-text1">An error has occurred :</div>
+        <div class="error-page_content-text1">{{ $t("error_occurred") }} :</div>
         <div class="error-page_content-text2">{{ errorText }}</div>
       </div>
     </div>
@@ -67,7 +67,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-      width: 17em;
+      width: 18em;
       &2 {
         margin-top: 1em;
       }

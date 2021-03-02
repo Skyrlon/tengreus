@@ -176,6 +176,11 @@ export default {
         height: 1.25em;
       }
     }
+    & .wind {
+      & .value {
+        text-transform: none;
+      }
+    }
     & .sun-rise-set {
       text-transform: none;
     }

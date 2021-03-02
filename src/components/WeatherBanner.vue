@@ -11,7 +11,7 @@
           >
             <reload-icon :isBlackOrWhite="getReloadIconColor" />
             <div class="reload-icon_tooltip" v-if="showTimeLeft">
-              Wait {{ tooltipText }}
+              {{ $t("wait") }} {{ tooltipText }}
             </div>
           </div>
         </div>

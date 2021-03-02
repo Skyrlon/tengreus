@@ -133,6 +133,11 @@ export default {
       text-align: right;
     }
   }
+  & .wind {
+    & .value {
+      text-transform: none;
+    }
+  }
   & .wind-direction {
     & .arrow {
       display: inline-block;
