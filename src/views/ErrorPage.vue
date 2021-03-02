@@ -3,21 +3,26 @@
     <div class="back-icon" @click="goBackToHome()">
       <arrow-icon :degree="90" />
     </div>
-    <div class="sad-smiley">
-      <svg
-        viewBox="0 0 100 100"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-      >
-        <path
-          d="M35,20 v20 M60,20 v20 M20,80 A10,8 0 0,1 75,80"
-          fill="transparent"
-          stroke-width="5"
-        />
-      </svg>
+    <div class="error-page_content">
+      <div class="sad-smiley">
+        <svg
+          viewBox="0 0 100 100"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <path
+            d="M35,20 v20 M60,20 v20 M20,80 A10,8 0 0,1 75,80"
+            fill="transparent"
+            stroke-width="5"
+          />
+        </svg>
+      </div>
+      <div class="error-page_content-text">
+        <div class="error-page_content-text1">An error has occurred :</div>
+        <div class="error-page_content-text2">{{ errorText }}</div>
+      </div>
     </div>
-    An error has occurred : {{ errorText }}
   </div>
 </template>
 
@@ -41,10 +46,40 @@ export default {
 
 <style lang="scss">
 .error-page {
-  display: flex;
   margin: 0 auto;
-  width: 40%;
-  margin-top: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 99%;
+  height: 99%;
+  &_content {
+    display: flex;
+    @media (orientation: landscape) {
+      flex-direction: row;
+    }
+    @media (orientation: portrait) {
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+    }
+    &-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 17em;
+      &2 {
+        margin-top: 1em;
+      }
+      @media (orientation: landscape) {
+        text-align: left;
+      }
+      @media (orientation: portrait) {
+        text-align: center;
+      }
+    }
+  }
+
   & .back-icon {
     position: absolute;
     top: 1em;
@@ -55,7 +90,7 @@ export default {
 }
 
 .sad-smiley {
-  width: 20%;
+  width: 7.5em;
   & path {
     stroke: var(--base-font-color);
   }
