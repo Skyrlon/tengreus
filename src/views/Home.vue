@@ -23,15 +23,21 @@ export default {
 </script>
 
 <style lang="scss">
-.logo-container {
-  margin: auto;
-  margin-top: 10%;
-  width: 20vw;
-}
+.home {
+  & .logo-container {
+    margin: auto;
+    width: 20em;
+    @media (orientation: landscape) {
+      margin-top: 10%;
+    }
+    @media (orientation: portrait) {
+      margin-top: 40%;
+    }
+  }
 
-.searchbar-container {
-  margin: auto;
-  margin-top: 1%;
-  width: 20em;
+  & .searchbar-container {
+    margin-top: 1%;
+    width: 20em;
+  }
 }
 </style>
