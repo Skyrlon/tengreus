@@ -47,5 +47,6 @@
   "dark_theme": "dark theme",
   "reset": "reset",
   "error_occurred": "An error has occurred",
-  "wait": "Wait"
+  "wait": "Wait",
+  "about": "about"
 }

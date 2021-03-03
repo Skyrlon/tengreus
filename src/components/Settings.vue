@@ -68,6 +68,7 @@
         <div @click="resetLocalStorage" class="reset-button">
           {{ $t("reset") }}
         </div>
+        <div class="about-link" @click="goToAboutPage">{{ $t("about") }}</div>
       </div>
     </div>
   </div>
@@ -189,6 +190,9 @@ export default {
       this.languageSelected = "english";
       this.toggleOn = "off";
       this.$emit("toggle-dark-theme", this.toggleOn);
+    },
+    goToAboutPage() {
+      this.$store.commit("SWITCH_PAGE", { page: "About" });
     },
   },
 };

@@ -10,6 +10,7 @@
       @selected-city="changeTitle"
     />
     <error-page v-if="this.currentView === 'Error'" />
+    <about v-if="this.currentView === 'About'" />
     <transition name="show-settings">
       <settings
         v-if="showSettings"
@@ -33,6 +34,7 @@ import Home from "./views/Home.vue";
 import Weather from "./views/Weather.vue";
 import Settings from "@/components/Settings.vue";
 import ErrorPage from "./views/ErrorPage.vue";
+import About from "./views/About.vue";
 import SettingsIcon from "@/components/icons/SettingsIcon.vue";
 import { mixin as clickaway } from "vue-clickaway";
 import { mapState } from "vuex";
@@ -50,6 +52,7 @@ export default {
     Settings,
     SettingsIcon,
     ErrorPage,
+    About,
   },
   created() {
     if (localStorage.getItem("language")) {
