@@ -1,23 +1,23 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h1>{{ $t("about") }} {{ $t("of") }} Tengreus</h1>
     <div class="sources">
       <div class="images">
-        <p>Images sources</p>
-        <p :key="info.name" v-for="info in imagesInfos">
-          <a :href="info.link">{{ info.name }}</a>
+        <h2>{{ $t("images_sources") }}</h2>
+        <p :key="source.name" v-for="source in imagesSources">
+          <a :href="source.link" target="_blank">{{ $t(source.name) }}</a>
         </p>
       </div>
       <div class="api">
-        <p>API used</p>
+        <h2>{{ $t("api_used") }}</h2>
         <p :key="info.name" v-for="info in ApiInfos">
-          <a :href="info.link">{{ info.name }}</a>
+          <a :href="info.link" target="_blank">{{ info.name }}</a>
         </p>
       </div>
       <div class="github">
-        <p>GitHub Repository</p>
+        <h2>{{ $t("github_repository") }}</h2>
         <p>
-          <a :href="githubInfos.link">{{ githubInfos.name }}</a>
+          <a :href="githubInfos.link" target="_blank">{{ githubInfos.name }}</a>
         </p>
       </div>
     </div>
@@ -28,7 +28,7 @@
 export default {
   data() {
     return {
-      imagesInfos: [
+      imagesSources: [
         {
           name: "fog",
           link:
@@ -81,15 +81,11 @@ export default {
 
       ApiInfos: [
         {
-          name: "current weather data",
-          link: "https://openweathermap.org/current",
+          name: "Open Weather Map",
+          link: "https://openweathermap.org/api",
         },
         {
-          name: "forecast weather data",
-          link: "https://openweathermap.org/api/one-call-api",
-        },
-        {
-          name: "cities data",
+          name: "Geonames",
           link: "http://www.geonames.org/export/web-services.html",
         },
       ],
@@ -113,14 +109,23 @@ export default {
   & h1 {
     height: 10%;
   }
+  & h2 {
+    text-transform: none;
+    font-size: 1.2em;
+  }
   & .sources {
     width: 90%;
     height: 80%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    @media (orientation: landscape) {
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    @media (orientation: portrait) {
+      flex-wrap: nowrap;
+    }
     & div {
       display: flex;
       flex-direction: column;

@@ -48,5 +48,17 @@
     "reset": "réinitialiser",
     "error_occurred": "Une erreur est survenue",
     "wait": "Attendez",
-    "about": "à propos"
+    "about": "À propos",
+    "of": "de",
+    "images_sources": "Sources des Images",
+    "api_used": "API Utilisés",
+    "github_repository": "Dépôt GitHub",
+    "fog": "brouillard",
+    "thunderstorm": "orage",
+    "rain": "pluie",
+    "snow": "neige",
+    "sandstorm": "tempête de sable",
+    "clouds": "nuages",
+    "sun": "soleil",
+    "tornado": "tornade"
 }

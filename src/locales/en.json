@@ -48,5 +48,17 @@
   "reset": "reset",
   "error_occurred": "An error has occurred",
   "wait": "Wait",
-  "about": "about"
+  "about": "About",
+  "of": "",
+  "images_sources": "Images Sources",
+  "api_used": "API Used",
+  "github_repository": "GitHub Repository",
+  "fog": "fog",
+  "thunderstorm": "thunderstorm",
+  "rain": "rain",
+  "snow": "snow",
+  "sandstorm": "sandstorm",
+  "clouds": "clouds",
+  "sun": "sun",
+  "tornado": "tornado"
 }
