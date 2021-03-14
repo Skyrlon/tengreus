@@ -26,6 +26,13 @@
         :isBlackOrWhite="getSettingsIconColor"
       />
     </div>
+    <div
+      class="back-icon"
+      @click="goBackToPreviousPage()"
+      v-if="this.currentView === 'Error' || this.currentView === 'About'"
+    >
+      <arrow-icon :degree="90" />
+    </div>
   </div>
 </template>
 
@@ -36,6 +43,7 @@ import Settings from "@/components/Settings.vue";
 import ErrorPage from "./views/ErrorPage.vue";
 import About from "./views/About.vue";
 import SettingsIcon from "@/components/icons/SettingsIcon.vue";
+import ArrowIcon from "@/components/icons/ArrowIcon.vue";
 import { mixin as clickaway } from "vue-clickaway";
 import { mapState } from "vuex";
 
@@ -53,6 +61,7 @@ export default {
     SettingsIcon,
     ErrorPage,
     About,
+    ArrowIcon,
   },
   created() {
     if (localStorage.getItem("language")) {
@@ -139,6 +148,12 @@ export default {
   },
 
   methods: {
+    goBackToPreviousPage() {
+      this.$store.commit("SWITCH_PAGE", {
+        page: this.$store.state.previousView,
+      });
+    },
+
     changeTitle() {
       let country = countries.getName(
         this.city.country,
@@ -217,6 +232,22 @@ body {
   cursor: pointer;
   &.active {
     transform: rotate(-180deg);
+  }
+}
+
+.back-icon {
+  position: absolute;
+  top: 1em;
+  left: 1em;
+  width: 3em;
+  cursor: pointer;
+}
+
+#app.dark {
+  & .back-icon {
+    & path {
+      fill: var(--darktheme-font-color);
+    }
   }
 }
 

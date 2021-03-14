@@ -192,7 +192,10 @@ export default {
       this.$emit("toggle-dark-theme", this.toggleOn);
     },
     goToAboutPage() {
-      this.$store.commit("SWITCH_PAGE", { page: "About" });
+      this.$store.commit("SWITCH_PAGE", {
+        previous: this.$store.state.currentView,
+        page: "About",
+      });
     },
   },
 };

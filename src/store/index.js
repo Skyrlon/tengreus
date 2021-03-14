@@ -11,6 +11,7 @@ export default new Vuex.Store({
   })],
 
   state: {
+    previousView: '',
     currentView: "Home",
     errorText: '',
     apiKey: process.env.VUE_APP_API_KEY,
@@ -30,6 +31,9 @@ export default new Vuex.Store({
       state.currentView = payload.page;
       if (payload.message) {
         state.errorText = payload.message;
+      }
+      if (payload.previous) {
+        state.previousView = payload.previous;
       }
     },
 
@@ -176,8 +180,8 @@ export default new Vuex.Store({
       dispatch
     }, payload) {
       dispatch('getCurrentWeather', payload).then(() =>
-          dispatch('getFrenchCurrentWeather', payload)
-        )
+        dispatch('getFrenchCurrentWeather', payload)
+      )
         .then(() =>
           dispatch('getForecastWeather', payload)
         )
@@ -190,6 +194,7 @@ export default new Vuex.Store({
           return;
         })
         .catch((error) => dispatch('switchPage', {
+          previous: this.state.currentView,
           page: 'Error',
           message: error.message
         }));
