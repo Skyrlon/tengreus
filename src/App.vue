@@ -33,6 +33,11 @@
     >
       <arrow-icon :degree="90" />
     </div>
+    <div class="loading-screen" v-if="this.$store.state.isLoading">
+      <div class="loading-icon">
+        <loading-icon />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -46,6 +51,7 @@ import SettingsIcon from "@/components/icons/SettingsIcon.vue";
 import ArrowIcon from "@/components/icons/ArrowIcon.vue";
 import { mixin as clickaway } from "vue-clickaway";
 import { mapState } from "vuex";
+import LoadingIcon from "./components/icons/LoadingIcon.vue";
 
 const countries = require("i18n-iso-countries");
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
@@ -62,6 +68,7 @@ export default {
     ErrorPage,
     About,
     ArrowIcon,
+    LoadingIcon,
   },
   created() {
     if (localStorage.getItem("language")) {
@@ -241,6 +248,23 @@ body {
   left: 1em;
   width: 3em;
   cursor: pointer;
+}
+
+.loading-screen {
+  position: absolute;
+  display: flex;
+  top: 0;
+  left: 0;
+  z-index: 101;
+  width: 100%;
+  height: 100%;
+  background: white;
+  opacity: 0.7;
+  justify-content: center;
+  align-items: center;
+  & .loading-icon {
+    width: 10vw;
+  }
 }
 
 #app.dark {

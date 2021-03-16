@@ -11,6 +11,7 @@ export default new Vuex.Store({
   })],
 
   state: {
+    isLoading: false,
     previousView: '',
     currentView: "Home",
     errorText: '',
@@ -26,6 +27,10 @@ export default new Vuex.Store({
   },
 
   mutations: {
+
+    TOGGLE_LOADING_SCREEN(state, payload) {
+      state.isLoading = payload
+    },
 
     SWITCH_PAGE(state, payload) {
       state.currentView = payload.page;
@@ -177,8 +182,9 @@ export default new Vuex.Store({
 
   actions: {
     getWeather({
-      dispatch
+      dispatch, commit
     }, payload) {
+      commit('TOGGLE_LOADING_SCREEN', true);
       dispatch('getCurrentWeather', payload).then(() =>
         dispatch('getFrenchCurrentWeather', payload)
       )
@@ -191,13 +197,17 @@ export default new Vuex.Store({
         .then(() => dispatch('switchPage', {
           page: 'Weather'
         })).then(() => {
+          commit('TOGGLE_LOADING_SCREEN', false);
           return;
         })
-        .catch((error) => dispatch('switchPage', {
-          previous: this.state.currentView,
-          page: 'Error',
-          message: error.message
-        }));
+        .catch((error) => {
+          dispatch('switchPage', {
+            previous: this.state.currentView,
+            page: 'Error',
+            message: error.message
+          });
+          commit('TOGGLE_LOAD_SCREEN', false);
+        });
 
     },
 

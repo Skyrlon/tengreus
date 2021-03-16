@@ -21,7 +21,9 @@
       class="scroll-area"
       :settings="settings"
     >
-      <div class="loading-icon" v-if="isLoading"></div>
+      <div class="loading-icon" v-if="isLoading">
+        <loading-icon />
+      </div>
       <div
         class="error-text"
         v-if="isLoading === false && gotError.status === true"
@@ -47,13 +49,14 @@ const axios = require("axios");
 import { mixin as clickaway } from "vue-clickaway";
 import vueCustomScrollbar from "vue-custom-scrollbar";
 import "vue-custom-scrollbar/dist/vueScrollbar.css";
+import LoadingIcon from "./icons/LoadingIcon.vue";
 
 export default {
   name: "SearchBar",
 
   mixins: [clickaway],
 
-  components: { vueCustomScrollbar },
+  components: { vueCustomScrollbar, LoadingIcon },
 
   data() {
     return {
@@ -272,12 +275,8 @@ export default {
       margin-top: 1em;
       margin-left: auto;
       margin-right: auto;
-      width: 1em;
-      height: 1em;
-      border: 0.5em solid #f3f3f3;
-      border-radius: 50%;
-      border-top: 0.5em solid #3498db;
-      animation: spin 2s linear infinite;
+      width: 2em;
+      height: 2em;
     }
   }
 }
