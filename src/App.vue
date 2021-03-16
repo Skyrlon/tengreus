@@ -5,10 +5,7 @@
     @beforeunload="window.sessionStorage.clear()"
   >
     <home v-if="this.currentView === 'Home'" />
-    <weather
-      v-if="this.currentView === 'Weather'"
-      @selected-city="changeTitle"
-    />
+    <weather v-if="this.currentView === 'Weather'" />
     <error-page v-if="this.currentView === 'Error'" />
     <about v-if="this.currentView === 'About'" />
     <transition name="show-settings">
@@ -16,7 +13,6 @@
         v-if="showSettings"
         v-on-clickaway="clickOutsideSettings"
         @toggle-dark-theme="toggleDarkTheme"
-        @language-changed="changeTitle"
       />
     </transition>
     <div class="settings-icon" :class="{ active: showSettings }">
@@ -53,10 +49,6 @@ import { mixin as clickaway } from "vue-clickaway";
 import { mapState } from "vuex";
 import LoadingIcon from "./components/icons/LoadingIcon.vue";
 
-const countries = require("i18n-iso-countries");
-countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
-countries.registerLocale(require("i18n-iso-countries/langs/fr.json"));
-
 export default {
   mixins: [clickaway],
 
@@ -78,9 +70,11 @@ export default {
       this.darkTheme =
         localStorage.getItem("darktheme") === "on" ? true : false;
     }
-    if (sessionStorage.getItem("title")) {
-      document.title = sessionStorage.getItem("title");
-    }
+    sessionStorage.getItem("title")
+      ? (document.title = sessionStorage.getItem("title"))
+      : this.$store.dispatch("switchPage", {
+          page: this.$store.state.currentView,
+        });
   },
 
   data() {
@@ -90,31 +84,8 @@ export default {
     };
   },
 
-  watch: {
-    currentView(newValue, oldValue) {
-      if (oldValue === "Home" && newValue === "Weather") {
-        this.setTitle;
-      }
-    },
-  },
-
   computed: {
     ...mapState(["currentView", "city"]),
-
-    setTitle() {
-      let country = countries.getName(
-        this.city.country,
-        localStorage.getItem("language") || "en",
-        {
-          select: "official",
-        }
-      );
-      let title = `Tengreus - ${
-        this.city.name[localStorage.getItem("language") || "en"]
-      }, ${country}`;
-      sessionStorage.setItem("title", title);
-      return (document.title = title);
-    },
 
     getSettingsIconColor() {
       let color;
@@ -156,24 +127,9 @@ export default {
 
   methods: {
     goBackToPreviousPage() {
-      this.$store.commit("SWITCH_PAGE", {
+      this.$store.dispatch("switchPage", {
         page: this.$store.state.previousView,
       });
-    },
-
-    changeTitle() {
-      let country = countries.getName(
-        this.city.country,
-        localStorage.getItem("language") || "en",
-        {
-          select: "official",
-        }
-      );
-      let title = `Tengreus - ${
-        this.city.name[localStorage.getItem("language") || "en"]
-      }, ${country}`;
-      sessionStorage.setItem("title", title);
-      document.title = title;
     },
 
     clickOutsideSettings() {

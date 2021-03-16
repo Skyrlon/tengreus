@@ -171,7 +171,9 @@ export default {
       this.languageSelected = value;
       localStorage.setItem("language", language);
       this.$i18n.locale = language;
-      this.$emit("language-changed");
+      this.$store.dispatch("switchPage", {
+        page: this.$store.state.currentView,
+      });
     },
 
     toggleDarkTheme() {
@@ -192,7 +194,7 @@ export default {
       this.$emit("toggle-dark-theme", this.toggleOn);
     },
     goToAboutPage() {
-      this.$store.commit("SWITCH_PAGE", {
+      this.$store.dispatch("switchPage", {
         previous: this.$store.state.currentView,
         page: "About",
       });

@@ -2,6 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 const axios = require("axios");
 import createPersistedState from "vuex-persistedstate";
+const countries = require("i18n-iso-countries");
+countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
+countries.registerLocale(require("i18n-iso-countries/langs/fr.json"));
+import i18n from '@/i18n.js'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -40,6 +44,32 @@ export default new Vuex.Store({
       if (payload.previous) {
         state.previousView = payload.previous;
       }
+    },
+
+    CHANGE_TITLE(state, payload) {
+      let title = '';
+      if (payload.page === 'Home') {
+        title = 'Tengreus'
+      }
+      else if (payload.page === 'About') {
+        title = `Tengreus - ${i18n.t("about")}`
+      }
+      else if (payload.page === "Weather") {
+        let country = countries.getName(
+          state.city.country,
+          localStorage.getItem("language") || "en",
+          {
+            select: "official",
+          }
+        );
+        title = `Tengreus - ${state.city.name[localStorage.getItem("language") || "en"]
+          }, ${country}`;
+      }
+      else if (payload.page === "Error") {
+        title = `Tengreus - ${i18n.t("error_occurred")}`
+      }
+      sessionStorage.setItem("title", title);
+      return (document.title = title);
     },
 
     LOAD_CURRENT_WEATHER(state, payload) {
@@ -258,7 +288,8 @@ export default new Vuex.Store({
     switchPage({
       commit
     }, payload) {
-      return commit("SWITCH_PAGE", payload);
+      commit("CHANGE_TITLE", payload);
+      commit("SWITCH_PAGE", payload);
     }
   },
 
