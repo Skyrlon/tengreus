@@ -41,7 +41,7 @@ export default new Vuex.Store({
       if (payload.message) {
         state.errorText = payload.message;
       }
-      if (payload.previous) {
+      if (payload.previous !== state.currentView) {
         state.previousView = payload.previous;
       }
     },
