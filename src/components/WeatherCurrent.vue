@@ -134,6 +134,7 @@ export default {
     }
   }
   & .wind {
+    min-height: 3em;
     & .value {
       text-transform: none;
     }
@@ -144,6 +145,9 @@ export default {
       width: 1.25em;
       height: 1.25em;
     }
+  }
+  & .moon-phase {
+    min-height: 3em;
   }
 }
 </style>

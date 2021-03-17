@@ -1,5 +1,5 @@
 <template>
-  <svg viewBox="-10 0 120 75" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="-10 0 120 80" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <rect
         id="sun-path_sun-ray"
