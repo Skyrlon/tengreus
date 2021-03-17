@@ -215,30 +215,17 @@ export default new Vuex.Store({
       dispatch, commit
     }, payload) {
       commit('TOGGLE_LOADING_SCREEN', true);
-      dispatch('getCurrentWeather', payload).then(() =>
-        dispatch('getFrenchCurrentWeather', payload)
-      )
-        .then(() =>
-          dispatch('getForecastWeather', payload)
-        )
-        .then(() =>
-          dispatch('getFrenchForecastWeather', payload)
-        )
-        .then(() => dispatch('switchPage', {
-          page: 'Weather'
-        })).then(() => {
-          commit('TOGGLE_LOADING_SCREEN', false);
-          return;
-        })
-        .catch((error) => {
-          dispatch('switchPage', {
-            previous: this.state.currentView,
-            page: 'Error',
-            message: error.message
-          });
-          commit('TOGGLE_LOAD_SCREEN', false);
-        });
 
+      return dispatch('getCurrentWeather', payload)
+        .then(() => dispatch('getFrenchCurrentWeather', payload))
+        .then(() => dispatch('getForecastWeather', payload))
+        .then(() => dispatch('getFrenchForecastWeather', payload))
+        .then(() => dispatch('switchPage', { page: 'Weather' }))
+        .then(() => commit('TOGGLE_LOADING_SCREEN', false))
+        .catch((error) => {
+          dispatch('switchPage', { previous: this.state.currentView, page: 'Error', message: error.message });
+          commit('TOGGLE_LOADING_SCREEN', false);
+        });
     },
 
     getCurrentWeather({
