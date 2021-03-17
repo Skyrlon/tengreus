@@ -267,6 +267,15 @@ export default {
     user-select: none;
     &:active {
       box-shadow: 0 0 0.5em -0.1em var(--base-font-color);
+      border-color: grey;
+      color: grey
+    }
+  }
+  & .about-link {
+    cursor: pointer;
+    user-select: none;
+    &:active {
+      color: grey;
     }
   }
 }

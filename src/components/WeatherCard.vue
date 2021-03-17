@@ -85,6 +85,10 @@ export default {
   &_link {
     margin-top: 2.5%;
     cursor: pointer;
+    user-select: none;
+    &:active {
+      color: grey;
+    }
   }
 }
 </style>
