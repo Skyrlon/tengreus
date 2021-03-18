@@ -50,6 +50,7 @@ import { mixin as clickaway } from "vue-clickaway";
 import vueCustomScrollbar from "vue-custom-scrollbar";
 import "vue-custom-scrollbar/dist/vueScrollbar.css";
 import LoadingIcon from "./icons/LoadingIcon.vue";
+const backendUrl = "http://localhost:3000/";
 
 export default {
   name: "SearchBar",
@@ -69,7 +70,6 @@ export default {
       searchCity: "",
       apiData: null,
       citiesList: [],
-      userName: process.env.VUE_APP_USER_NAME,
       settings: {
         suppressScrollY: false,
         suppressScrollX: true,
@@ -94,9 +94,9 @@ export default {
         }
         axios
           .get(
-            `http://api.geonames.org/searchJSON?name_startsWith="${
+            `${backendUrl}cities?name_startsWith="${
               this.searchCity
-            }"&maxRows=1000&username=${this.userName}&cities=cities1000&lang=${
+            }"&maxRows=1000&cities=cities1000&lang=${
               localStorage.getItem("language") || "en"
             }&searchlang=${
               localStorage.getItem("language") || "en"

@@ -5,7 +5,8 @@ import createPersistedState from "vuex-persistedstate";
 const countries = require("i18n-iso-countries");
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 countries.registerLocale(require("i18n-iso-countries/langs/fr.json"));
-import i18n from '@/i18n.js'
+import i18n from '@/i18n.js';
+const backendUrl = 'http://localhost:3000/'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -19,7 +20,6 @@ export default new Vuex.Store({
     previousView: '',
     currentView: "Home",
     errorText: '',
-    apiKey: process.env.VUE_APP_API_KEY,
     tempUnit: "°C",
     pressureUnit: 'hPa',
     lengthUnit: 'm',
@@ -41,7 +41,7 @@ export default new Vuex.Store({
       if (payload.message) {
         state.errorText = payload.message;
       }
-      if (payload.previous !== state.currentView) {
+      if (payload.previous && payload.previous !== state.currentView) {
         state.previousView = payload.previous;
       }
     },
@@ -50,22 +50,18 @@ export default new Vuex.Store({
       let title = '';
       if (payload.page === 'Home') {
         title = 'Tengreus'
-      }
-      else if (payload.page === 'About') {
+      } else if (payload.page === 'About') {
         title = `Tengreus - ${i18n.t("about")}`
-      }
-      else if (payload.page === "Weather") {
+      } else if (payload.page === "Weather") {
         let country = countries.getName(
           state.city.country,
-          localStorage.getItem("language") || "en",
-          {
+          localStorage.getItem("language") || "en", {
             select: "official",
           }
         );
         title = `Tengreus - ${state.city.name[localStorage.getItem("language") || "en"]
           }, ${country}`;
-      }
-      else if (payload.page === "Error") {
+      } else if (payload.page === "Error") {
         title = `Tengreus - ${i18n.t("error_occurred")}`
       }
       sessionStorage.setItem("title", title);
@@ -212,7 +208,8 @@ export default new Vuex.Store({
 
   actions: {
     getWeather({
-      dispatch, commit
+      dispatch,
+      commit
     }, payload) {
       commit('TOGGLE_LOADING_SCREEN', true);
 
@@ -220,53 +217,55 @@ export default new Vuex.Store({
         .then(() => dispatch('getFrenchCurrentWeather', payload))
         .then(() => dispatch('getForecastWeather', payload))
         .then(() => dispatch('getFrenchForecastWeather', payload))
-        .then(() => dispatch('switchPage', { page: 'Weather' }))
+        .then(() => dispatch('switchPage', {
+          page: 'Weather'
+        }))
         .then(() => commit('TOGGLE_LOADING_SCREEN', false))
         .catch((error) => {
-          dispatch('switchPage', { previous: this.state.currentView, page: 'Error', message: error.message });
+          dispatch('switchPage', {
+            previous: this.state.currentView,
+            page: 'Error',
+            message: error.message
+          });
           commit('TOGGLE_LOADING_SCREEN', false);
         });
     },
 
     getCurrentWeather({
-      commit,
-      state
+      commit
     }, payload) {
       return axios
-        .get(`https://api.openweathermap.org/data/2.5/weather?id=${payload.id}&appid=${state.apiKey}&units=metric&lang=en`)
+        .get(`${backendUrl}currentWeather?id=${payload.id}&units=metric&lang=en`)
         .then(result => {
           commit('LOAD_CURRENT_WEATHER', result.data);
         });
     },
 
     getFrenchCurrentWeather({
-      commit,
-      state
+      commit
     }, payload) {
       return axios
-        .get(`https://api.openweathermap.org/data/2.5/weather?id=${payload.id}&appid=${state.apiKey}&units=metric&lang=fr`)
+        .get(`${backendUrl}currentWeather?id=${payload.id}&units=metric&lang=fr`)
         .then(result => {
           commit('LOAD_FRENCH_CURRENT_WEATHER', result.data);
         })
     },
 
     getForecastWeather({
-      commit,
-      state
+      commit
     }, payload) {
       return axios
-        .get(`https://api.openweathermap.org/data/2.5/onecall?appid=${state.apiKey}&units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=en`)
+        .get(`${backendUrl}forecastWeather?units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=en`)
         .then(result => {
           commit('LOAD_FORECAST_WEATHER', result.data);
         });
     },
 
     getFrenchForecastWeather({
-      commit,
-      state
+      commit
     }, payload) {
       return axios
-        .get(`https://api.openweathermap.org/data/2.5/onecall?appid=${state.apiKey}&units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=fr`)
+        .get(`${backendUrl}forecastWeather?units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=fr`)
         .then(result => {
           commit('LOAD_FRENCH_FORECAST_WEATHER', result.data);
         })
