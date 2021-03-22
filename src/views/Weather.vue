@@ -82,7 +82,7 @@ export default {
     toggleSearchBar() {
       setTimeout(() => {
         this.showSearchBar = true;
-      }, 1000);
+      }, 450);
     },
   },
 };

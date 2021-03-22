@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 app.get('/cities', (request, response) => {
     response.set('Access-Control-Allow-Origin', '*')
     let query = request.query
-    queryString.username = citiesApiKey
+    query.username = citiesApiKey
     let queryString = qs.stringify(query)
     axios.get(`${citiesUrl}?${queryString}`).then((res) => {
         response.send(res.data)

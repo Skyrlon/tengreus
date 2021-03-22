@@ -175,12 +175,12 @@ body {
 
 .show-settings-enter-active {
   transform-origin: 100% 0%;
-  animation: show-up 0.7s linear;
+  animation: show-up 0.7s ease-in-out;
 }
 
 .show-settings-leave-active {
   transform-origin: 100% 0%;
-  animation: show-up 0.7s linear reverse;
+  animation: show-up 0.7s ease-in-out reverse;
 }
 
 .settings-icon {
