@@ -1,13 +1,23 @@
 # tengreus
 
 ## Project setup
+
+Client
 ```
 npm install
 ```
 
 ### Compiles and hot-reloads for development
+
+Client
 ```
 npm run serve
+```
+
+Backend
+```
+cd backend
+npm start
 ```
 
 ### Compiles and minifies for production
