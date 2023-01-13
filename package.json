@@ -1,48 +1,21 @@
 {
   "name": "tengreus",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "Weather App",
+  "main": "server.js",
   "scripts": {
-    "start": "npm run serve",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint",
-    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix frontend"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.4",
-    "core-js": "^3.8.0",
-    "i18n-iso-countries": "^6.5.0",
-    "vue": "^2.6.11",
-    "vue-clickaway": "^2.2.2",
-    "vue-custom-scrollbar": "^1.4.0",
-    "vue-debounce": "^2.6.0",
-    "vue-i18n": "^8.17.3",
-    "vue-router": "^3.2.0",
-    "vuex": "^3.6.0",
-    "vuex-persistedstate": "^4.0.0-beta.3"
-  },
-  "devDependencies": {
-    "@intlify/vue-i18n-loader": "^1.0.0",
-    "@vue/cli-plugin-babel": "^5.0.8",
-    "@vue/cli-plugin-e2e-cypress": "^5.0.8",
-    "@vue/cli-plugin-eslint": "^5.0.8",
-    "@vue/cli-plugin-router": "^5.0.8",
-    "@vue/cli-plugin-unit-jest": "^5.0.8",
-    "@vue/cli-plugin-vuex": "^5.0.8",
-    "@vue/cli-service": "^5.0.8",
-    "@vue/test-utils": "^1.0.3",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^6.2.2",
-    "node-sass": "^8.0.0",
-    "raw-loader": "^4.0.2",
-    "sass-loader": "^13.2.0",
-    "vue-cli-plugin-i18n": "^0.6.1",
-    "vue-template-compiler": "^2.6.11",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^4.2.0"
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7",
+    "qs": "^6.10.0"
   }
 }

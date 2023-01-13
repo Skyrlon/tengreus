@@ -1,29 +1,32 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 const axios = require("axios");
 import createPersistedState from "vuex-persistedstate";
 const countries = require("i18n-iso-countries");
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 countries.registerLocale(require("i18n-iso-countries/langs/fr.json"));
-import i18n from '@/i18n.js';
-const backendUrl = 'http://localhost:3000/'
-Vue.use(Vuex)
+import i18n from "@/i18n.js";
+const production = process.env.PORT;
+const developpement = "http://localhost:3000/";
+const backendUrl = process.env.PORT ? production : developpement;
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-
-  plugins: [createPersistedState({
-    storage: window.sessionStorage
-  })],
+  plugins: [
+    createPersistedState({
+      storage: window.sessionStorage,
+    }),
+  ],
 
   state: {
     isLoading: false,
-    previousView: '',
+    previousView: "",
     currentView: "Home",
-    errorText: '',
+    errorText: "",
     tempUnit: "°C",
-    pressureUnit: 'hPa',
-    lengthUnit: 'm',
-    speedUnit: 'km/h',
+    pressureUnit: "hPa",
+    lengthUnit: "m",
+    speedUnit: "km/h",
     city: {},
     timeShift: 0,
     current: {},
@@ -31,9 +34,8 @@ export default new Vuex.Store({
   },
 
   mutations: {
-
     TOGGLE_LOADING_SCREEN(state, payload) {
-      state.isLoading = payload
+      state.isLoading = payload;
     },
 
     SWITCH_PAGE(state, payload) {
@@ -47,22 +49,24 @@ export default new Vuex.Store({
     },
 
     CHANGE_TITLE(state, payload) {
-      let title = '';
-      if (payload.page === 'Home') {
-        title = 'Tengreus'
-      } else if (payload.page === 'About') {
-        title = `Tengreus - ${i18n.t("about")}`
+      let title = "";
+      if (payload.page === "Home") {
+        title = "Tengreus";
+      } else if (payload.page === "About") {
+        title = `Tengreus - ${i18n.t("about")}`;
       } else if (payload.page === "Weather") {
         let country = countries.getName(
           state.city.country,
-          localStorage.getItem("language") || "en", {
+          localStorage.getItem("language") || "en",
+          {
             select: "official",
           }
         );
-        title = `Tengreus - ${state.city.name[localStorage.getItem("language") || "en"]
-          }, ${country}`;
+        title = `Tengreus - ${
+          state.city.name[localStorage.getItem("language") || "en"]
+        }, ${country}`;
       } else if (payload.page === "Error") {
-        title = `Tengreus - ${i18n.t("error_occurred")}`
+        title = `Tengreus - ${i18n.t("error_occurred")}`;
       }
       sessionStorage.setItem("title", title);
       return (document.title = title);
@@ -106,7 +110,7 @@ export default new Vuex.Store({
             en: payload.weather[0].description,
             fr: "",
           },
-        }
+        },
       };
       state.current.time = Date.now() / 1000; //time provided by api is inaccurate
     },
@@ -146,138 +150,136 @@ export default new Vuex.Store({
               en: payload.daily[i].weather[0].description,
               fr: "",
             },
-          }
-        }
+          },
+        };
       }
     },
 
     LOAD_FRENCH_FORECAST_WEATHER(state, payload) {
       if (state.forecast.length === 8) {
         for (let i = 0; i < payload.daily.length; i++) {
-          state.forecast[i].weather.detailed.fr = payload.daily[i].weather[0].description;
+          state.forecast[i].weather.detailed.fr =
+            payload.daily[i].weather[0].description;
         }
       }
     },
 
     CHANGE_TEMPERATURE_UNIT(state, payload) {
-      localStorage.setItem('tempUnit', payload);
-      return state.tempUnit = payload;
+      localStorage.setItem("tempUnit", payload);
+      return (state.tempUnit = payload);
     },
 
     CHANGE_PRESSURE_UNIT(state, payload) {
-      localStorage.setItem('pressureUnit', payload);
-      return state.pressureUnit = payload;
+      localStorage.setItem("pressureUnit", payload);
+      return (state.pressureUnit = payload);
     },
 
     CHANGE_LENGTH_UNIT(state, payload) {
       let unit;
       switch (payload) {
-        case 'metric':
-          unit = 'm';
+        case "metric":
+          unit = "m";
           break;
-        case 'imperial':
-          unit = 'mi';
+        case "imperial":
+          unit = "mi";
           break;
       }
-      localStorage.setItem('lengthUnit', payload);
-      return state.lengthUnit = unit;
+      localStorage.setItem("lengthUnit", payload);
+      return (state.lengthUnit = unit);
     },
 
     CHANGE_SPEED_UNIT(state, payload) {
       let unit;
       switch (payload) {
-        case 'metric':
-          unit = 'km/h';
+        case "metric":
+          unit = "km/h";
           break;
-        case 'imperial':
-          unit = 'mi/h';
+        case "imperial":
+          unit = "mi/h";
           break;
       }
-      localStorage.setItem('speedUnit', payload);
-      return state.speedUnit = unit;
+      localStorage.setItem("speedUnit", payload);
+      return (state.speedUnit = unit);
     },
 
     RESET_LOCAL_STORAGE(state) {
       localStorage.clear();
       state.tempUnit = "°C";
-      state.pressureUnit = 'hPa';
-      state.lengthUnit = 'm';
-      state.speedUnit = 'km/h';
-    }
+      state.pressureUnit = "hPa";
+      state.lengthUnit = "m";
+      state.speedUnit = "km/h";
+    },
   },
 
   actions: {
-    getWeather({
-      dispatch,
-      commit
-    }, payload) {
-      commit('TOGGLE_LOADING_SCREEN', true);
+    getWeather({ dispatch, commit }, payload) {
+      commit("TOGGLE_LOADING_SCREEN", true);
 
-      return dispatch('getCurrentWeather', payload)
-        .then(() => dispatch('getFrenchCurrentWeather', payload))
-        .then(() => dispatch('getForecastWeather', payload))
-        .then(() => dispatch('getFrenchForecastWeather', payload))
-        .then(() => dispatch('switchPage', {
-          page: 'Weather'
-        }))
-        .then(() => commit('TOGGLE_LOADING_SCREEN', false))
+      return dispatch("getCurrentWeather", payload)
+        .then(() => dispatch("getFrenchCurrentWeather", payload))
+        .then(() => dispatch("getForecastWeather", payload))
+        .then(() => dispatch("getFrenchForecastWeather", payload))
+        .then(() =>
+          dispatch("switchPage", {
+            page: "Weather",
+          })
+        )
+        .then(() => commit("TOGGLE_LOADING_SCREEN", false))
         .catch((error) => {
-          dispatch('switchPage', {
+          dispatch("switchPage", {
             previous: this.state.currentView,
-            page: 'Error',
-            message: error.message
+            page: "Error",
+            message: error.message,
           });
-          commit('TOGGLE_LOADING_SCREEN', false);
+          commit("TOGGLE_LOADING_SCREEN", false);
         });
     },
 
-    getCurrentWeather({
-      commit
-    }, payload) {
+    getCurrentWeather({ commit }, payload) {
       return axios
-        .get(`${backendUrl}currentWeather?id=${payload.id}&units=metric&lang=en`)
-        .then(result => {
-          commit('LOAD_CURRENT_WEATHER', result.data);
+        .get(
+          `${backendUrl}currentWeather?id=${payload.id}&units=metric&lang=en`
+        )
+        .then((result) => {
+          commit("LOAD_CURRENT_WEATHER", result.data);
         });
     },
 
-    getFrenchCurrentWeather({
-      commit
-    }, payload) {
+    getFrenchCurrentWeather({ commit }, payload) {
       return axios
-        .get(`${backendUrl}currentWeather?id=${payload.id}&units=metric&lang=fr`)
-        .then(result => {
-          commit('LOAD_FRENCH_CURRENT_WEATHER', result.data);
-        })
-    },
-
-    getForecastWeather({
-      commit
-    }, payload) {
-      return axios
-        .get(`${backendUrl}forecastWeather?units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=en`)
-        .then(result => {
-          commit('LOAD_FORECAST_WEATHER', result.data);
+        .get(
+          `${backendUrl}currentWeather?id=${payload.id}&units=metric&lang=fr`
+        )
+        .then((result) => {
+          commit("LOAD_FRENCH_CURRENT_WEATHER", result.data);
         });
     },
 
-    getFrenchForecastWeather({
-      commit
-    }, payload) {
+    getForecastWeather({ commit }, payload) {
       return axios
-        .get(`${backendUrl}forecastWeather?units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=fr`)
-        .then(result => {
-          commit('LOAD_FRENCH_FORECAST_WEATHER', result.data);
-        })
+        .get(
+          `${backendUrl}forecastWeather?units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=en`
+        )
+        .then((result) => {
+          commit("LOAD_FORECAST_WEATHER", result.data);
+        });
     },
 
-    switchPage({
-      commit
-    }, payload) {
+    getFrenchForecastWeather({ commit }, payload) {
+      return axios
+        .get(
+          `${backendUrl}forecastWeather?units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=fr`
+        )
+        .then((result) => {
+          commit("LOAD_FRENCH_FORECAST_WEATHER", result.data);
+        });
+    },
+
+    switchPage({ commit }, payload) {
       commit("CHANGE_TITLE", payload);
       commit("SWITCH_PAGE", payload);
-    }
+    },
   },
 
-  modules: {}
-})
+  modules: {},
+});

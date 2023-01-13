@@ -50,7 +50,9 @@ import { mixin as clickaway } from "vue-clickaway";
 import vueCustomScrollbar from "vue-custom-scrollbar";
 import "vue-custom-scrollbar/dist/vueScrollbar.css";
 import LoadingIcon from "./icons/LoadingIcon.vue";
-const backendUrl = "http://localhost:3000/";
+const production = process.env.PORT;
+const developpement = "http://localhost:3000/";
+const backendUrl = process.env.PORT ? production : developpement;
 
 export default {
   name: "SearchBar",

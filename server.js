@@ -47,5 +47,5 @@ app.get("/forecastWeather", (request, response) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Server started on port ${port}`);
 });
