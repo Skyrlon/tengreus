@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "start": "vue-cli-service serve",
-    "build": "node ./node_modules/@vue/cli-service/bin/vue-cli-service.js build",
+    "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
   "dependencies": {
+    "@vue/cli-service": "^5.0.8",
     "axios": "^0.21.4",
     "core-js": "^3.8.0",
     "i18n-iso-countries": "^6.5.0",
