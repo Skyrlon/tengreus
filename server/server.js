@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 var qs = require("qs");
+var cors = require("cors");
 const axios = require("axios");
 
 const citiesApiKey = process.env.CITIES_API_KEY;
@@ -12,12 +13,13 @@ const citiesUrl = "http://api.geonames.org/searchJSON";
 const currentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather";
 const forecastWeatherUrl = "https://api.openweathermap.org/data/2.5/onecall";
 
-app.get("/", (req, res) => {
+app.use(cors());
+
+app.get("/api", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/cities", (request, response) => {
-  response.set("Access-Control-Allow-Origin", "*");
+app.get("/api/cities", (request, response) => {
   let query = request.query;
   query.username = citiesApiKey;
   let queryString = qs.stringify(query);
@@ -26,8 +28,7 @@ app.get("/cities", (request, response) => {
   });
 });
 
-app.get("/currentWeather", (request, response) => {
-  response.set("Access-Control-Allow-Origin", "*");
+app.get("/api/currentWeather", (request, response) => {
   let query = request.query;
   query.appid = weatherApiKey;
   let queryString = qs.stringify(query);
@@ -36,8 +37,7 @@ app.get("/currentWeather", (request, response) => {
   });
 });
 
-app.get("/forecastWeather", (request, response) => {
-  response.set("Access-Control-Allow-Origin", "*");
+app.get("/api/forecastWeather", (request, response) => {
   let query = request.query;
   query.appid = weatherApiKey;
   let queryString = qs.stringify(query);

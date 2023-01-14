@@ -1,5 +1,5 @@
 {
-  "name": "tengreus",
+  "name": "tengreus-client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,11 +11,10 @@
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
   "dependencies": {
-    "@vue/cli-service": "^5.0.8",
     "axios": "^0.21.4",
     "core-js": "^3.8.0",
     "i18n-iso-countries": "^6.5.0",
-    "vue": "^3.2.45",
+    "vue": "^2.6.1",
     "vue-clickaway": "^2.2.2",
     "vue-custom-scrollbar": "^1.4.0",
     "vue-debounce": "^2.6.0",
@@ -25,6 +24,8 @@
     "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
+    "@vue/cli-service": "^5.0.8",
+    "@vue/test-utils": "^2.2.7",
     "@intlify/vue-i18n-loader": "^1.0.0",
     "@vue/cli-plugin-babel": "^5.0.8",
     "@vue/cli-plugin-e2e-cypress": "^5.0.8",
@@ -32,8 +33,6 @@
     "@vue/cli-plugin-router": "^5.0.8",
     "@vue/cli-plugin-unit-jest": "^5.0.8",
     "@vue/cli-plugin-vuex": "^5.0.8",
-    "@vue/cli-service": "^5.0.8",
-    "@vue/test-utils": "^1.0.3",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^6.2.2",

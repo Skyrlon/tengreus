@@ -7,7 +7,7 @@ countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 countries.registerLocale(require("i18n-iso-countries/langs/fr.json"));
 import i18n from "@/i18n.js";
 const production = process.env.PORT;
-const developpement = "http://localhost:3000/";
+const developpement = "http://localhost:3000/api/";
 const backendUrl = process.env.PORT ? production : developpement;
 Vue.use(Vuex);
 
