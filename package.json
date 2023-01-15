@@ -1,5 +1,5 @@
 {
-  "name": "tengreus-client",
+  "name": "tengreus",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -21,7 +21,8 @@
     "vue-i18n": "^8.17.3",
     "vue-router": "^3.2.0",
     "vuex": "^3.6.0",
-    "vuex-persistedstate": "^4.0.0-beta.3"
+    "vuex-persistedstate": "^4.0.0-beta.3",
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
     "@vue/cli-service": "^5.0.8",
