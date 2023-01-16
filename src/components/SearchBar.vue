@@ -51,7 +51,7 @@ import vueCustomScrollbar from "vue-custom-scrollbar";
 import "vue-custom-scrollbar/dist/vueScrollbar.css";
 import LoadingIcon from "./icons/LoadingIcon.vue";
 
-const production = "https://api.tengreus/";
+const production = "https://colorful-tunic-dove.cyclic.app";
 const developpement = "http://localhost:3000/";
 const backendUrl = process.env.PORT ? production : developpement;
 
