@@ -53,7 +53,7 @@ import LoadingIcon from "./icons/LoadingIcon.vue";
 
 const production = "https://tengreus.cyclic.app/";
 const developpement = "http://localhost:3000/";
-const backendUrl = process.env.VUE_APP_PRODUCTION ? production : developpement;
+const backendUrl = process.env.NODE_ENV ? production : developpement;
 
 export default {
   name: "SearchBar",
