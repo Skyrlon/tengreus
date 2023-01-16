@@ -47,7 +47,7 @@
 <script>
 const axios = require("axios");
 const citiesApiKey = process.env.VUE_APP_CITIES_API_KEY;
-const citiesUrl = "http://api.geonames.org/searchJSON";
+const citiesUrl = "https://api.geonames.org/searchJSON";
 import { mixin as clickaway } from "vue-clickaway";
 import vueCustomScrollbar from "vue-custom-scrollbar";
 import "vue-custom-scrollbar/dist/vueScrollbar.css";
