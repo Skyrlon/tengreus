@@ -114,7 +114,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .weather-icon {
   height: 100%;
   width: 100%;
