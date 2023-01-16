@@ -8,7 +8,7 @@ countries.registerLocale(require("i18n-iso-countries/langs/fr.json"));
 import i18n from "@/i18n.js";
 Vue.use(Vuex);
 
-const production = "https://colorful-tunic-dove.cyclic.app";
+const production = "https://tengreus.cyclic.app/";
 const developpement = "http://localhost:3000/";
 const backendUrl = process.env.PORT ? production : developpement;
 
