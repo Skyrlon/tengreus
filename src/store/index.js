@@ -8,10 +8,9 @@ countries.registerLocale(require("i18n-iso-countries/langs/fr.json"));
 import i18n from "@/i18n.js";
 Vue.use(Vuex);
 
-const weatherApiKey = process.env.VUE_APP_WEATHER_API_KEY;
-
-const currentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather";
-const forecastWeatherUrl = "https://api.openweathermap.org/data/2.5/onecall";
+const production = "https://api.tengreus/";
+const developpement = "http://localhost:3000/";
+const backendUrl = process.env.PORT ? production : developpement;
 
 export default new Vuex.Store({
   plugins: [
@@ -213,10 +212,7 @@ export default new Vuex.Store({
   },
 
   actions: {
-    getWeather({
-      dispatch,
-      commit
-    }, payload) {
+    getWeather({ dispatch, commit }, payload) {
       commit("TOGGLE_LOADING_SCREEN", true);
 
       return dispatch("getCurrentWeather", payload)
@@ -239,57 +235,47 @@ export default new Vuex.Store({
         });
     },
 
-    getCurrentWeather({
-      commit
-    }, payload) {
+    getCurrentWeather({ commit }, payload) {
       return axios
         .get(
-          `${currentWeatherUrl}?id=${payload.id}&units=metric&lang=en&appid=${weatherApiKey}`
+          `${backendUrl}currentWeather?id=${payload.id}&units=metric&lang=en`
         )
         .then((result) => {
           commit("LOAD_CURRENT_WEATHER", result.data);
         });
     },
 
-    getFrenchCurrentWeather({
-      commit
-    }, payload) {
+    getFrenchCurrentWeather({ commit }, payload) {
       return axios
         .get(
-          `${currentWeatherUrl}?id=${payload.id}&units=metric&lang=fr&appid=${weatherApiKey}`
+          `${backendUrl}currentWeather?id=${payload.id}&units=metric&lang=fr`
         )
         .then((result) => {
           commit("LOAD_FRENCH_CURRENT_WEATHER", result.data);
         });
     },
 
-    getForecastWeather({
-      commit
-    }, payload) {
+    getForecastWeather({ commit }, payload) {
       return axios
         .get(
-          `${forecastWeatherUrl}?units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=en&appid=${weatherApiKey}`
+          `${backendUrl}forecastWeather?units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=en`
         )
         .then((result) => {
           commit("LOAD_FORECAST_WEATHER", result.data);
         });
     },
 
-    getFrenchForecastWeather({
-      commit
-    }, payload) {
+    getFrenchForecastWeather({ commit }, payload) {
       return axios
         .get(
-          `${forecastWeatherUrl}?units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=fr&appid=${weatherApiKey}`
+          `${backendUrl}forecastWeather?units=metric&lat=${payload.latitude}&lon=${payload.longitude}&exclude=current,minutely,hourly,alerts&lang=fr`
         )
         .then((result) => {
           commit("LOAD_FRENCH_FORECAST_WEATHER", result.data);
         });
     },
 
-    switchPage({
-      commit
-    }, payload) {
+    switchPage({ commit }, payload) {
       commit("CHANGE_TITLE", payload);
       commit("SWITCH_PAGE", payload);
     },

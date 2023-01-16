@@ -46,12 +46,14 @@
 
 <script>
 const axios = require("axios");
-const citiesApiKey = process.env.VUE_APP_CITIES_API_KEY;
-const citiesUrl = "https://api.geonames.org/searchJSON";
 import { mixin as clickaway } from "vue-clickaway";
 import vueCustomScrollbar from "vue-custom-scrollbar";
 import "vue-custom-scrollbar/dist/vueScrollbar.css";
 import LoadingIcon from "./icons/LoadingIcon.vue";
+
+const production = "https://api.tengreus/";
+const developpement = "http://localhost:3000/";
+const backendUrl = process.env.PORT ? production : developpement;
 
 export default {
   name: "SearchBar",
@@ -93,16 +95,15 @@ export default {
         if (e.key == "Shift" || e.keyCode == 16) {
           this.isLoading = false;
         }
-
         axios
           .get(
-            `${citiesUrl}?name_startsWith="${
+            `${backendUrl}cities?name_startsWith="${
               this.searchCity
             }"&maxRows=1000&cities=cities1000&lang=${
               localStorage.getItem("language") || "en"
             }&searchlang=${
               localStorage.getItem("language") || "en"
-            }&orderby=revelence&username=${citiesApiKey}`
+            }&orderby=revelence`
           )
           .catch((error) => {
             if (error.response) {
