@@ -13,6 +13,6 @@ git init
 git add -A
 git commit -m 'deploy'
 
-git push -f git@github.com:skyrlon/tengreus.git main:gh-pages
+git push -f git@github.com:Skyrlon/tengreus.git main:gh-pages
 
 cd -
